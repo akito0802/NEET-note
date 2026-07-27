@@ -63,18 +63,18 @@
           </div>
 
           <section class="advice-box" aria-labelledby="adviceTitle">
-            <div class="advice-heading"><div><p class="advice-kicker">OPENAI SONGWRITING ASSISTANT</p><h2 id="adviceTitle">AI作曲アドバイス</h2></div><button id="generateAdviceBtn" class="primary-button" type="button">AIに相談する</button></div>
+            <div class="advice-heading"><div><p class="advice-kicker">GEMINI SONGWRITING ASSISTANT</p><h2 id="adviceTitle">AI作曲アドバイス</h2></div><button id="generateAdviceBtn" class="primary-button" type="button">Geminiに相談する</button></div>
 
             <details class="ai-settings">
-              <summary>OpenAI API設定</summary>
+              <summary>Gemini API設定</summary>
               <div class="ai-settings-body">
-                <label class="field"><span>APIキー</span><input id="openAiApiKeyInput" type="password" placeholder="sk-..." autocomplete="off" /></label>
+                <label class="field"><span>APIキー</span><input id="geminiApiKeyInput" type="password" placeholder="Google AI Studioで取得したキー" autocomplete="off" /></label>
                 <div class="ai-setting-actions">
                   <button id="saveApiKeyBtn" class="ghost-button" type="button">この端末に保存</button>
                   <button id="clearApiKeyBtn" class="danger-text-button" type="button">削除</button>
                   <span id="apiKeyStatus" class="save-status">未設定</span>
                 </div>
-                <small>APIキーはGitHubには送られず、このブラウザのlocalStorageにだけ保存されます。</small>
+                <small>APIキーはGitHubには保存されず、このブラウザのlocalStorageにだけ保存されます。</small>
               </div>
             </details>
 
@@ -83,10 +83,10 @@
               <label class="field"><span>テーマ・情景</span><input id="themeInput" type="text" placeholder="例：夏の帰り道、別れ、夜の街" maxlength="120" /></label>
             </div>
             <label class="field"><span>歌詞の断片・入れたい言葉</span><textarea id="lyricIdeaInput" rows="5" placeholder="例：君のいない駅で、発車ベルだけが鳴っていた"></textarea></label>
-            <p class="advice-note">タイトル・キー・BPM・構成・コード進行・雰囲気・歌詞断片をOpenAIへ送り、具体的な提案を作ります。</p>
-            <div id="adviceEmpty" class="advice-empty">APIキーを保存して「AIに相談する」を押すと、コード進行・メロディ・歌詞・アレンジ案がここに出るよ。</div>
+            <p class="advice-note">タイトル・キー・BPM・構成・コード進行・雰囲気・歌詞断片をGeminiへ送り、具体的な提案を作ります。</p>
+            <div id="adviceEmpty" class="advice-empty">APIキーを保存して「Geminiに相談する」を押すと、コード進行・メロディ・歌詞・アレンジ案がここに出るよ。</div>
             <div id="adviceResults" class="advice-results hidden">
-              <article><h3>AIからのアドバイス</h3><div id="aiAdviceOutput"></div></article>
+              <article><h3>Geminiからのアドバイス</h3><div id="aiAdviceOutput"></div></article>
             </div>
           </section>
 
@@ -105,6 +105,6 @@
   <script src="structure-sync.js?v=1"></script>
   <script src="chord-picker.js?v=6"></script>
   <script src="print.js?v=2"></script>
-  <script src="advice.js?v=2"></script>
+  <script src="advice.js?v=3"></script>
 </body>
 </html>
