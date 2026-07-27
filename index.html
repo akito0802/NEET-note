@@ -7,6 +7,7 @@
   <title>NEET NOTE</title>
   <link rel="stylesheet" href="style.css?v=3" />
   <link rel="stylesheet" href="background.css?v=1" />
+  <link rel="stylesheet" href="chord-picker.css?v=1" />
 </head>
 <body>
   <div class="app-shell">
@@ -87,15 +88,43 @@
             <textarea id="structureInput" rows="5" placeholder="例：イントロ → Aメロ → Bメロ → サビ"></textarea>
           </label>
 
-          <label class="field">
+          <div class="field">
             <span>コード進行</span>
+            <div class="chord-picker" aria-label="コード選択">
+              <select id="chordRootSelect" aria-label="ルート音">
+                <option value="">ルート</option>
+                <option>C</option><option>C#</option><option>Db</option><option>D</option>
+                <option>D#</option><option>Eb</option><option>E</option><option>F</option>
+                <option>F#</option><option>Gb</option><option>G</option><option>G#</option>
+                <option>Ab</option><option>A</option><option>A#</option><option>Bb</option><option>B</option>
+              </select>
+              <select id="chordTypeSelect" aria-label="コード種類">
+                <option value="">メジャー</option>
+                <option value="m">マイナー</option>
+                <option value="7">7</option>
+                <option value="maj7">maj7</option>
+                <option value="m7">m7</option>
+                <option value="6">6</option>
+                <option value="m6">m6</option>
+                <option value="add9">add9</option>
+                <option value="9">9</option>
+                <option value="sus2">sus2</option>
+                <option value="sus4">sus4</option>
+                <option value="dim">dim</option>
+                <option value="aug">aug</option>
+                <option value="m7b5">m7♭5</option>
+              </select>
+              <button id="addChordBtn" class="chord-add-button" type="button">追加</button>
+              <button id="addChordLineBtn" class="chord-line-button" type="button">改行</button>
+            </div>
+            <small class="chord-picker-note">ルート音と種類を選んで「追加」を押すと、下の欄に入ります。</small>
             <textarea id="chordsInput" rows="8" placeholder="例：
 [イントロ]
 C  G  Am  F
 
 [サビ]
 F  G  Em  Am"></textarea>
-          </label>
+          </div>
 
           <label class="field">
             <span>歌詞メモ</span>
@@ -137,5 +166,6 @@ F  G  Em  Am"></textarea>
 
   <script src="app.js?v=3"></script>
   <script src="structure-sync.js?v=1"></script>
+  <script src="chord-picker.js?v=1"></script>
 </body>
 </html>
