@@ -2,59 +2,94 @@ const chordRootSelect = document.getElementById('chordRootSelect');
 const chordTypeSelect = document.getElementById('chordTypeSelect');
 const addChordBtn = document.getElementById('addChordBtn');
 const addChordLineBtn = document.getElementById('addChordLineBtn');
-const chordTextArea = document.getElementById('chordsInput');
+const lyricsTextArea = document.getElementById('lyricsInput');
 
-let savedSelectionStart = 0;
-let savedSelectionEnd = 0;
-
-function rememberChordSelection() {
-  if (!chordTextArea) return;
-  savedSelectionStart = chordTextArea.selectionStart ?? chordTextArea.value.length;
-  savedSelectionEnd = chordTextArea.selectionEnd ?? savedSelectionStart;
+function displayWidth(text) {
+  return Array.from(text).reduce((width, char) => {
+    const code = char.codePointAt(0);
+    const isWide =
+      code >= 0x1100 &&
+      (code <= 0x115f ||
+        code === 0x2329 ||
+        code === 0x232a ||
+        (code >= 0x2e80 && code <= 0xa4cf) ||
+        (code >= 0xac00 && code <= 0xd7a3) ||
+        (code >= 0xf900 && code <= 0xfaff) ||
+        (code >= 0xfe10 && code <= 0xfe19) ||
+        (code >= 0xfe30 && code <= 0xfe6f) ||
+        (code >= 0xff00 && code <= 0xff60) ||
+        (code >= 0xffe0 && code <= 0xffe6));
+    return width + (isWide ? 2 : 1);
+  }, 0);
 }
 
-function insertTextAtSelection(text, addSpacing = false) {
-  if (!chordTextArea) return;
+function looksLikeChordLine(line) {
+  return line.trim() === '' || /^[\sA-G#b0-9majinsudg()+/♭♯-]+$/.test(line);
+}
 
-  const value = chordTextArea.value;
-  const start = Math.min(savedSelectionStart, value.length);
-  const end = Math.min(savedSelectionEnd, value.length);
-  const before = value.slice(0, start);
-  const after = value.slice(end);
+function placeChordAboveLyrics(chord) {
+  if (!lyricsTextArea || !chord) return;
 
-  let insertedText = text;
-  if (addSpacing && start === end) {
-    const needsSpaceBefore = before.length > 0 && !/[\s\n]$/.test(before);
-    const needsSpaceAfter = after.length > 0 && !/^[\s\n]/.test(after);
-    insertedText = `${needsSpaceBefore ? '  ' : ''}${text}${needsSpaceAfter ? '  ' : ''}`;
+  const value = lyricsTextArea.value;
+  const cursor = lyricsTextArea.selectionStart ?? value.length;
+  const lineStart = value.lastIndexOf('\n', Math.max(0, cursor - 1)) + 1;
+  const lineEndIndex = value.indexOf('\n', cursor);
+  const lineEnd = lineEndIndex === -1 ? value.length : lineEndIndex;
+  const lyricLine = value.slice(lineStart, lineEnd);
+  const cursorInLine = Math.max(0, Math.min(cursor - lineStart, lyricLine.length));
+  const targetColumn = displayWidth(lyricLine.slice(0, cursorInLine));
+
+  const beforeCurrentLine = value.slice(0, lineStart);
+  const previousLineEnd = Math.max(0, lineStart - 1);
+  const previousLineStart = value.lastIndexOf('\n', Math.max(0, previousLineEnd - 1)) + 1;
+  const previousLine = lineStart > 0 ? value.slice(previousLineStart, previousLineEnd) : '';
+  const hasChordLine = lineStart > 0 && looksLikeChordLine(previousLine);
+
+  let newValue;
+  let newCursor;
+
+  if (hasChordLine) {
+    const padded = previousLine.padEnd(targetColumn, ' ');
+    const prefix = padded.slice(0, targetColumn);
+    const suffixStart = targetColumn + chord.length;
+    const suffix = padded.length > suffixStart ? padded.slice(suffixStart) : '';
+    const updatedChordLine = prefix + chord + suffix;
+
+    newValue =
+      value.slice(0, previousLineStart) +
+      updatedChordLine +
+      value.slice(previousLineEnd);
+
+    const lengthDiff = updatedChordLine.length - previousLine.length;
+    newCursor = cursor + lengthDiff;
+  } else {
+    const chordLine = ' '.repeat(targetColumn) + chord;
+    newValue = beforeCurrentLine + chordLine + '\n' + value.slice(lineStart);
+    newCursor = cursor + chordLine.length + 1;
   }
 
-  chordTextArea.value = before + insertedText + after;
-
-  const nextCursor = before.length + insertedText.length;
-  chordTextArea.focus();
-  chordTextArea.setSelectionRange(nextCursor, nextCursor);
-  savedSelectionStart = nextCursor;
-  savedSelectionEnd = nextCursor;
-
-  chordTextArea.dispatchEvent(new Event('input', { bubbles: true }));
+  lyricsTextArea.value = newValue;
+  lyricsTextArea.dispatchEvent(new Event('input', { bubbles: true }));
+  lyricsTextArea.focus();
+  lyricsTextArea.setSelectionRange(newCursor, newCursor);
 }
 
-if (chordTextArea) {
-  ['click', 'keyup', 'input', 'select', 'focus'].forEach(eventName => {
-    chordTextArea.addEventListener(eventName, rememberChordSelection);
-  });
-
-  chordTextArea.addEventListener('blur', rememberChordSelection);
+function insertLineBreakAtCursor() {
+  if (!lyricsTextArea) return;
+  const start = lyricsTextArea.selectionStart ?? lyricsTextArea.value.length;
+  const end = lyricsTextArea.selectionEnd ?? start;
+  lyricsTextArea.setRangeText('\n', start, end, 'end');
+  lyricsTextArea.dispatchEvent(new Event('input', { bubbles: true }));
+  lyricsTextArea.focus();
 }
 
 if (addChordBtn) {
   addChordBtn.addEventListener('click', () => {
     if (!chordRootSelect.value) return;
-    insertTextAtSelection(chordRootSelect.value + chordTypeSelect.value, true);
+    placeChordAboveLyrics(chordRootSelect.value + chordTypeSelect.value);
   });
 }
 
 if (addChordLineBtn) {
-  addChordLineBtn.addEventListener('click', () => insertTextAtSelection('\n'));
+  addChordLineBtn.addEventListener('click', insertLineBreakAtCursor);
 }
