@@ -37,6 +37,10 @@
             <label class="field"><span>アーティスト</span><input id="artistInput" type="text" placeholder="アーティスト名" maxlength="80" /></label>
             <label class="field"><span>制作日</span><input id="productionDateInput" type="date" /></label>
           </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-8px 0 18px">
+            <button id="copyCreatorNameBtn" class="ghost-button" type="button">作詞・作曲・編曲を同じ名前にする</button>
+            <small style="color:#6b7280">3項目のうち、入力済みの名前をほかにもコピーします。</small>
+          </div>
           <div class="meta-grid">
             <label class="field"><span>キー</span><select id="keyInput"><option value="">未設定</option><option>C</option><option>C# / Db</option><option>D</option><option>D# / Eb</option><option>E</option><option>F</option><option>F# / Gb</option><option>G</option><option>G# / Ab</option><option>A</option><option>A# / Bb</option><option>B</option></select></label>
             <label class="field"><span>BPM</span><input id="bpmInput" type="number" inputmode="numeric" min="20" max="300" placeholder="120" /></label>
@@ -69,6 +73,6 @@
   </div>
   <section id="printSheet" class="print-sheet" aria-hidden="true"><h1 id="printTitle">無題の曲</h1><div id="printCredits" class="print-meta"></div><div id="printMeta" class="print-meta"></div><pre id="printContent" class="print-content"></pre></section>
   <template id="songCardTemplate"><article class="song-card" tabindex="0"><div class="song-card-head"><div><h2 class="song-title"></h2><p class="song-meta"></p></div><span class="song-date"></span></div><p class="song-preview"></p></article></template>
-  <script src="app.js?v=6"></script><script src="structure-sync.js?v=1"></script><script src="chord-picker.js?v=6"></script><script src="print.js?v=2"></script>
+  <script src="app.js?v=7"></script><script src="structure-sync.js?v=1"></script><script src="chord-picker.js?v=6"></script><script src="print.js?v=2"></script>
 </body>
 </html>
