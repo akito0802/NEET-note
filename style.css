@@ -4,25 +4,28 @@
 
 :root {
   color-scheme: light;
-  --bg: #f4f7fb;
-  --panel: #ffffff;
-  --text: #111827;
-  --muted: #6b7280;
-  --line: #e5e7eb;
-  --accent: #111827;
-  --danger: #b91c1c;
-  --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+  --desk: #d9c7a8;
+  --paper: #fffdf5;
+  --paper-deep: #f7f0dd;
+  --ink: #28313b;
+  --muted: #7a7368;
+  --rule: rgba(105, 158, 197, 0.24);
+  --margin-line: rgba(220, 93, 93, 0.42);
+  --accent: #315f78;
+  --accent-dark: #24495e;
+  --danger: #a54848;
+  --shadow: 0 18px 45px rgba(82, 62, 35, 0.18);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
   background:
-    radial-gradient(circle at top right, rgba(196, 181, 253, 0.26), transparent 32%),
-    radial-gradient(circle at top left, rgba(147, 197, 253, 0.2), transparent 30%),
-    var(--bg);
-  color: var(--text);
+    linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12)),
+    repeating-linear-gradient(90deg, rgba(91,67,37,0.025) 0 1px, transparent 1px 4px),
+    var(--desk);
 }
 
 button,
@@ -37,31 +40,69 @@ button {
 }
 
 .app-shell {
-  width: min(100%, 1000px);
-  margin: 0 auto;
-  padding: 24px 18px 60px;
+  position: relative;
+  width: min(calc(100% - 24px), 1000px);
+  min-height: calc(100vh - 32px);
+  margin: 16px auto;
+  padding: 34px 34px 64px 72px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, transparent 0 45px, var(--margin-line) 45px 47px, transparent 47px),
+    repeating-linear-gradient(to bottom, transparent 0 31px, var(--rule) 31px 32px),
+    var(--paper);
+  border: 1px solid #e2d7bd;
+  border-radius: 8px 18px 18px 8px;
+  box-shadow: var(--shadow);
+}
+
+.app-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 14px;
+  width: 20px;
+  background:
+    radial-gradient(circle, #d5c7aa 0 5px, #f7f0dd 5.5px 8px, transparent 8.5px)
+    center top / 20px 42px repeat-y;
+  opacity: 0.96;
+  pointer-events: none;
+}
+
+.app-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(120,93,50,0.07), transparent 8%, transparent 92%, rgba(120,93,50,0.035));
+}
+
+.app-header,
+main {
+  position: relative;
+  z-index: 1;
 }
 
 .app-header {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .eyebrow {
   margin: 0 0 4px;
   color: var(--muted);
   font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   font-weight: 700;
 }
 
 h1 {
   margin: 0;
-  font-size: clamp(2rem, 8vw, 3rem);
-  letter-spacing: -0.06em;
+  font-family: "Hannotate SC", "Chalkboard SE", "Comic Sans MS", cursive;
+  font-size: clamp(2.2rem, 8vw, 3.4rem);
+  letter-spacing: 0.02em;
+  transform: rotate(-1deg);
 }
 
 .primary-button,
@@ -69,32 +110,38 @@ h1 {
 .danger-button,
 .danger-text-button {
   border: 0;
-  border-radius: 14px;
+  border-radius: 10px;
   padding: 12px 16px;
   font-weight: 700;
 }
 
 .primary-button {
+  color: #fffdf5;
   background: var(--accent);
-  color: white;
-  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.18);
+  box-shadow: 0 5px 0 var(--accent-dark);
+}
+
+.primary-button:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--accent-dark);
 }
 
 .ghost-button {
-  background: rgba(255,255,255,0.72);
-  color: var(--text);
-  border: 1px solid var(--line);
+  color: var(--ink);
+  background: rgba(255,253,245,0.82);
+  border: 1px solid #cfc3aa;
 }
 
 .danger-button {
-  background: #fee2e2;
   color: var(--danger);
+  background: #f8e7df;
+  border: 1px solid #e8c8bc;
 }
 
 .danger-text-button {
   padding: 0;
-  background: transparent;
   color: var(--danger);
+  background: transparent;
 }
 
 .view {
@@ -106,18 +153,18 @@ h1 {
 }
 
 .toolbar {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .search-box {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 13px 15px;
-  background: rgba(255,255,255,0.88);
-  border: 1px solid rgba(229,231,235,0.9);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid #d8ccb3;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(89,69,40,0.08);
 }
 
 .search-box input {
@@ -130,24 +177,47 @@ h1 {
 .song-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 18px;
 }
 
 .song-card {
-  min-height: 160px;
-  padding: 18px;
-  background: rgba(255,255,255,0.92);
-  border: 1px solid rgba(229,231,235,0.95);
-  border-radius: 20px;
-  box-shadow: var(--shadow);
+  position: relative;
+  min-height: 175px;
+  padding: 20px 20px 18px 28px;
+  background:
+    linear-gradient(90deg, transparent 0 17px, rgba(220,93,93,0.32) 17px 18px, transparent 18px),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,0.9) 0 27px, rgba(105,158,197,0.18) 27px 28px),
+    #fffef8;
+  border: 1px solid #ddd1b8;
+  border-radius: 5px 12px 12px 5px;
+  box-shadow: 0 8px 18px rgba(82,62,35,0.1);
   transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.song-card:nth-child(odd) {
+  transform: rotate(-0.35deg);
+}
+
+.song-card:nth-child(even) {
+  transform: rotate(0.35deg);
 }
 
 .song-card:hover,
 .song-card:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 34px rgba(17,24,39,0.12);
+  transform: translateY(-3px) rotate(0deg);
+  box-shadow: 0 14px 25px rgba(82,62,35,0.16);
   outline: none;
+}
+
+.song-card::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  right: 22px;
+  width: 54px;
+  height: 16px;
+  background: rgba(246, 214, 121, 0.56);
+  transform: rotate(2deg);
 }
 
 .song-card-head {
@@ -158,7 +228,8 @@ h1 {
 
 .song-title {
   margin: 0;
-  font-size: 1.15rem;
+  font-family: "Hannotate SC", "Chalkboard SE", cursive;
+  font-size: 1.25rem;
 }
 
 .song-meta,
@@ -178,8 +249,8 @@ h1 {
 }
 
 .song-preview {
-  margin: 22px 0 0;
-  line-height: 1.6;
+  margin: 24px 0 0;
+  line-height: 1.75;
   white-space: pre-wrap;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -188,19 +259,22 @@ h1 {
 }
 
 .empty-state {
-  padding: 60px 20px;
+  padding: 64px 20px;
   text-align: center;
-  background: rgba(255,255,255,0.82);
-  border: 1px dashed #cbd5e1;
-  border-radius: 24px;
+  background: rgba(255,255,255,0.5);
+  border: 2px dashed #cdbf9f;
+  border-radius: 12px;
 }
 
-.empty-state p {
+.empty-state p,
+.save-status,
+.field small {
   color: var(--muted);
 }
 
 .empty-icon {
   font-size: 3rem;
+  transform: rotate(-8deg);
 }
 
 .hidden {
@@ -211,66 +285,72 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .save-status {
-  color: var(--muted);
   font-size: 0.85rem;
 }
 
 .editor-card {
-  background: rgba(255,255,255,0.94);
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  box-shadow: var(--shadow);
-  padding: 22px;
+  position: relative;
+  padding: 28px 28px 28px 38px;
+  background:
+    linear-gradient(90deg, transparent 0 24px, rgba(220,93,93,0.32) 24px 26px, transparent 26px),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,0.68) 0 31px, rgba(105,158,197,0.2) 31px 32px),
+    rgba(255,254,248,0.93);
+  border: 1px solid #d9ccb0;
+  border-radius: 6px 14px 14px 6px;
+  box-shadow: 0 10px 24px rgba(82,62,35,0.12);
 }
 
 .field {
   display: grid;
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 19px;
 }
 
 .field > span {
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: #374151;
+  font-family: "Hannotate SC", "Chalkboard SE", cursive;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #4a4a43;
 }
 
 .field input,
 .field textarea,
 .field select {
   width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #fbfdff;
-  padding: 13px 14px;
+  padding: 11px 12px;
+  color: var(--ink);
+  border: 0;
+  border-bottom: 1px solid rgba(86,113,132,0.42);
+  border-radius: 4px;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background: rgba(255,255,255,0.34);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 
 .field input:focus,
 .field textarea:focus,
 .field select:focus {
-  border-color: #94a3b8;
-  box-shadow: 0 0 0 4px rgba(148,163,184,0.15);
+  background: rgba(255,255,255,0.72);
+  box-shadow: 0 0 0 3px rgba(49,95,120,0.12);
 }
 
 .field textarea {
   resize: vertical;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .field small {
-  color: var(--muted);
   line-height: 1.5;
 }
 
 .title-field input {
-  font-size: 1.45rem;
-  font-weight: 800;
+  font-family: "Hannotate SC", "Chalkboard SE", cursive;
+  font-size: 1.55rem;
+  font-weight: 700;
 }
 
 .meta-grid {
@@ -282,8 +362,9 @@ h1 {
 .audio-preview {
   margin: -4px 0 20px;
   padding: 14px;
-  background: #f8fafc;
-  border-radius: 14px;
+  background: rgba(255,255,255,0.56);
+  border: 1px dashed #c8b99b;
+  border-radius: 8px;
 }
 
 .audio-preview audio {
@@ -295,12 +376,19 @@ h1 {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  padding-top: 6px;
+  padding-top: 8px;
 }
 
 @media (max-width: 680px) {
   .app-shell {
-    padding: 18px 14px 40px;
+    width: min(calc(100% - 12px), 1000px);
+    margin: 6px auto;
+    padding: 24px 14px 44px 46px;
+    border-radius: 5px 12px 12px 5px;
+  }
+
+  .app-shell::before {
+    left: 8px;
   }
 
   .app-header {
@@ -308,7 +396,7 @@ h1 {
   }
 
   .app-header .primary-button {
-    padding: 11px 13px;
+    padding: 10px 12px;
   }
 
   .song-grid {
@@ -324,8 +412,7 @@ h1 {
   }
 
   .editor-card {
-    padding: 17px;
-    border-radius: 20px;
+    padding: 22px 14px 22px 30px;
   }
 
   .editor-actions {
