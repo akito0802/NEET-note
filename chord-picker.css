@@ -1,6 +1,6 @@
 .chord-picker {
   display: grid;
-  grid-template-columns: minmax(90px, 0.8fr) minmax(120px, 1fr) auto auto;
+  grid-template-columns: minmax(88px, 0.75fr) minmax(125px, 1.15fr) minmax(105px, 0.85fr) auto auto;
   gap: 8px;
   margin: 4px 0 10px;
 }
@@ -60,13 +60,23 @@
   tab-size: 2;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 820px) {
   .chord-picker {
-    grid-template-columns: 1fr 1.15fr;
+    grid-template-columns: 1fr 1.15fr 1fr;
   }
 
   .chord-picker button {
     width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .chord-picker {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #chordBassSelect {
+    grid-column: 1 / -1;
   }
 
   .lyrics-chord-editor {
