@@ -1,0 +1,62 @@
+.chord-picker {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.8fr) minmax(120px, 1fr) auto auto;
+  gap: 8px;
+  margin: 4px 0 10px;
+}
+
+.chord-picker select,
+.chord-picker button {
+  min-height: 42px;
+  border-radius: 10px;
+  font: inherit;
+}
+
+.chord-picker select {
+  width: 100%;
+  padding: 9px 11px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  outline: none;
+}
+
+.chord-picker select:focus {
+  border-color: rgba(0, 122, 255, 0.5);
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+}
+
+.chord-add-button,
+.chord-line-button {
+  padding: 9px 13px;
+  border: 0;
+  font-weight: 700;
+}
+
+.chord-add-button {
+  color: #fff;
+  background: var(--accent);
+}
+
+.chord-line-button {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+}
+
+.chord-picker-note {
+  display: block;
+  margin: -2px 0 10px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 680px) {
+  .chord-picker {
+    grid-template-columns: 1fr 1.15fr;
+  }
+
+  .chord-picker button {
+    width: 100%;
+  }
+}
