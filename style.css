@@ -1,0 +1,338 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light;
+  --bg: #f4f7fb;
+  --panel: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --accent: #111827;
+  --danger: #b91c1c;
+  --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top right, rgba(196, 181, 253, 0.26), transparent 32%),
+    radial-gradient(circle at top left, rgba(147, 197, 253, 0.2), transparent 30%),
+    var(--bg);
+  color: var(--text);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  width: min(100%, 1000px);
+  margin: 0 auto;
+  padding: 24px 18px 60px;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 3rem);
+  letter-spacing: -0.06em;
+}
+
+.primary-button,
+.ghost-button,
+.danger-button,
+.danger-text-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-weight: 700;
+}
+
+.primary-button {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.18);
+}
+
+.ghost-button {
+  background: rgba(255,255,255,0.72);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.danger-button {
+  background: #fee2e2;
+  color: var(--danger);
+}
+
+.danger-text-button {
+  padding: 0;
+  background: transparent;
+  color: var(--danger);
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+.toolbar {
+  margin-bottom: 18px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 15px;
+  background: rgba(255,255,255,0.88);
+  border: 1px solid rgba(229,231,235,0.9);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.search-box input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
+.song-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.song-card {
+  min-height: 160px;
+  padding: 18px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(229,231,235,0.95);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.song-card:hover,
+.song-card:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(17,24,39,0.12);
+  outline: none;
+}
+
+.song-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.song-title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.song-meta,
+.song-date,
+.song-preview {
+  color: var(--muted);
+}
+
+.song-meta {
+  margin: 6px 0 0;
+  font-size: 0.86rem;
+}
+
+.song-date {
+  white-space: nowrap;
+  font-size: 0.72rem;
+}
+
+.song-preview {
+  margin: 22px 0 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  background: rgba(255,255,255,0.82);
+  border: 1px dashed #cbd5e1;
+  border-radius: 24px;
+}
+
+.empty-state p {
+  color: var(--muted);
+}
+
+.empty-icon {
+  font-size: 3rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.editor-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.save-status {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.editor-card {
+  background: rgba(255,255,255,0.94);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.field > span {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #374151;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fbfdff;
+  padding: 13px 14px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: #94a3b8;
+  box-shadow: 0 0 0 4px rgba(148,163,184,0.15);
+}
+
+.field textarea {
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.field small {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.title-field input {
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 1fr;
+  gap: 12px;
+}
+
+.audio-preview {
+  margin: -4px 0 20px;
+  padding: 14px;
+  background: #f8fafc;
+  border-radius: 14px;
+}
+
+.audio-preview audio {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.editor-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+@media (max-width: 680px) {
+  .app-shell {
+    padding: 18px 14px 40px;
+  }
+
+  .app-header {
+    align-items: flex-end;
+  }
+
+  .app-header .primary-button {
+    padding: 11px 13px;
+  }
+
+  .song-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .meta-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .meta-grid .field:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .editor-card {
+    padding: 17px;
+    border-radius: 20px;
+  }
+
+  .editor-actions {
+    flex-direction: column-reverse;
+  }
+
+  .editor-actions button {
+    width: 100%;
+  }
+}
