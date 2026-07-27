@@ -20,7 +20,9 @@ const fields = {
   timeSignature: document.getElementById("timeSignatureInput"),
   structure: document.getElementById("structureInput"),
   chords: document.getElementById("chordsInput"),
-  lyrics: document.getElementById("lyricsInput")
+  mood: document.getElementById("moodInput"),
+  theme: document.getElementById("themeInput"),
+  lyricIdea: document.getElementById("lyricIdeaInput")
 };
 
 const audioInput = document.getElementById("audioInput");
@@ -47,7 +49,7 @@ function makeId() { return crypto.randomUUID ? crypto.randomUUID() : String(Date
 function newSong() {
   const song = {
     id: makeId(), title: "", lyricist: "", composer: "", arranger: "", artist: "", productionDate: "",
-    key: "", bpm: "", timeSignature: "", structure: "", chords: "", lyrics: "", audioData: "",
+    key: "", bpm: "", timeSignature: "", structure: "", chords: "", mood: "", theme: "", lyricIdea: "", audioData: "",
     createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()
   };
   songs.unshift(song);
@@ -70,7 +72,9 @@ function openEditor(id) {
   fields.timeSignature.value = song.timeSignature || "";
   fields.structure.value = song.structure || "";
   fields.chords.value = song.chords || "";
-  fields.lyrics.value = song.lyrics || "";
+  fields.mood.value = song.mood || "";
+  fields.theme.value = song.theme || "";
+  fields.lyricIdea.value = song.lyricIdea || song.lyrics || "";
   currentAudioData = song.audioData || "";
   renderAudioPreview();
   saveStatus.textContent = "保存済み";
@@ -89,19 +93,11 @@ function showList() {
 
 function collectFormData() {
   return {
-    title: fields.title.value.trim(),
-    lyricist: fields.lyricist.value.trim(),
-    composer: fields.composer.value.trim(),
-    arranger: fields.arranger.value.trim(),
-    artist: fields.artist.value.trim(),
-    productionDate: fields.productionDate.value,
-    key: fields.key.value,
-    bpm: fields.bpm.value,
-    timeSignature: fields.timeSignature.value,
-    structure: fields.structure.value,
-    chords: fields.chords.value,
-    lyrics: fields.lyrics.value,
-    audioData: currentAudioData
+    title: fields.title.value.trim(), lyricist: fields.lyricist.value.trim(), composer: fields.composer.value.trim(),
+    arranger: fields.arranger.value.trim(), artist: fields.artist.value.trim(), productionDate: fields.productionDate.value,
+    key: fields.key.value, bpm: fields.bpm.value, timeSignature: fields.timeSignature.value,
+    structure: fields.structure.value, chords: fields.chords.value, mood: fields.mood.value,
+    theme: fields.theme.value.trim(), lyricIdea: fields.lyricIdea.value, audioData: currentAudioData
   };
 }
 
@@ -126,7 +122,8 @@ function renderSongList() {
   const query = searchInput.value.trim().toLowerCase();
   const filtered = songs.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).filter(song => {
     const haystack = [song.title, song.lyricist, song.composer, song.arranger, song.artist, song.productionDate,
-      song.key, song.bpm, song.timeSignature, song.structure, song.chords, song.lyrics].join(" ").toLowerCase();
+      song.key, song.bpm, song.timeSignature, song.structure, song.chords, song.mood, song.theme, song.lyricIdea, song.lyrics]
+      .join(" ").toLowerCase();
     return haystack.includes(query);
   });
 
@@ -145,10 +142,10 @@ function renderSongList() {
     const date = node.querySelector(".song-date");
     const preview = node.querySelector(".song-preview");
     title.textContent = song.title || "無題の曲";
-    const metaItems = [song.artist || "", song.key ? `Key ${song.key}` : "", song.bpm ? `${song.bpm} BPM` : "", song.timeSignature || ""].filter(Boolean);
+    const metaItems = [song.artist || "", song.mood || "", song.key ? `Key ${song.key}` : "", song.bpm ? `${song.bpm} BPM` : ""].filter(Boolean);
     meta.textContent = metaItems.length ? metaItems.join(" · ") : "作品情報未設定";
     date.textContent = new Intl.DateTimeFormat("ja-JP", { month: "numeric", day: "numeric" }).format(new Date(song.updatedAt));
-    preview.textContent = song.lyrics?.trim() || song.chords?.trim() || song.structure?.trim() || "まだ内容がありません";
+    preview.textContent = song.lyricIdea?.trim() || song.theme?.trim() || song.chords?.trim() || song.structure?.trim() || "まだ内容がありません";
     card.addEventListener("click", () => openEditor(song.id));
     card.addEventListener("keydown", event => {
       if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openEditor(song.id); }
@@ -188,7 +185,7 @@ document.getElementById("emptyNewSongBtn").addEventListener("click", newSong);
 document.getElementById("backBtn").addEventListener("click", showList);
 document.getElementById("doneBtn").addEventListener("click", showList);
 document.getElementById("deleteBtn").addEventListener("click", deleteCurrentSong);
-Object.values(fields).forEach(field => { if (field.id !== "songId") { field.addEventListener("input", scheduleSave); field.addEventListener("change", scheduleSave); } });
+Object.values(fields).forEach(field => { if (field && field.id !== "songId") { field.addEventListener("input", scheduleSave); field.addEventListener("change", scheduleSave); } });
 audioInput.addEventListener("change", event => handleAudioFile(event.target.files[0]));
 document.getElementById("removeAudioBtn").addEventListener("click", () => { currentAudioData = ""; audioInput.value = ""; renderAudioPreview(); scheduleSave(); });
 searchInput.addEventListener("input", renderSongList);
