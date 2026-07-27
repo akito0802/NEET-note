@@ -1,43 +1,46 @@
-const OPENAI_KEY_STORAGE = 'neet-note-openai-api-key';
+const GEMINI_KEY_STORAGE = 'neet-note-gemini-api-key';
+const OLD_OPENAI_KEY_STORAGE = 'neet-note-openai-api-key';
 
 const generateAdviceBtn = document.getElementById('generateAdviceBtn');
 const adviceEmpty = document.getElementById('adviceEmpty');
 const adviceResults = document.getElementById('adviceResults');
 const aiAdviceOutput = document.getElementById('aiAdviceOutput');
-const openAiApiKeyInput = document.getElementById('openAiApiKeyInput');
+const geminiApiKeyInput = document.getElementById('geminiApiKeyInput');
 const saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
 const clearApiKeyBtn = document.getElementById('clearApiKeyBtn');
 const apiKeyStatus = document.getElementById('apiKeyStatus');
 
 function getStoredApiKey() {
-  return localStorage.getItem(OPENAI_KEY_STORAGE) || '';
+  return localStorage.getItem(GEMINI_KEY_STORAGE) || '';
 }
 
 function maskKey(key) {
   if (!key) return '';
   if (key.length < 12) return '保存済み';
-  return `${key.slice(0, 7)}…${key.slice(-4)}`;
+  return `${key.slice(0, 6)}…${key.slice(-4)}`;
 }
 
 function refreshApiKeyState() {
   const key = getStoredApiKey();
-  if (openAiApiKeyInput) openAiApiKeyInput.value = key;
+  if (geminiApiKeyInput) geminiApiKeyInput.value = key;
   if (apiKeyStatus) apiKeyStatus.textContent = key ? `${maskKey(key)} を使用中` : '未設定';
 }
 
 function saveApiKey() {
-  const key = openAiApiKeyInput?.value.trim() || '';
+  const key = geminiApiKeyInput?.value.trim() || '';
   if (!key) {
-    alert('APIキーを入力してね。');
+    alert('GeminiのAPIキーを入力してね。');
     return;
   }
-  localStorage.setItem(OPENAI_KEY_STORAGE, key);
+  localStorage.setItem(GEMINI_KEY_STORAGE, key);
+  localStorage.removeItem(OLD_OPENAI_KEY_STORAGE);
   refreshApiKeyState();
 }
 
 function clearApiKey() {
-  localStorage.removeItem(OPENAI_KEY_STORAGE);
-  if (openAiApiKeyInput) openAiApiKeyInput.value = '';
+  localStorage.removeItem(GEMINI_KEY_STORAGE);
+  localStorage.removeItem(OLD_OPENAI_KEY_STORAGE);
+  if (geminiApiKeyInput) geminiApiKeyInput.value = '';
   refreshApiKeyState();
 }
 
@@ -76,26 +79,17 @@ function buildPrompt(context) {
     `既存アーティストの作風をそのまま模倣せず、一般的な音楽的特徴として提案してください。コードはキーとの関係も簡潔に説明してください。`;
 }
 
-function extractResponseText(data) {
-  if (typeof data.output_text === 'string' && data.output_text.trim()) {
-    return data.output_text.trim();
-  }
-
-  const texts = [];
-  for (const item of data.output || []) {
-    for (const content of item.content || []) {
-      if (content.type === 'output_text' && content.text) texts.push(content.text);
-    }
-  }
-  return texts.join('\n').trim();
+function extractGeminiText(data) {
+  const parts = data?.candidates?.[0]?.content?.parts || [];
+  return parts.map(part => part.text || '').join('\n').trim();
 }
 
 function showAdviceText(text) {
   aiAdviceOutput.innerHTML = '';
-  const pre = document.createElement('div');
-  pre.className = 'ai-response-text';
-  pre.textContent = text;
-  aiAdviceOutput.appendChild(pre);
+  const response = document.createElement('div');
+  response.className = 'ai-response-text';
+  response.textContent = text;
+  aiAdviceOutput.appendChild(response);
   adviceEmpty.classList.add('hidden');
   adviceResults.classList.remove('hidden');
 }
@@ -109,28 +103,34 @@ function showError(message) {
 async function generateAiAdvice() {
   const apiKey = getStoredApiKey();
   if (!apiKey) {
-    showError('先に「OpenAI API設定」を開いて、APIキーを保存してね。');
+    showError('先に「Gemini API設定」を開いて、APIキーを保存してね。');
     return;
   }
 
   const context = collectSongContext();
   const originalLabel = generateAdviceBtn.textContent;
   generateAdviceBtn.disabled = true;
-  generateAdviceBtn.textContent = 'AIが考え中…';
+  generateAdviceBtn.textContent = 'Geminiが考え中…';
   adviceEmpty.classList.remove('hidden');
   adviceResults.classList.add('hidden');
   adviceEmpty.textContent = '曲の情報を読み取って、アドバイスを作ってるよ…';
 
   try {
-    const response = await fetch('https://api.openai.com/v1/responses', {
+    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
+        'x-goog-api-key': apiKey
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini',
-        input: buildPrompt(context)
+        contents: [{
+          role: 'user',
+          parts: [{ text: buildPrompt(context) }]
+        }],
+        generationConfig: {
+          temperature: 0.85,
+          maxOutputTokens: 1800
+        }
       })
     });
 
@@ -140,12 +140,15 @@ async function generateAiAdvice() {
       throw new Error(apiMessage);
     }
 
-    const text = extractResponseText(data);
-    if (!text) throw new Error('AIの回答を読み取れませんでした。');
+    const text = extractGeminiText(data);
+    if (!text) {
+      const reason = data?.candidates?.[0]?.finishReason;
+      throw new Error(reason ? `回答を生成できませんでした（${reason}）` : 'AIの回答を読み取れませんでした。');
+    }
     showAdviceText(text);
   } catch (error) {
     console.error(error);
-    showError(`AIへの接続に失敗しました：${error.message}`);
+    showError(`Geminiへの接続に失敗しました：${error.message}`);
   } finally {
     generateAdviceBtn.disabled = false;
     generateAdviceBtn.textContent = originalLabel;
