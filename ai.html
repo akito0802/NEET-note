@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#d9c7a8" />
+  <title>AI作曲アシスタント | NEET NOTE</title>
+  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="background.css?v=1" />
+  <link rel="stylesheet" href="ai-page.css?v=1" />
+</head>
+<body>
+  <div class="app-shell ai-shell">
+    <header class="app-header ai-header">
+      <div>
+        <p class="eyebrow">GEMINI SONGWRITING ASSISTANT</p>
+        <h1>AI作曲アシスタント</h1>
+      </div>
+      <a id="backToEditorLink" class="ghost-button link-button" href="index.html">← 曲編集へ戻る</a>
+    </header>
+
+    <main class="ai-layout">
+      <section class="ai-panel song-context-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">CURRENT SONG</p>
+            <h2 id="contextTitle">無題の曲</h2>
+          </div>
+          <button id="reloadSongBtn" class="ghost-button" type="button">再読込</button>
+        </div>
+
+        <div class="context-meta" id="contextMeta"></div>
+
+        <label class="field"><span>曲の構成</span><textarea id="contextStructure" rows="5"></textarea></label>
+        <label class="field"><span>コード進行</span><textarea id="contextChords" rows="10" wrap="off"></textarea></label>
+        <div class="advice-input-grid">
+          <label class="field"><span>曲の雰囲気</span><select id="moodInput"><option value="">選択してください</option><option>明るい</option><option>爽やか</option><option>切ない</option><option>寂しい</option><option>優しい</option><option>壮大</option><option>不穏</option><option>激しい</option><option>おしゃれ</option><option>幻想的</option></select></label>
+          <label class="field"><span>テーマ・情景</span><input id="themeInput" type="text" placeholder="例：夏の帰り道、別れ、夜の街" /></label>
+        </div>
+        <label class="field"><span>歌詞の断片・入れたい言葉</span><textarea id="lyricIdeaInput" rows="6" placeholder="例：君のいない駅で、発車ベルだけが鳴っていた"></textarea></label>
+
+        <details class="ai-settings">
+          <summary>Gemini API設定</summary>
+          <div class="ai-settings-body">
+            <label class="field"><span>APIキー</span><input id="geminiApiKeyInput" type="password" placeholder="Google AI Studioで取得したキー" autocomplete="off" /></label>
+            <div class="ai-setting-actions">
+              <button id="saveApiKeyBtn" class="ghost-button" type="button">この端末に保存</button>
+              <button id="clearApiKeyBtn" class="danger-text-button" type="button">削除</button>
+              <span id="apiKeyStatus" class="save-status">未設定</span>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section class="ai-panel chat-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">CHAT</p><h2>Geminiに相談</h2></div>
+          <button id="clearChatBtn" class="ghost-button" type="button">履歴を消す</button>
+        </div>
+
+        <div id="chatMessages" class="chat-messages">
+          <div class="chat-message assistant-message">この曲について何でも聞いてね。「サビを考えて」「もっと切なく」「次のコード候補」みたいに相談できるよ。</div>
+        </div>
+
+        <div class="quick-prompts">
+          <button type="button" data-prompt="このコード進行の続きを3案考えて">次のコード</button>
+          <button type="button" data-prompt="印象に残るサビのメロディ案を考えて">サビ案</button>
+          <button type="button" data-prompt="この曲に合う歌詞のサビ案を作って">歌詞案</button>
+          <button type="button" data-prompt="曲全体をレビューして改善点を教えて">全体レビュー</button>
+        </div>
+
+        <div class="chat-composer">
+          <textarea id="chatInput" rows="4" placeholder="例：Bメロからサビへの盛り上げ方を教えて"></textarea>
+          <button id="sendChatBtn" class="primary-button" type="button">送信</button>
+        </div>
+
+        <div class="ai-actions">
+          <button id="copyLastBtn" class="ghost-button" type="button">最後の回答をコピー</button>
+          <button id="applyChordBtn" class="ghost-button" type="button">回答をコード進行へ追加</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="ai-page.js?v=1"></script>
+</body>
+</html>
