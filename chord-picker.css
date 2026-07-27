@@ -51,6 +51,15 @@
   font-size: 0.78rem;
 }
 
+.lyrics-chord-editor {
+  font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Noto Sans Mono CJK JP", monospace !important;
+  font-size: 0.96rem;
+  line-height: 1.75 !important;
+  white-space: pre;
+  overflow-x: auto;
+  tab-size: 2;
+}
+
 @media (max-width: 680px) {
   .chord-picker {
     grid-template-columns: 1fr 1.15fr;
@@ -58,5 +67,9 @@
 
   .chord-picker button {
     width: 100%;
+  }
+
+  .lyrics-chord-editor {
+    font-size: 0.9rem;
   }
 }
