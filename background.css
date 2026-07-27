@@ -1,0 +1,6 @@
+body {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12)),
+    repeating-linear-gradient(90deg, rgba(91, 67, 37, 0.025) 0 1px, transparent 1px 4px),
+    #d9c7a8;
+}
