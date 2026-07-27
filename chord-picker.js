@@ -2,7 +2,7 @@ const chordRootSelect = document.getElementById('chordRootSelect');
 const chordTypeSelect = document.getElementById('chordTypeSelect');
 const addChordBtn = document.getElementById('addChordBtn');
 const addChordLineBtn = document.getElementById('addChordLineBtn');
-const lyricsTextArea = document.getElementById('lyricsInput');
+const chordMemoTextArea = document.getElementById('chordsInput');
 
 function displayWidth(text) {
   return Array.from(text).reduce((width, char) => {
@@ -27,17 +27,17 @@ function looksLikeChordLine(line) {
   return line.trim() === '' || /^[\sA-G#b0-9majinsudg()+/♭♯-]+$/.test(line);
 }
 
-function placeChordAboveLyrics(chord) {
-  if (!lyricsTextArea || !chord) return;
+function placeChordAboveMemoText(chord) {
+  if (!chordMemoTextArea || !chord) return;
 
-  const value = lyricsTextArea.value;
-  const cursor = lyricsTextArea.selectionStart ?? value.length;
+  const value = chordMemoTextArea.value;
+  const cursor = chordMemoTextArea.selectionStart ?? value.length;
   const lineStart = value.lastIndexOf('\n', Math.max(0, cursor - 1)) + 1;
   const lineEndIndex = value.indexOf('\n', cursor);
   const lineEnd = lineEndIndex === -1 ? value.length : lineEndIndex;
-  const lyricLine = value.slice(lineStart, lineEnd);
-  const cursorInLine = Math.max(0, Math.min(cursor - lineStart, lyricLine.length));
-  const targetColumn = displayWidth(lyricLine.slice(0, cursorInLine));
+  const textLine = value.slice(lineStart, lineEnd);
+  const cursorInLine = Math.max(0, Math.min(cursor - lineStart, textLine.length));
+  const targetColumn = displayWidth(textLine.slice(0, cursorInLine));
 
   const beforeCurrentLine = value.slice(0, lineStart);
   const previousLineEnd = Math.max(0, lineStart - 1);
@@ -68,25 +68,25 @@ function placeChordAboveLyrics(chord) {
     newCursor = cursor + chordLine.length + 1;
   }
 
-  lyricsTextArea.value = newValue;
-  lyricsTextArea.dispatchEvent(new Event('input', { bubbles: true }));
-  lyricsTextArea.focus();
-  lyricsTextArea.setSelectionRange(newCursor, newCursor);
+  chordMemoTextArea.value = newValue;
+  chordMemoTextArea.dispatchEvent(new Event('input', { bubbles: true }));
+  chordMemoTextArea.focus();
+  chordMemoTextArea.setSelectionRange(newCursor, newCursor);
 }
 
 function insertLineBreakAtCursor() {
-  if (!lyricsTextArea) return;
-  const start = lyricsTextArea.selectionStart ?? lyricsTextArea.value.length;
-  const end = lyricsTextArea.selectionEnd ?? start;
-  lyricsTextArea.setRangeText('\n', start, end, 'end');
-  lyricsTextArea.dispatchEvent(new Event('input', { bubbles: true }));
-  lyricsTextArea.focus();
+  if (!chordMemoTextArea) return;
+  const start = chordMemoTextArea.selectionStart ?? chordMemoTextArea.value.length;
+  const end = chordMemoTextArea.selectionEnd ?? start;
+  chordMemoTextArea.setRangeText('\n', start, end, 'end');
+  chordMemoTextArea.dispatchEvent(new Event('input', { bubbles: true }));
+  chordMemoTextArea.focus();
 }
 
 if (addChordBtn) {
   addChordBtn.addEventListener('click', () => {
     if (!chordRootSelect.value) return;
-    placeChordAboveLyrics(chordRootSelect.value + chordTypeSelect.value);
+    placeChordAboveMemoText(chordRootSelect.value + chordTypeSelect.value);
   });
 }
 
