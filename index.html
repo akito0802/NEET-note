@@ -7,7 +7,7 @@
   <title>NEET NOTE</title>
   <link rel="stylesheet" href="style.css?v=3" />
   <link rel="stylesheet" href="background.css?v=1" />
-  <link rel="stylesheet" href="chord-picker.css?v=3" />
+  <link rel="stylesheet" href="chord-picker.css?v=4" />
 </head>
 <body>
   <div class="app-shell">
@@ -84,14 +84,9 @@
             <textarea id="structureInput" rows="5" placeholder="例：イントロ → Aメロ → Bメロ → サビ"></textarea>
           </label>
 
-          <label class="field">
-            <span>コード進行メモ</span>
-            <textarea id="chordsInput" rows="6" placeholder="例：C  G  Am  F"></textarea>
-          </label>
-
           <div class="field chord-section">
-            <span>コード付き歌詞</span>
-            <div class="chord-picker" aria-label="歌詞上のコード選択">
+            <span>コード進行メモ</span>
+            <div class="chord-picker" aria-label="コード進行メモへのコード選択">
               <select id="chordRootSelect" aria-label="ルート音">
                 <option value="">ルート音</option>
                 <option>C</option><option>C#</option><option>Db</option><option>D</option>
@@ -111,11 +106,16 @@
               <button id="addChordBtn" class="chord-add-button" type="button">＋ 上に追加</button>
               <button id="addChordLineBtn" class="chord-line-button" type="button">↵ 改行</button>
             </div>
-            <small class="chord-picker-note">歌詞の文字の間にカーソルを置いて「上に追加」を押すと、その位置の上にコードが入ります。</small>
-            <textarea id="lyricsInput" class="lyrics-chord-editor" rows="16" wrap="off" placeholder="例：
+            <small class="chord-picker-note">コード進行メモ内の文字の間にカーソルを置いて「上に追加」を押すと、その位置の上にコードが入ります。</small>
+            <textarea id="chordsInput" class="lyrics-chord-editor" rows="12" wrap="off" placeholder="例：
       C        G
 いつか君と また会えるかな"></textarea>
           </div>
+
+          <label class="field">
+            <span>歌詞メモ</span>
+            <textarea id="lyricsInput" rows="14" placeholder="歌詞やフレーズを書いてみよう"></textarea>
+          </label>
 
           <label class="field">
             <span>音源・ボイスメモ</span>
@@ -149,6 +149,6 @@
 
   <script src="app.js?v=3"></script>
   <script src="structure-sync.js?v=1"></script>
-  <script src="chord-picker.js?v=4"></script>
+  <script src="chord-picker.js?v=5"></script>
 </body>
 </html>
