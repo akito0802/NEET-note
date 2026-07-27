@@ -10,6 +10,11 @@ const saveStatus = document.getElementById("saveStatus");
 const fields = {
   id: document.getElementById("songId"),
   title: document.getElementById("titleInput"),
+  lyricist: document.getElementById("lyricistInput"),
+  composer: document.getElementById("composerInput"),
+  arranger: document.getElementById("arrangerInput"),
+  artist: document.getElementById("artistInput"),
+  productionDate: document.getElementById("productionDateInput"),
   key: document.getElementById("keyInput"),
   bpm: document.getElementById("bpmInput"),
   timeSignature: document.getElementById("timeSignatureInput"),
@@ -36,29 +41,15 @@ function loadSongs() {
   }
 }
 
-function persistSongs() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(songs));
-}
-
-function makeId() {
-  return crypto.randomUUID ? crypto.randomUUID() : String(Date.now());
-}
+function persistSongs() { localStorage.setItem(STORAGE_KEY, JSON.stringify(songs)); }
+function makeId() { return crypto.randomUUID ? crypto.randomUUID() : String(Date.now()); }
 
 function newSong() {
   const song = {
-    id: makeId(),
-    title: "",
-    key: "",
-    bpm: "",
-    timeSignature: "",
-    structure: "",
-    chords: "",
-    lyrics: "",
-    audioData: "",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    id: makeId(), title: "", lyricist: "", composer: "", arranger: "", artist: "", productionDate: "",
+    key: "", bpm: "", timeSignature: "", structure: "", chords: "", lyrics: "", audioData: "",
+    createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()
   };
-
   songs.unshift(song);
   persistSongs();
   openEditor(song.id);
@@ -67,19 +58,21 @@ function newSong() {
 function openEditor(id) {
   const song = songs.find(item => item.id === id);
   if (!song) return;
-
   fields.id.value = song.id;
   fields.title.value = song.title || "";
+  fields.lyricist.value = song.lyricist || "";
+  fields.composer.value = song.composer || "";
+  fields.arranger.value = song.arranger || "";
+  fields.artist.value = song.artist || "";
+  fields.productionDate.value = song.productionDate || "";
   fields.key.value = song.key || "";
   fields.bpm.value = song.bpm || "";
   fields.timeSignature.value = song.timeSignature || "";
   fields.structure.value = song.structure || "";
   fields.chords.value = song.chords || "";
   fields.lyrics.value = song.lyrics || "";
-
   currentAudioData = song.audioData || "";
   renderAudioPreview();
-
   saveStatus.textContent = "保存済み";
   listView.classList.remove("active");
   editorView.classList.add("active");
@@ -97,6 +90,11 @@ function showList() {
 function collectFormData() {
   return {
     title: fields.title.value.trim(),
+    lyricist: fields.lyricist.value.trim(),
+    composer: fields.composer.value.trim(),
+    arranger: fields.arranger.value.trim(),
+    artist: fields.artist.value.trim(),
+    productionDate: fields.productionDate.value,
     key: fields.key.value,
     bpm: fields.bpm.value,
     timeSignature: fields.timeSignature.value,
@@ -117,41 +115,23 @@ function autoSaveNow() {
   clearTimeout(saveTimer);
   const id = fields.id.value;
   if (!id) return;
-
   const index = songs.findIndex(item => item.id === id);
   if (index === -1) return;
-
-  songs[index] = {
-    ...songs[index],
-    ...collectFormData(),
-    updatedAt: new Date().toISOString()
-  };
-
+  songs[index] = { ...songs[index], ...collectFormData(), updatedAt: new Date().toISOString() };
   persistSongs();
   saveStatus.textContent = "保存済み";
 }
 
 function renderSongList() {
   const query = searchInput.value.trim().toLowerCase();
-  const filtered = songs
-    .slice()
-    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
-    .filter(song => {
-      const haystack = [
-        song.title,
-        song.key,
-        song.bpm,
-        song.timeSignature,
-        song.structure,
-        song.chords,
-        song.lyrics
-      ].join(" ").toLowerCase();
-      return haystack.includes(query);
-    });
+  const filtered = songs.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).filter(song => {
+    const haystack = [song.title, song.lyricist, song.composer, song.arranger, song.artist, song.productionDate,
+      song.key, song.bpm, song.timeSignature, song.structure, song.chords, song.lyrics].join(" ").toLowerCase();
+    return haystack.includes(query);
+  });
 
   songList.innerHTML = "";
   emptyState.classList.toggle("hidden", songs.length !== 0 || query !== "");
-
   if (songs.length > 0 && filtered.length === 0) {
     songList.innerHTML = '<div class="empty-state"><h2>見つかりませんでした</h2><p>別の言葉で検索してみてね。</p></div>';
     return;
@@ -164,35 +144,15 @@ function renderSongList() {
     const meta = node.querySelector(".song-meta");
     const date = node.querySelector(".song-date");
     const preview = node.querySelector(".song-preview");
-
     title.textContent = song.title || "無題の曲";
-
-    const metaItems = [
-      song.key ? `Key ${song.key}` : "",
-      song.bpm ? `${song.bpm} BPM` : "",
-      song.timeSignature || ""
-    ].filter(Boolean);
-    meta.textContent = metaItems.length ? metaItems.join(" · ") : "キー・BPM未設定";
-
-    date.textContent = new Intl.DateTimeFormat("ja-JP", {
-      month: "numeric",
-      day: "numeric"
-    }).format(new Date(song.updatedAt));
-
-    preview.textContent =
-      song.lyrics.trim() ||
-      song.chords.trim() ||
-      song.structure.trim() ||
-      "まだ内容がありません";
-
+    const metaItems = [song.artist || "", song.key ? `Key ${song.key}` : "", song.bpm ? `${song.bpm} BPM` : "", song.timeSignature || ""].filter(Boolean);
+    meta.textContent = metaItems.length ? metaItems.join(" · ") : "作品情報未設定";
+    date.textContent = new Intl.DateTimeFormat("ja-JP", { month: "numeric", day: "numeric" }).format(new Date(song.updatedAt));
+    preview.textContent = song.lyrics?.trim() || song.chords?.trim() || song.structure?.trim() || "まだ内容がありません";
     card.addEventListener("click", () => openEditor(song.id));
     card.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openEditor(song.id);
-      }
+      if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openEditor(song.id); }
     });
-
     songList.appendChild(node);
   });
 }
@@ -200,11 +160,9 @@ function renderSongList() {
 function deleteCurrentSong() {
   const id = fields.id.value;
   if (!id) return;
-
   const song = songs.find(item => item.id === id);
   const title = song?.title || "無題の曲";
   if (!confirm(`「${title}」を削除しますか？`)) return;
-
   songs = songs.filter(item => item.id !== id);
   persistSongs();
   fields.id.value = "";
@@ -212,32 +170,16 @@ function deleteCurrentSong() {
 }
 
 function renderAudioPreview() {
-  if (currentAudioData) {
-    audioPreview.src = currentAudioData;
-    audioPreviewWrap.classList.remove("hidden");
-  } else {
-    audioPreview.removeAttribute("src");
-    audioPreview.load();
-    audioPreviewWrap.classList.add("hidden");
-  }
+  if (currentAudioData) { audioPreview.src = currentAudioData; audioPreviewWrap.classList.remove("hidden"); }
+  else { audioPreview.removeAttribute("src"); audioPreview.load(); audioPreviewWrap.classList.add("hidden"); }
 }
 
 function handleAudioFile(file) {
   if (!file) return;
-
   const maxSize = 4 * 1024 * 1024;
-  if (file.size > maxSize) {
-    alert("音源が大きすぎます。4MB以下のファイルを選んでください。");
-    audioInput.value = "";
-    return;
-  }
-
+  if (file.size > maxSize) { alert("音源が大きすぎます。4MB以下のファイルを選んでください。"); audioInput.value = ""; return; }
   const reader = new FileReader();
-  reader.onload = () => {
-    currentAudioData = reader.result;
-    renderAudioPreview();
-    scheduleSave();
-  };
+  reader.onload = () => { currentAudioData = reader.result; renderAudioPreview(); scheduleSave(); };
   reader.readAsDataURL(file);
 }
 
@@ -246,27 +188,9 @@ document.getElementById("emptyNewSongBtn").addEventListener("click", newSong);
 document.getElementById("backBtn").addEventListener("click", showList);
 document.getElementById("doneBtn").addEventListener("click", showList);
 document.getElementById("deleteBtn").addEventListener("click", deleteCurrentSong);
-
-Object.values(fields).forEach(field => {
-  if (field.id !== "songId") {
-    field.addEventListener("input", scheduleSave);
-    field.addEventListener("change", scheduleSave);
-  }
-});
-
-audioInput.addEventListener("change", event => {
-  handleAudioFile(event.target.files[0]);
-});
-
-document.getElementById("removeAudioBtn").addEventListener("click", () => {
-  currentAudioData = "";
-  audioInput.value = "";
-  renderAudioPreview();
-  scheduleSave();
-});
-
+Object.values(fields).forEach(field => { if (field.id !== "songId") { field.addEventListener("input", scheduleSave); field.addEventListener("change", scheduleSave); } });
+audioInput.addEventListener("change", event => handleAudioFile(event.target.files[0]));
+document.getElementById("removeAudioBtn").addEventListener("click", () => { currentAudioData = ""; audioInput.value = ""; renderAudioPreview(); scheduleSave(); });
 searchInput.addEventListener("input", renderSongList);
-
 window.addEventListener("beforeunload", autoSaveNow);
-
 renderSongList();
