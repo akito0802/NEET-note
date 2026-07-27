@@ -7,7 +7,7 @@
   <title>NEET NOTE</title>
   <link rel="stylesheet" href="style.css?v=3" />
   <link rel="stylesheet" href="background.css?v=1" />
-  <link rel="stylesheet" href="chord-picker.css?v=1" />
+  <link rel="stylesheet" href="chord-picker.css?v=2" />
 </head>
 <body>
   <div class="app-shell">
@@ -73,12 +73,8 @@
               <span>拍子</span>
               <select id="timeSignatureInput">
                 <option value="">未設定</option>
-                <option>4/4</option>
-                <option>3/4</option>
-                <option>6/8</option>
-                <option>2/4</option>
-                <option>5/4</option>
-                <option>7/8</option>
+                <option>4/4</option><option>3/4</option><option>6/8</option>
+                <option>2/4</option><option>5/4</option><option>7/8</option>
               </select>
             </label>
           </div>
@@ -88,36 +84,29 @@
             <textarea id="structureInput" rows="5" placeholder="例：イントロ → Aメロ → Bメロ → サビ"></textarea>
           </label>
 
-          <div class="field">
+          <div class="field chord-section">
             <span>コード進行</span>
             <div class="chord-picker" aria-label="コード選択">
               <select id="chordRootSelect" aria-label="ルート音">
-                <option value="">ルート</option>
+                <option value="">ルート音</option>
                 <option>C</option><option>C#</option><option>Db</option><option>D</option>
                 <option>D#</option><option>Eb</option><option>E</option><option>F</option>
                 <option>F#</option><option>Gb</option><option>G</option><option>G#</option>
                 <option>Ab</option><option>A</option><option>A#</option><option>Bb</option><option>B</option>
               </select>
               <select id="chordTypeSelect" aria-label="コード種類">
-                <option value="">メジャー</option>
-                <option value="m">マイナー</option>
-                <option value="7">7</option>
-                <option value="maj7">maj7</option>
-                <option value="m7">m7</option>
-                <option value="6">6</option>
-                <option value="m6">m6</option>
-                <option value="add9">add9</option>
-                <option value="9">9</option>
-                <option value="sus2">sus2</option>
-                <option value="sus4">sus4</option>
-                <option value="dim">dim</option>
-                <option value="aug">aug</option>
-                <option value="m7b5">m7♭5</option>
+                <option value="">メジャー</option><option value="m">マイナー</option>
+                <option value="7">7</option><option value="maj7">maj7</option>
+                <option value="m7">m7</option><option value="6">6</option>
+                <option value="m6">m6</option><option value="add9">add9</option>
+                <option value="9">9</option><option value="sus2">sus2</option>
+                <option value="sus4">sus4</option><option value="dim">dim</option>
+                <option value="aug">aug</option><option value="m7b5">m7♭5</option>
               </select>
-              <button id="addChordBtn" class="chord-add-button" type="button">追加</button>
-              <button id="addChordLineBtn" class="chord-line-button" type="button">改行</button>
+              <button id="addChordBtn" class="chord-add-button" type="button">＋ 追加</button>
+              <button id="addChordLineBtn" class="chord-line-button" type="button">↵ 改行</button>
             </div>
-            <small class="chord-picker-note">ルート音と種類を選んで「追加」を押すと、下の欄に入ります。</small>
+            <small class="chord-picker-note">ルート音と種類を選ぶと、下のコード進行欄に追加できます。</small>
             <textarea id="chordsInput" rows="8" placeholder="例：
 [イントロ]
 C  G  Am  F
@@ -154,10 +143,7 @@ F  G  Em  Am"></textarea>
   <template id="songCardTemplate">
     <article class="song-card" tabindex="0">
       <div class="song-card-head">
-        <div>
-          <h2 class="song-title"></h2>
-          <p class="song-meta"></p>
-        </div>
+        <div><h2 class="song-title"></h2><p class="song-meta"></p></div>
         <span class="song-date"></span>
       </div>
       <p class="song-preview"></p>
@@ -166,6 +152,6 @@ F  G  Em  Am"></textarea>
 
   <script src="app.js?v=3"></script>
   <script src="structure-sync.js?v=1"></script>
-  <script src="chord-picker.js?v=1"></script>
+  <script src="chord-picker.js?v=2"></script>
 </body>
 </html>
