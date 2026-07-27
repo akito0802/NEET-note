@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111827" />
+  <title>Song Note</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">COMPOSITION NOTE</p>
+        <h1>Song Note</h1>
+      </div>
+      <button id="newSongBtn" class="primary-button">＋ 新しい曲</button>
+    </header>
+
+    <main>
+      <section id="listView" class="view active">
+        <div class="toolbar">
+          <label class="search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="search" placeholder="曲名・歌詞・コードで検索" />
+          </label>
+        </div>
+
+        <div id="emptyState" class="empty-state hidden">
+          <div class="empty-icon">♪</div>
+          <h2>まだ曲がありません</h2>
+          <p>思いついたコードや歌詞を、すぐに残してみよう。</p>
+          <button id="emptyNewSongBtn" class="primary-button">最初の曲を作る</button>
+        </div>
+
+        <div id="songList" class="song-grid"></div>
+      </section>
+
+      <section id="editorView" class="view">
+        <div class="editor-topbar">
+          <button id="backBtn" class="ghost-button">← 曲一覧</button>
+          <div id="saveStatus" class="save-status">保存済み</div>
+        </div>
+
+        <form id="songForm" class="editor-card" autocomplete="off">
+          <input id="songId" type="hidden" />
+
+          <label class="field title-field">
+            <span>曲タイトル</span>
+            <input id="titleInput" type="text" placeholder="無題の曲" maxlength="80" />
+          </label>
+
+          <div class="meta-grid">
+            <label class="field">
+              <span>キー</span>
+              <select id="keyInput">
+                <option value="">未設定</option>
+                <option>C</option><option>C# / Db</option><option>D</option>
+                <option>D# / Eb</option><option>E</option><option>F</option>
+                <option>F# / Gb</option><option>G</option><option>G# / Ab</option>
+                <option>A</option><option>A# / Bb</option><option>B</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>BPM</span>
+              <input id="bpmInput" type="number" inputmode="numeric" min="20" max="300" placeholder="120" />
+            </label>
+
+            <label class="field">
+              <span>拍子</span>
+              <select id="timeSignatureInput">
+                <option value="">未設定</option>
+                <option>4/4</option>
+                <option>3/4</option>
+                <option>6/8</option>
+                <option>2/4</option>
+                <option>5/4</option>
+                <option>7/8</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>曲の構成</span>
+            <textarea id="structureInput" rows="5" placeholder="例：イントロ → Aメロ → Bメロ → サビ"></textarea>
+          </label>
+
+          <label class="field">
+            <span>コード進行</span>
+            <textarea id="chordsInput" rows="8" placeholder="例：
+[イントロ]
+C  G  Am  F
+
+[サビ]
+F  G  Em  Am"></textarea>
+          </label>
+
+          <label class="field">
+            <span>歌詞メモ</span>
+            <textarea id="lyricsInput" rows="14" placeholder="歌詞やフレーズを書いてみよう"></textarea>
+          </label>
+
+          <label class="field">
+            <span>音源・ボイスメモ</span>
+            <input id="audioInput" type="file" accept="audio/*" />
+            <small>この最小版では、選んだ音源はブラウザ内に保存されます。大きなファイルは保存できない場合があります。</small>
+          </label>
+
+          <div id="audioPreviewWrap" class="audio-preview hidden">
+            <audio id="audioPreview" controls></audio>
+            <button id="removeAudioBtn" type="button" class="danger-text-button">音源を削除</button>
+          </div>
+
+          <div class="editor-actions">
+            <button id="deleteBtn" type="button" class="danger-button">この曲を削除</button>
+            <button id="doneBtn" type="button" class="primary-button">保存して一覧へ</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <template id="songCardTemplate">
+    <article class="song-card" tabindex="0">
+      <div class="song-card-head">
+        <div>
+          <h2 class="song-title"></h2>
+          <p class="song-meta"></p>
+        </div>
+        <span class="song-date"></span>
+      </div>
+      <p class="song-preview"></p>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
