@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="background.css?v=1" />
   <link rel="stylesheet" href="chord-picker.css?v=5" />
   <link rel="stylesheet" href="print.css?v=1" />
+  <link rel="stylesheet" href="advice.css?v=1" />
 </head>
 <body>
   <div class="app-shell">
@@ -19,30 +20,17 @@
 
     <main>
       <section id="listView" class="view active">
-        <div class="toolbar">
-          <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="曲名・作家名・歌詞・コードで検索" /></label>
-        </div>
-        <div id="emptyState" class="empty-state hidden">
-          <div class="empty-icon">♪</div><h2>まだ曲がありません</h2>
-          <p>思いついたコードや歌詞を、すぐに残してみよう。</p>
-          <button id="emptyNewSongBtn" class="primary-button">最初の曲を作る</button>
-        </div>
+        <div class="toolbar"><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="曲名・作家名・雰囲気・コードで検索" /></label></div>
+        <div id="emptyState" class="empty-state hidden"><div class="empty-icon">♪</div><h2>まだ曲がありません</h2><p>思いついたコードや雰囲気を、すぐに残してみよう。</p><button id="emptyNewSongBtn" class="primary-button">最初の曲を作る</button></div>
         <div id="songList" class="song-grid"></div>
       </section>
 
       <section id="editorView" class="view">
-        <div class="editor-topbar">
-          <button id="backBtn" class="ghost-button">← 曲一覧</button>
-          <div id="saveStatus" class="save-status">保存済み</div>
-        </div>
+        <div class="editor-topbar"><button id="backBtn" class="ghost-button">← 曲一覧</button><div id="saveStatus" class="save-status">保存済み</div></div>
 
         <form id="songForm" class="editor-card" autocomplete="off">
           <input id="songId" type="hidden" />
-
-          <label class="field title-field">
-            <span>曲タイトル</span>
-            <input id="titleInput" type="text" placeholder="無題の曲" maxlength="80" />
-          </label>
+          <label class="field title-field"><span>曲タイトル</span><input id="titleInput" type="text" placeholder="無題の曲" maxlength="80" /></label>
 
           <div class="meta-grid credits-grid">
             <label class="field"><span>作詞</span><input id="lyricistInput" type="text" placeholder="作詞者名" maxlength="80" /></label>
@@ -71,12 +59,26 @@
               <button id="printChordMemoBtn" class="print-button" type="button">印刷</button>
             </div>
             <small class="chord-picker-note">ベース音を選ぶと C/E のようなオンコードになります。印刷では作品情報も表示されます。</small>
-            <textarea id="chordsInput" class="lyrics-chord-editor" rows="12" wrap="off" placeholder="例：
-      C/E      G/B
-いつか君と また会えるかな"></textarea>
+            <textarea id="chordsInput" class="lyrics-chord-editor" rows="12" wrap="off" placeholder="例：&#10;      C/E      G/B&#10;いつか君と また会えるかな"></textarea>
           </div>
 
-          <label class="field"><span>歌詞メモ</span><textarea id="lyricsInput" rows="14" placeholder="歌詞やフレーズを書いてみよう"></textarea></label>
+          <section class="advice-box" aria-labelledby="adviceTitle">
+            <div class="advice-heading"><div><p class="advice-kicker">SONGWRITING ASSISTANT</p><h2 id="adviceTitle">作曲アドバイス</h2></div><button id="generateAdviceBtn" class="primary-button" type="button">おすすめを作る</button></div>
+            <div class="advice-input-grid">
+              <label class="field"><span>曲の雰囲気</span><select id="moodInput"><option value="">選択してください</option><option>明るい</option><option>爽やか</option><option>切ない</option><option>寂しい</option><option>優しい</option><option>壮大</option><option>不穏</option><option>激しい</option><option>おしゃれ</option><option>幻想的</option></select></label>
+              <label class="field"><span>テーマ・情景</span><input id="themeInput" type="text" placeholder="例：夏の帰り道、別れ、夜の街" maxlength="120" /></label>
+            </div>
+            <label class="field"><span>歌詞の断片・入れたい言葉</span><textarea id="lyricIdeaInput" rows="5" placeholder="例：君のいない駅で、発車ベルだけが鳴っていた"></textarea></label>
+            <p class="advice-note">キー・BPM・コード進行・雰囲気・歌詞断片を読み取り、端末内で提案を作ります。</p>
+            <div id="adviceEmpty" class="advice-empty">「おすすめを作る」を押すと、コード進行・メロディ・歌詞・アレンジ案がここに出るよ。</div>
+            <div id="adviceResults" class="advice-results hidden">
+              <article><h3>おすすめコード進行</h3><div id="chordAdvice"></div></article>
+              <article><h3>メロディ案</h3><div id="melodyAdvice"></div></article>
+              <article><h3>歌詞案</h3><div id="lyricAdvice"></div></article>
+              <article><h3>アレンジ案</h3><div id="arrangementAdvice"></div></article>
+            </div>
+          </section>
+
           <label class="field"><span>音源・ボイスメモ</span><input id="audioInput" type="file" accept="audio/*" /><small>この最小版では、選んだ音源はブラウザ内に保存されます。大きなファイルは保存できない場合があります。</small></label>
           <div id="audioPreviewWrap" class="audio-preview hidden"><audio id="audioPreview" controls></audio><button id="removeAudioBtn" type="button" class="danger-text-button">音源を削除</button></div>
           <div class="editor-actions"><button id="deleteBtn" type="button" class="danger-button">この曲を削除</button><button id="doneBtn" type="button" class="primary-button">保存して一覧へ</button></div>
@@ -86,12 +88,12 @@
   </div>
 
   <section id="printSheet" class="print-sheet" aria-hidden="true"><h1 id="printTitle">無題の曲</h1><div id="printCredits" class="print-meta"></div><div id="printMeta" class="print-meta"></div><pre id="printContent" class="print-content"></pre></section>
-
   <template id="songCardTemplate"><article class="song-card" tabindex="0"><div class="song-card-head"><div><h2 class="song-title"></h2><p class="song-meta"></p></div><span class="song-date"></span></div><p class="song-preview"></p></article></template>
 
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
   <script src="structure-sync.js?v=1"></script>
   <script src="chord-picker.js?v=6"></script>
   <script src="print.js?v=2"></script>
+  <script src="advice.js?v=1"></script>
 </body>
 </html>
