@@ -1,5 +1,6 @@
 const chordRootSelect = document.getElementById('chordRootSelect');
 const chordTypeSelect = document.getElementById('chordTypeSelect');
+const chordBassSelect = document.getElementById('chordBassSelect');
 const addChordBtn = document.getElementById('addChordBtn');
 const addChordLineBtn = document.getElementById('addChordLineBtn');
 const chordMemoTextArea = document.getElementById('chordsInput');
@@ -25,6 +26,16 @@ function displayWidth(text) {
 
 function looksLikeChordLine(line) {
   return line.trim() === '' || /^[\sA-G#b0-9majinsudg()+/♭♯-]+$/.test(line);
+}
+
+function buildChordName() {
+  if (!chordRootSelect?.value) return '';
+
+  const root = chordRootSelect.value;
+  const type = chordTypeSelect?.value || '';
+  const bass = chordBassSelect?.value || '';
+
+  return `${root}${type}${bass ? `/${bass}` : ''}`;
 }
 
 function placeChordAboveMemoText(chord) {
@@ -85,8 +96,9 @@ function insertLineBreakAtCursor() {
 
 if (addChordBtn) {
   addChordBtn.addEventListener('click', () => {
-    if (!chordRootSelect.value) return;
-    placeChordAboveMemoText(chordRootSelect.value + chordTypeSelect.value);
+    const chord = buildChordName();
+    if (!chord) return;
+    placeChordAboveMemoText(chord);
   });
 }
 
