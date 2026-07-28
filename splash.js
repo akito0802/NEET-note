@@ -34,12 +34,11 @@
 
   window.setTimeout(() => book.classList.add('turning'), 2000);
   noteButton.addEventListener('click', () => {
-    const nextUrl = new URL(location.href);
-    nextUrl.searchParams.set('mode', 'note');
-    history.replaceState(null, '', nextUrl);
+    history.replaceState(null, '', `${location.pathname}?mode=note`);
     launch.animate([{opacity:1},{opacity:0}], {duration:260, easing:'ease', fill:'forwards'}).finished.then(() => {
       launch.remove();
       document.body.style.overflow = '';
+      window.scrollTo({top:0, behavior:'instant'});
     });
   });
 })();
