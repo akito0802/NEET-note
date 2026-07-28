@@ -15,7 +15,7 @@
           <a class="launch-card" href="#" id="openNoteMode"><span>📝</span><span>ノート<small>作曲メモ・曲管理</small></span></a>
           <a class="launch-card" href="https://akito0802.github.io/scale/"><span>🎸</span><span>スケール<small>スケール辞典</small></span></a>
           <a class="launch-card" href="https://akito0802.github.io/-h/"><span>🎵</span><span>指板<small>ギター指板ビューア</small></span></a>
-          <a class="launch-card" href="https://akito0802.github.io/Cordhyo-/theory.html"><span>📚</span><span>理論<small>コード・進行・音楽理論</small></span></a>
+          <a class="launch-card" href="https://akito0802.github.io/Cordhyo-/index.html"><span>📚</span><span>コード表<small>コード・進行・音楽理論</small></span></a>
         </div>
       </section>
       <section class="launch-cover" aria-hidden="true">
