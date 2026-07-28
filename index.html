@@ -31,15 +31,17 @@
           <textarea id="lyricIdeaInput" class="hidden"></textarea>
           <label class="field title-field"><span>曲タイトル</span><input id="titleInput" type="text" placeholder="無題の曲" maxlength="80" /></label>
           <div class="meta-grid credits-grid">
-            <label class="field"><span>作詞</span><input id="lyricistInput" type="text" placeholder="作詞者名" maxlength="80" /></label>
+            <label class="field">
+              <span style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                <span>作詞</span>
+                <button id="copyCreatorNameBtn" class="ghost-button" type="button" title="作詞名を作曲・編曲へコピー" style="min-height:26px;padding:3px 9px;border-radius:999px;font-size:.72rem;line-height:1">↺ 同じ</button>
+              </span>
+              <input id="lyricistInput" type="text" placeholder="作詞者名" maxlength="80" />
+            </label>
             <label class="field"><span>作曲</span><input id="composerInput" type="text" placeholder="作曲者名" maxlength="80" /></label>
             <label class="field"><span>編曲</span><input id="arrangerInput" type="text" placeholder="編曲者名" maxlength="80" /></label>
             <label class="field"><span>アーティスト</span><input id="artistInput" type="text" placeholder="アーティスト名" maxlength="80" /></label>
             <label class="field"><span>制作日</span><input id="productionDateInput" type="date" /></label>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-8px 0 18px">
-            <button id="copyCreatorNameBtn" class="ghost-button" type="button">作詞・作曲・編曲を同じ名前にする</button>
-            <small style="color:#6b7280">3項目のうち、入力済みの名前をほかにもコピーします。</small>
           </div>
           <div class="meta-grid">
             <label class="field"><span>キー</span><select id="keyInput"><option value="">未設定</option><option>C</option><option>C# / Db</option><option>D</option><option>D# / Eb</option><option>E</option><option>F</option><option>F# / Gb</option><option>G</option><option>G# / Ab</option><option>A</option><option>A# / Bb</option><option>B</option></select></label>
