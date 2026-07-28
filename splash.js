@@ -1,6 +1,6 @@
 (() => {
   const params = new URLSearchParams(location.search);
-  if (params.has('song')) return;
+  if (params.has('song') || params.get('mode') === 'note') return;
 
   const launch = document.createElement('div');
   launch.id = 'neetLaunch';
@@ -12,7 +12,7 @@
         <h2>NEET NOTE</h2>
         <p>使いたいモードを選んでね</p>
         <div class="launch-grid">
-          <a class="launch-card" href="#" id="openNoteMode"><span>📝</span><span>ノート<small>作曲メモ・曲管理</small></span></a>
+          <button class="launch-card" id="openNoteMode" type="button"><span>📝</span><span>ノート<small>作曲メモ・曲管理</small></span></button>
           <a class="launch-card" href="https://akito0802.github.io/scale/"><span>🎸</span><span>スケール<small>スケール辞典</small></span></a>
           <a class="launch-card" href="https://akito0802.github.io/-h/"><span>🎵</span><span>指板<small>ギター指板ビューア</small></span></a>
           <a class="launch-card" href="https://akito0802.github.io/Cordhyo-/index.html"><span>📚</span><span>コード表<small>コード・進行・音楽理論</small></span></a>
@@ -33,8 +33,10 @@
   const noteButton = document.getElementById('openNoteMode');
 
   window.setTimeout(() => book.classList.add('turning'), 2000);
-  noteButton.addEventListener('click', event => {
-    event.preventDefault();
+  noteButton.addEventListener('click', () => {
+    const nextUrl = new URL(location.href);
+    nextUrl.searchParams.set('mode', 'note');
+    history.replaceState(null, '', nextUrl);
     launch.animate([{opacity:1},{opacity:0}], {duration:260, easing:'ease', fill:'forwards'}).finished.then(() => {
       launch.remove();
       document.body.style.overflow = '';
