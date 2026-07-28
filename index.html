@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="chord-picker.css?v=5" />
   <link rel="stylesheet" href="print.css?v=1" />
   <style>
-    .app-header{position:relative}.header-brand{display:flex;align-items:center;gap:12px}.menu-button{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid rgba(0,0,0,.1);border-radius:12px;background:rgba(255,255,255,.85);color:#1f2937;font-size:1.35rem;line-height:1;cursor:pointer}.menu-overlay{position:fixed;inset:0;z-index:80;background:rgba(17,24,39,.35);opacity:0;pointer-events:none;transition:opacity .2s ease}.menu-overlay.open{opacity:1;pointer-events:auto}.side-menu{position:fixed;top:0;left:0;z-index:90;width:min(82vw,300px);height:100%;padding:24px 18px;background:#fffdf8;box-shadow:14px 0 34px rgba(0,0,0,.18);transform:translateX(-105%);transition:transform .22s ease}.side-menu.open{transform:translateX(0)}.side-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.side-menu-head h2{margin:0;font-size:1.15rem}.menu-close{width:36px;height:36px;border:0;border-radius:10px;background:#f1f1f1;font-size:1.3rem}.menu-link{display:flex;align-items:center;gap:12px;width:100%;padding:14px 12px;margin-bottom:8px;border:0;border-radius:12px;color:#1f2937;background:transparent;text-decoration:none;font-weight:700}.menu-link:hover,.menu-link:focus{background:#f2eee6}.menu-link.current{background:#e9e1d4}.menu-icon{width:28px;text-align:center;font-size:1.15rem}@media(max-width:680px){.app-header{align-items:center}.header-brand{gap:8px}.menu-button{width:38px;height:38px}}
+    .app-header{position:relative}.header-brand{display:flex;align-items:center;gap:12px}.menu-button{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid rgba(0,0,0,.1);border-radius:12px;background:rgba(255,255,255,.85);color:#1f2937;font-size:1.35rem;line-height:1;cursor:pointer}.menu-overlay{position:fixed;inset:0;z-index:9998;background:rgba(17,24,39,.42);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease}.menu-overlay.open{opacity:1;visibility:visible;pointer-events:auto}.side-menu{position:fixed;top:0;left:0;z-index:9999;width:min(82vw,300px);height:100dvh;padding:24px 18px;background:#fffdf8;box-shadow:14px 0 34px rgba(0,0,0,.18);transform:translateX(-110%);visibility:hidden;transition:transform .22s ease,visibility .22s ease}.side-menu.open{transform:translateX(0);visibility:visible}.side-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.side-menu-head h2{margin:0;font-size:1.15rem}.menu-close{width:36px;height:36px;border:0;border-radius:10px;background:#f1f1f1;font-size:1.3rem}.menu-link{display:flex;align-items:center;gap:12px;width:100%;padding:14px 12px;margin-bottom:8px;border:0;border-radius:12px;color:#1f2937;background:transparent;text-decoration:none;font-weight:700}.menu-link:hover,.menu-link:focus{background:#f2eee6}.menu-link.current{background:#e9e1d4}.menu-icon{width:28px;text-align:center;font-size:1.15rem}@media(max-width:680px){.app-header{align-items:center}.header-brand{gap:8px}.menu-button{width:38px;height:38px}}
   </style>
 </head>
 <body>
@@ -67,6 +67,19 @@
   </div>
   <section id="printSheet" class="print-sheet" aria-hidden="true"><h1 id="printTitle">無題の曲</h1><div id="printCredits" class="print-meta"></div><div id="printMeta" class="print-meta"></div><pre id="printContent" class="print-content"></pre></section>
   <template id="songCardTemplate"><article class="song-card" tabindex="0"><div class="song-card-head"><div><h2 class="song-title"></h2><p class="song-meta"></p></div><div style="display:flex;align-items:center;gap:8px"><span class="song-date"></span><button class="song-delete-button" type="button" aria-label="この曲を削除" style="border:0;border-radius:999px;padding:5px 9px;background:#fff0f0;color:#c0392b;font-size:.72rem;font-weight:700">削除</button></div></div><p class="song-preview"></p></article></template>
-  <script src="app.js?v=9"></script><script src="structure-sync.js?v=1"></script><script src="chord-picker.js?v=6"></script><script src="print.js?v=2"></script>
+  <script src="app.js?v=10"></script><script src="structure-sync.js?v=1"></script><script src="chord-picker.js?v=6"></script><script src="print.js?v=2"></script>
+  <script>
+    (() => {
+      const openButton = document.getElementById('menuOpenBtn');
+      const closeButton = document.getElementById('menuCloseBtn');
+      const menu = document.getElementById('sideMenu');
+      const overlay = document.getElementById('menuOverlay');
+      const open = () => { menu.classList.add('open'); overlay.classList.add('open'); menu.setAttribute('aria-hidden','false'); openButton.setAttribute('aria-expanded','true'); };
+      const close = () => { menu.classList.remove('open'); overlay.classList.remove('open'); menu.setAttribute('aria-hidden','true'); openButton.setAttribute('aria-expanded','false'); };
+      openButton.addEventListener('click', open);
+      closeButton.addEventListener('click', close);
+      overlay.addEventListener('click', close);
+    })();
+  </script>
 </body>
 </html>
