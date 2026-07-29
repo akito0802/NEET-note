@@ -94,6 +94,73 @@ function insertLineBreakAtCursor() {
   chordMemoTextArea.focus();
 }
 
+let chordAudioContext;
+const NOTE_INDEX = { C: 0, 'C#': 1, Db: 1, D: 2, 'D#': 3, Eb: 3, E: 4, F: 5, 'F#': 6, Gb: 6, G: 7, 'G#': 8, Ab: 8, A: 9, 'A#': 10, Bb: 10, B: 11 };
+
+function getChordIntervals(chord) {
+  const lower = chord.toLowerCase();
+  if (lower.includes('dim7')) return [0, 3, 6, 9];
+  if (lower.includes('m7b5') || lower.includes('m7♭5')) return [0, 3, 6, 10];
+  if (lower.includes('dim')) return [0, 3, 6];
+  if (lower.includes('aug')) return [0, 4, 8];
+  if (lower.includes('sus2')) return [0, 2, 7];
+  if (lower.includes('sus4')) return [0, 5, 7];
+  if (lower.includes('maj7')) return [0, 4, 7, 11];
+  if (/^[A-G][#b]?m7/i.test(chord)) return [0, 3, 7, 10];
+  if (lower.includes('7')) return [0, 4, 7, 10];
+  if (/^[A-G][#b]?m/i.test(chord)) return [0, 3, 7];
+  return [0, 4, 7];
+}
+
+function playSelectedChord() {
+  const chord = buildChordName();
+  if (!chord) {
+    alert('まずルート音を選んでね。');
+    return;
+  }
+
+  const rootMatch = chord.match(/^([A-G](?:#|b)?)/);
+  if (!rootMatch) return;
+
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) {
+    alert('このブラウザでは音を再生できなかったよ。');
+    return;
+  }
+
+  chordAudioContext = chordAudioContext || new AudioContextClass();
+  if (chordAudioContext.state === 'suspended') chordAudioContext.resume();
+
+  const root = NOTE_INDEX[rootMatch[1]];
+  const now = chordAudioContext.currentTime;
+  getChordIntervals(chord).forEach((interval, index) => {
+    const oscillator = chordAudioContext.createOscillator();
+    const gain = chordAudioContext.createGain();
+    oscillator.type = 'triangle';
+    oscillator.frequency.value = 440 * Math.pow(2, ((48 + root + interval) - 69) / 12);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.16 / (index + 1), now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+    oscillator.connect(gain).connect(chordAudioContext.destination);
+    oscillator.start(now + index * 0.012);
+    oscillator.stop(now + 1.25);
+  });
+}
+
+function addPlayButton() {
+  const picker = chordRootSelect?.closest('.chord-picker');
+  if (!picker || document.getElementById('playSelectedChordBtn')) return;
+
+  const button = document.createElement('button');
+  button.id = 'playSelectedChordBtn';
+  button.type = 'button';
+  button.className = 'chord-line-button';
+  button.textContent = '▶ 再生';
+  button.setAttribute('aria-label', '選択中のコードを再生');
+  button.addEventListener('click', playSelectedChord);
+  picker.insertBefore(button, addChordBtn || null);
+}
+
 if (addChordBtn) {
   addChordBtn.addEventListener('click', () => {
     const chord = buildChordName();
@@ -105,3 +172,5 @@ if (addChordBtn) {
 if (addChordLineBtn) {
   addChordLineBtn.addEventListener('click', insertLineBreakAtCursor);
 }
+
+addPlayButton();
