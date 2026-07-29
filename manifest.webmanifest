@@ -1,0 +1,16 @@
+{
+  "name": "NEET NOTE",
+  "short_name": "NEET NOTE",
+  "start_url": "/NEET-note/",
+  "display": "standalone",
+  "background_color": "#fff3cf",
+  "theme_color": "#d9c7a8",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
