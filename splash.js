@@ -1,6 +1,6 @@
 (() => {
   const params = new URLSearchParams(location.search);
-  if (params.has('song') || params.get('mode') === 'note') return;
+  if (params.has('song') || document.getElementById('neetIntro')) return;
 
   const style = document.createElement('style');
   style.textContent = `
@@ -41,10 +41,7 @@
   document.body.style.overflow = 'hidden';
 
   window.setTimeout(() => intro.classList.add('turning'), 850);
-  window.setTimeout(() => {
-    history.replaceState(null, '', `${location.pathname}?mode=note`);
-    intro.classList.add('finishing');
-  }, 1500);
+  window.setTimeout(() => intro.classList.add('finishing'), 1500);
   window.setTimeout(() => {
     intro.remove();
     style.remove();
