@@ -14,8 +14,8 @@
     .neet-intro-kicker{margin:0 0 12px;color:#6e6e73;font-size:.72rem;font-weight:800;letter-spacing:.22em}
     .neet-intro-title h1{margin:0;font-family:'Hannotate SC','Chalkboard SE',-apple-system,sans-serif;font-size:clamp(2.5rem,11vw,4.6rem);letter-spacing:-.05em}
     .neet-intro-title p{margin:14px 0 0;color:#6e6e73;font-size:.95rem}
-    #neetIntro.turning .neet-intro-page{animation:neetPageTurn .72s cubic-bezier(.55,.08,.2,.99) forwards}
-    #neetIntro.finishing{animation:neetIntroFade .28s ease forwards}
+    #neetIntro.turning .neet-intro-page{animation:neetPageTurn .9s cubic-bezier(.55,.08,.2,.99) forwards}
+    #neetIntro.finishing{animation:neetIntroFade .4s ease forwards}
     @keyframes neetPageTurn{0%{transform:rotateY(0deg)}45%{transform:rotateY(-78deg)}100%{transform:rotateY(-178deg)}}
     @keyframes neetIntroFade{to{opacity:0;visibility:hidden}}
     @media (prefers-reduced-motion:reduce){#neetIntro.turning .neet-intro-page{animation-duration:.01ms}#neetIntro.finishing{animation-duration:.01ms}}
@@ -40,12 +40,12 @@
   document.body.prepend(intro);
   document.body.style.overflow = 'hidden';
 
-  window.setTimeout(() => intro.classList.add('turning'), 850);
-  window.setTimeout(() => intro.classList.add('finishing'), 1500);
+  window.setTimeout(() => intro.classList.add('turning'), 1600);
+  window.setTimeout(() => intro.classList.add('finishing'), 2500);
   window.setTimeout(() => {
     intro.remove();
     style.remove();
     document.body.style.overflow = '';
     window.scrollTo({top: 0, behavior: 'instant'});
-  }, 1820);
+  }, 2950);
 })();
