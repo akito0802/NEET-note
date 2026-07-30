@@ -1,0 +1,14 @@
+:root{color-scheme:light;--ui-bg:#f4efe6;--ui-surface:#fffdf8;--ui-surface-2:#f7f2e9;--ui-text:#1f2937;--ui-muted:#6b7280;--ui-line:#ded6c9;--ui-accent:#8b6f47;--ui-hover:#f2eee6;--ui-current:#e9e1d4;--ui-shadow:rgba(80,60,30,.12)}
+html[data-theme="dark"]{color-scheme:dark;--ui-bg:#141311;--ui-surface:#201e1a;--ui-surface-2:#2a2722;--ui-text:#f5f1e8;--ui-muted:#b8b1a5;--ui-line:#454039;--ui-accent:#c6a66f;--ui-hover:#302c26;--ui-current:#3b342a;--ui-shadow:rgba(0,0,0,.35)}
+body{background-color:var(--ui-bg)!important;color:var(--ui-text)!important;transition:background-color .2s ease,color .2s ease}
+.side-menu{background:var(--ui-surface)!important;color:var(--ui-text)!important;box-shadow:14px 0 34px var(--ui-shadow)!important}
+.menu-button,.menu-close,.theme-toggle{border-color:var(--ui-line)!important;background:var(--ui-surface)!important;color:var(--ui-text)!important}
+.menu-link{color:var(--ui-text)!important}.menu-link:hover,.menu-link:focus{background:var(--ui-hover)!important}.menu-link.current{background:var(--ui-current)!important}
+.theme-toggle{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:44px;margin-top:14px;padding:11px 12px;border:1px solid var(--ui-line);border-radius:12px;font:inherit;font-weight:700;cursor:pointer}
+.editor-card,.song-card,.empty-state,.ai-panel,.card{background:var(--ui-surface)!important;border-color:var(--ui-line)!important;color:var(--ui-text)!important;box-shadow:0 8px 24px var(--ui-shadow)!important}
+input,select,textarea{background:var(--ui-surface)!important;color:var(--ui-text)!important;border-color:var(--ui-line)!important}input::placeholder,textarea::placeholder{color:var(--ui-muted)!important}
+.result,.sub,.ai-settings,.chat-message.assistant-message{background:var(--ui-surface-2)!important;color:var(--ui-text)!important;border-color:var(--ui-line)!important}
+.small,.field small,.song-meta,.song-date,.save-status,.chord-picker-note{color:var(--ui-muted)!important}
+html[data-theme="dark"] .menu-overlay{background:rgba(0,0,0,.62)!important}
+html[data-theme="dark"] .primary-button,html[data-theme="dark"] button:not(.menu-button):not(.menu-close):not(.theme-toggle):not(.ghost-button):not(.danger-button):not(.danger-text-button):not(.sub){filter:brightness(1.08)}
+@media(prefers-reduced-motion:reduce){body{transition:none}}
