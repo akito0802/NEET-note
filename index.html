@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#d9c7a8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#d9c7a8">
   <title>NEET NOTE</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1" />
-  <link rel="apple-touch-icon" href="favicon.svg?v=1" />
-  <link rel="stylesheet" href="style.css?v=3" />
-  <link rel="stylesheet" href="background.css?v=1" />
-  <link rel="stylesheet" href="chord-picker.css?v=5" />
-  <link rel="stylesheet" href="print.css?v=1" />
-  <link rel="stylesheet" href="common-ui.css?v=1" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+  <link rel="apple-touch-icon" href="favicon.svg?v=1">
+  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="background.css?v=1">
+  <link rel="stylesheet" href="chord-picker.css?v=5">
+  <link rel="stylesheet" href="print.css?v=1">
+  <link rel="stylesheet" href="common-ui.css?v=1">
   <style>
-    .app-header{position:relative}.header-brand{display:flex;align-items:center;gap:12px}.menu-button{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid rgba(0,0,0,.1);border-radius:12px;background:rgba(255,255,255,.85);color:#1f2937;font-size:1.35rem;line-height:1;cursor:pointer}.menu-overlay{position:fixed;inset:0;z-index:9998;background:rgba(17,24,39,.42);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease}.menu-overlay.open{opacity:1;visibility:visible;pointer-events:auto}.side-menu{position:fixed;top:0;left:0;z-index:9999;width:min(82vw,300px);height:100dvh;padding:24px 18px;background:#fffdf8;box-shadow:14px 0 34px rgba(0,0,0,.18);transform:translateX(-110%);visibility:hidden;transition:transform .22s ease,visibility .22s ease}.side-menu.open{transform:translateX(0);visibility:visible}.side-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.side-menu-head h2{margin:0;font-size:1.15rem}.menu-close{width:36px;height:36px;border:0;border-radius:10px;background:#f1f1f1;font-size:1.3rem}.menu-link{display:flex;align-items:center;gap:12px;width:100%;padding:14px 12px;margin-bottom:8px;border:0;border-radius:12px;color:#1f2937;background:transparent;text-decoration:none;font-weight:700}.menu-link:hover,.menu-link:focus{background:#f2eee6}.menu-link.current{background:#e9e1d4}.menu-icon{width:28px;text-align:center;font-size:1.15rem}@media(max-width:680px){.app-header{align-items:center}.header-brand{gap:8px}.menu-button{width:38px;height:38px}}
+    .app-header{position:relative}.header-brand{display:flex;align-items:center;gap:12px}.menu-button{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid rgba(0,0,0,.1);border-radius:12px;background:rgba(255,255,255,.85);color:#1f2937;font-size:1.35rem;cursor:pointer}.menu-overlay{position:fixed;inset:0;z-index:9998;background:rgba(17,24,39,.42);opacity:0;visibility:hidden;pointer-events:none;transition:.2s}.menu-overlay.open{opacity:1;visibility:visible;pointer-events:auto}.side-menu{position:fixed;top:0;left:0;z-index:9999;width:min(82vw,300px);height:100dvh;padding:24px 18px;background:#fffdf8;box-shadow:14px 0 34px rgba(0,0,0,.18);transform:translateX(-110%);visibility:hidden;transition:.22s}.side-menu.open{transform:translateX(0);visibility:visible}.side-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.side-menu-head h2{margin:0;font-size:1.15rem}.menu-close{width:36px;height:36px;border:0;border-radius:10px;background:#f1f1f1;font-size:1.3rem}.menu-link{display:flex;align-items:center;gap:12px;width:100%;padding:14px 12px;margin-bottom:8px;border:0;border-radius:12px;color:#1f2937;background:transparent;text-decoration:none;font-weight:700}.menu-link.current{background:#e9e1d4}.menu-icon{width:28px;text-align:center;font-size:1.15rem}
+    #neetIntro{position:fixed;inset:0;z-index:30000;display:grid;place-items:center;overflow:hidden;background:#f5f5f7;perspective:1600px}.intro-book{position:relative;width:min(82vw,430px);aspect-ratio:3/4;transform-style:preserve-3d;filter:drop-shadow(0 22px 42px rgba(0,0,0,.18))}.intro-back,.intro-cover{position:absolute;inset:0;border-radius:10px 20px 20px 10px}.intro-back{background:#fffdf8;border:1px solid #e7dfd2}.intro-cover{display:grid;place-items:center;transform-origin:left center;transform-style:preserve-3d;background:linear-gradient(90deg,#f1eadf 0 3%,#fffdf8 8% 100%);border:1px solid #ded5c7;backface-visibility:hidden;will-change:transform}.intro-cover:after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,rgba(0,0,0,.14),transparent 18%,transparent 78%,rgba(255,255,255,.55));opacity:.35}.intro-copy{position:relative;z-index:1;text-align:center;padding:24px;color:#1d1d1f}.intro-kicker{margin:0 0 12px;color:#6e6e73;font-size:.72rem;font-weight:800;letter-spacing:.22em}.intro-copy h1{margin:0;font-family:"Hannotate SC","Chalkboard SE",-apple-system,sans-serif;font-size:clamp(2.5rem,11vw,4.6rem);letter-spacing:-.05em}.intro-copy p:last-child{margin:14px 0 0;color:#6e6e73;font-size:.95rem}#neetIntro.turning .intro-cover{animation:pageTurn .9s cubic-bezier(.55,.08,.2,.99) forwards}#neetIntro.finishing{animation:introFade .4s ease forwards}@keyframes pageTurn{0%{transform:rotateY(0)}45%{transform:rotateY(-78deg)}100%{transform:rotateY(-178deg)}}@keyframes introFade{to{opacity:0;visibility:hidden}}@media(max-width:680px){.menu-button{width:38px;height:38px}}@media(prefers-reduced-motion:reduce){#neetIntro.turning .intro-cover,#neetIntro.finishing{animation-duration:.01ms}}
   </style>
 </head>
 <body>
+  <div id="neetIntro" aria-label="NEET NOTE 起動画面">
+    <div class="intro-book" aria-hidden="true"><div class="intro-back"></div><div class="intro-cover"><div class="intro-copy"><p class="intro-kicker">COMPOSITION NOTE</p><h1>NEET NOTE</h1><p>作曲・練習・記録をひとつに。</p></div></div></div>
+  </div>
+  <script>
+    document.body.style.overflow='hidden';
+    window.setTimeout(()=>document.getElementById('neetIntro')?.classList.add('turning'),1600);
+    window.setTimeout(()=>document.getElementById('neetIntro')?.classList.add('finishing'),2500);
+    window.setTimeout(()=>{document.getElementById('neetIntro')?.remove();document.body.style.overflow='';window.scrollTo(0,0)},2950);
+  </script>
   <div id="menuOverlay" class="menu-overlay"></div>
   <nav id="sideMenu" class="side-menu" aria-hidden="true" aria-label="サイトメニュー">
     <div class="side-menu-head"><h2>NEET NOTE</h2><button id="menuCloseBtn" class="menu-close" type="button" aria-label="メニューを閉じる">×</button></div>
@@ -27,66 +37,32 @@
     <a class="menu-link" href="tools.html"><span class="menu-icon">🧰</span><span>ツール</span></a>
     <button class="theme-toggle" type="button" data-theme-toggle></button>
   </nav>
-
   <div class="app-shell">
-    <header class="app-header">
-      <div class="header-brand">
-        <button id="menuOpenBtn" class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false">☰</button>
-        <div><p class="eyebrow">COMPOSITION NOTE</p><h1>NEET NOTE</h1></div>
-      </div>
-      <button id="newSongBtn" class="primary-button">＋ 新しい曲</button>
-    </header>
+    <header class="app-header"><div class="header-brand"><button id="menuOpenBtn" class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false">☰</button><div><p class="eyebrow">COMPOSITION NOTE</p><h1>NEET NOTE</h1></div></div><button id="newSongBtn" class="primary-button">＋ 新しい曲</button></header>
     <main>
-      <section id="listView" class="view active">
-        <div class="toolbar"><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="曲名・作家名・雰囲気・コードで検索" /></label></div>
-        <div id="emptyState" class="empty-state hidden"><div class="empty-icon">♪</div><h2>まだ曲がありません</h2><p>思いついたコードや雰囲気を、すぐに残してみよう。</p><button id="emptyNewSongBtn" class="primary-button">最初の曲を作る</button></div>
-        <div id="songList" class="song-grid"></div>
-      </section>
+      <section id="listView" class="view active"><div class="toolbar"><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="曲名・作家名・雰囲気・コードで検索"></label></div><div id="emptyState" class="empty-state hidden"><div class="empty-icon">♪</div><h2>まだ曲がありません</h2><p>思いついたコードや雰囲気を、すぐに残してみよう。</p><button id="emptyNewSongBtn" class="primary-button">最初の曲を作る</button></div><div id="songList" class="song-grid"></div></section>
       <section id="editorView" class="view">
         <div class="editor-topbar"><button id="backBtn" class="ghost-button">← 曲一覧</button><div id="saveStatus" class="save-status">保存済み</div></div>
         <form id="songForm" class="editor-card" autocomplete="off">
-          <input id="songId" type="hidden" />
-          <input id="moodInput" type="hidden" />
-          <input id="themeInput" type="hidden" />
-          <textarea id="lyricIdeaInput" class="hidden"></textarea>
-          <label class="field title-field"><span>曲タイトル</span><input id="titleInput" type="text" placeholder="無題の曲" maxlength="80" /></label>
+          <input id="songId" type="hidden"><input id="moodInput" type="hidden"><input id="themeInput" type="hidden"><textarea id="lyricIdeaInput" class="hidden"></textarea>
+          <label class="field title-field"><span>曲タイトル</span><input id="titleInput" type="text" placeholder="無題の曲" maxlength="80"></label>
           <div class="meta-grid credits-grid">
-            <label class="field"><span style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span>作詞</span><button id="copyCreatorNameBtn" class="ghost-button" type="button" title="作詞名を作曲・編曲へコピー" style="min-height:26px;padding:3px 9px;border-radius:999px;font-size:.72rem;line-height:1">↺ 同じ</button></span><input id="lyricistInput" type="text" placeholder="作詞者名" maxlength="80" /></label>
-            <label class="field"><span>作曲</span><input id="composerInput" type="text" placeholder="作曲者名" maxlength="80" /></label>
-            <label class="field"><span>編曲</span><input id="arrangerInput" type="text" placeholder="編曲者名" maxlength="80" /></label>
-            <label class="field"><span>アーティスト</span><input id="artistInput" type="text" placeholder="アーティスト名" maxlength="80" /></label>
-            <label class="field"><span>制作日</span><input id="productionDateInput" type="date" /></label>
+            <label class="field"><span style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span>作詞</span><button id="copyCreatorNameBtn" class="ghost-button" type="button" style="min-height:26px;padding:3px 9px;border-radius:999px;font-size:.72rem">↺ 同じ</button></span><input id="lyricistInput" type="text" placeholder="作詞者名" maxlength="80"></label>
+            <label class="field"><span>作曲</span><input id="composerInput" type="text" placeholder="作曲者名" maxlength="80"></label><label class="field"><span>編曲</span><input id="arrangerInput" type="text" placeholder="編曲者名" maxlength="80"></label><label class="field"><span>アーティスト</span><input id="artistInput" type="text" placeholder="アーティスト名" maxlength="80"></label><label class="field"><span>制作日</span><input id="productionDateInput" type="date"></label>
           </div>
-          <div class="meta-grid">
-            <label class="field"><span>キー</span><select id="keyInput"><option value="">未設定</option><option>C</option><option>C# / Db</option><option>D</option><option>D# / Eb</option><option>E</option><option>F</option><option>F# / Gb</option><option>G</option><option>G# / Ab</option><option>A</option><option>A# / Bb</option><option>B</option></select></label>
-            <label class="field"><span>BPM</span><input id="bpmInput" type="number" inputmode="numeric" min="20" max="300" placeholder="120" /></label>
-            <label class="field"><span>拍子</span><select id="timeSignatureInput"><option value="">未設定</option><option>4/4</option><option>3/4</option><option>6/8</option><option>2/4</option><option>5/4</option><option>7/8</option></select></label>
-          </div>
+          <div class="meta-grid"><label class="field"><span>キー</span><select id="keyInput"><option value="">未設定</option><option>C</option><option>C# / Db</option><option>D</option><option>D# / Eb</option><option>E</option><option>F</option><option>F# / Gb</option><option>G</option><option>G# / Ab</option><option>A</option><option>A# / Bb</option><option>B</option></select></label><label class="field"><span>BPM</span><input id="bpmInput" type="number" min="20" max="300" placeholder="120"></label><label class="field"><span>拍子</span><select id="timeSignatureInput"><option value="">未設定</option><option>4/4</option><option>3/4</option><option>6/8</option><option>2/4</option><option>5/4</option><option>7/8</option></select></label></div>
           <label class="field"><span>曲の構成</span><textarea id="structureInput" rows="5" placeholder="例：イントロ → Aメロ → Bメロ → サビ"></textarea></label>
-          <div class="field chord-section"><span>コード進行メモ</span><div class="chord-picker" aria-label="コード進行メモへのコード選択"><select id="chordRootSelect" aria-label="ルート音"><option value="">ルート音</option><option>C</option><option>C#</option><option>Db</option><option>D</option><option>D#</option><option>Eb</option><option>E</option><option>F</option><option>F#</option><option>Gb</option><option>G</option><option>G#</option><option>Ab</option><option>A</option><option>A#</option><option>Bb</option><option>B</option></select><select id="chordTypeSelect" aria-label="コード種類"><option value="">メジャー</option><option value="m">マイナー</option><option value="5">5</option><option value="6">6</option><option value="m6">m6</option><option value="7">7</option><option value="maj7">maj7</option><option value="m7">m7</option><option value="mMaj7">mMaj7</option><option value="add9">add9</option><option value="madd9">madd9</option><option value="9">9</option><option value="maj9">maj9</option><option value="m9">m9</option><option value="11">11</option><option value="m11">m11</option><option value="13">13</option><option value="maj13">maj13</option><option value="m13">m13</option><option value="sus2">sus2</option><option value="sus4">sus4</option><option value="7sus4">7sus4</option><option value="dim">dim</option><option value="dim7">dim7</option><option value="aug">aug</option><option value="m7b5">m7♭5</option><option value="7b5">7♭5</option><option value="7#5">7♯5</option><option value="7b9">7♭9</option><option value="7#9">7♯9</option><option value="7#11">7♯11</option><option value="add11">add11</option></select><select id="chordBassSelect" aria-label="オンコードのベース音"><option value="">ベースなし</option><option>C</option><option>C#</option><option>Db</option><option>D</option><option>D#</option><option>Eb</option><option>E</option><option>F</option><option>F#</option><option>Gb</option><option>G</option><option>G#</option><option>Ab</option><option>A</option><option>A#</option><option>Bb</option><option>B</option></select><button id="addChordBtn" class="chord-add-button" type="button">＋ 上に追加</button><button id="addChordLineBtn" class="chord-line-button" type="button">↵ 改行</button><button id="printChordMemoBtn" class="print-button" type="button">印刷</button></div><small class="chord-picker-note">ベース音を選ぶと C/E のようなオンコードになります。印刷では作品情報も表示されます。</small><textarea id="chordsInput" class="lyrics-chord-editor" rows="12" wrap="off" placeholder="例：&#10;      C/E      G/B&#10;いつか君と また会えるかな"></textarea></div>
-          <div style="margin:22px 0;padding:18px;border:1px solid var(--ui-line);border-radius:16px;background:var(--ui-surface)"><p class="eyebrow">GEMINI SONGWRITING ASSISTANT</p><h2 style="margin:0 0 8px">AIに相談</h2><p style="margin:0 0 14px;color:var(--ui-muted)">現在の曲情報を引き継いで、コード・メロディ・歌詞・アレンジを別ページで相談できます。</p><button id="openAiPageBtn" class="primary-button" type="button">AI作曲アシスタントを開く</button></div>
-          <label class="field"><span>音源・ボイスメモ</span><input id="audioInput" type="file" accept="audio/*" /><small>選んだ音源はブラウザ内に保存されます。大きなファイルは保存できない場合があります。</small></label>
-          <div id="audioPreviewWrap" class="audio-preview hidden"><audio id="audioPreview" controls></audio><button id="removeAudioBtn" type="button" class="danger-text-button">音源を削除</button></div>
+          <div class="field chord-section"><span>コード進行メモ</span><div class="chord-picker"><select id="chordRootSelect"><option value="">ルート音</option><option>C</option><option>C#</option><option>Db</option><option>D</option><option>D#</option><option>Eb</option><option>E</option><option>F</option><option>F#</option><option>Gb</option><option>G</option><option>G#</option><option>Ab</option><option>A</option><option>A#</option><option>Bb</option><option>B</option></select><select id="chordTypeSelect"><option value="">メジャー</option><option value="m">マイナー</option><option value="5">5</option><option value="6">6</option><option value="m6">m6</option><option value="7">7</option><option value="maj7">maj7</option><option value="m7">m7</option><option value="add9">add9</option><option value="9">9</option><option value="sus2">sus2</option><option value="sus4">sus4</option><option value="dim">dim</option><option value="aug">aug</option><option value="m7b5">m7♭5</option></select><select id="chordBassSelect"><option value="">ベースなし</option><option>C</option><option>C#</option><option>Db</option><option>D</option><option>D#</option><option>Eb</option><option>E</option><option>F</option><option>F#</option><option>Gb</option><option>G</option><option>G#</option><option>Ab</option><option>A</option><option>A#</option><option>Bb</option><option>B</option></select><button id="addChordBtn" class="chord-add-button" type="button">＋ 上に追加</button><button id="addChordLineBtn" class="chord-line-button" type="button">↵ 改行</button><button id="printChordMemoBtn" class="print-button" type="button">印刷</button></div><textarea id="chordsInput" class="lyrics-chord-editor" rows="12" wrap="off"></textarea></div>
+          <div style="margin:22px 0;padding:18px;border:1px solid var(--ui-line);border-radius:16px;background:var(--ui-surface)"><p class="eyebrow">GEMINI SONGWRITING ASSISTANT</p><h2>AIに相談</h2><button id="openAiPageBtn" class="primary-button" type="button">AI作曲アシスタントを開く</button></div>
+          <label class="field"><span>音源・ボイスメモ</span><input id="audioInput" type="file" accept="audio/*"></label><div id="audioPreviewWrap" class="audio-preview hidden"><audio id="audioPreview" controls></audio><button id="removeAudioBtn" type="button" class="danger-text-button">音源を削除</button></div>
           <div class="editor-actions"><button id="deleteBtn" type="button" class="danger-button">この曲を削除</button><button id="doneBtn" type="button" class="primary-button">保存して一覧へ</button></div>
         </form>
       </section>
     </main>
   </div>
   <section id="printSheet" class="print-sheet" aria-hidden="true"><h1 id="printTitle">無題の曲</h1><div id="printCredits" class="print-meta"></div><div id="printMeta" class="print-meta"></div><pre id="printContent" class="print-content"></pre></section>
-  <template id="songCardTemplate"><article class="song-card" tabindex="0"><div class="song-card-head"><div><h2 class="song-title"></h2><p class="song-meta"></p></div><div style="display:flex;align-items:center;gap:8px"><span class="song-date"></span><button class="song-delete-button" type="button" aria-label="この曲を削除" style="border:0;border-radius:999px;padding:5px 9px;background:#fff0f0;color:#c0392b;font-size:.72rem;font-weight:700">削除</button></div></div><p class="song-preview"></p></article></template>
-  <script src="common-ui.js?v=2"></script><script src="app.js?v=15"></script><script src="structure-sync.js?v=1"></script><script src="chord-picker.js?v=6"></script><script src="print.js?v=2"></script>
-  <script>
-    (() => {
-      const openButton = document.getElementById('menuOpenBtn');
-      const closeButton = document.getElementById('menuCloseBtn');
-      const menu = document.getElementById('sideMenu');
-      const overlay = document.getElementById('menuOverlay');
-      const open = () => { menu.classList.add('open'); overlay.classList.add('open'); menu.setAttribute('aria-hidden','false'); openButton.setAttribute('aria-expanded','true'); };
-      const close = () => { menu.classList.remove('open'); overlay.classList.remove('open'); menu.setAttribute('aria-hidden','true'); openButton.setAttribute('aria-expanded','false'); };
-      openButton.addEventListener('click', open);
-      closeButton.addEventListener('click', close);
-      overlay.addEventListener('click', close);
-    })();
-  </script>
+  <template id="songCardTemplate"><article class="song-card" tabindex="0"><div class="song-card-head"><div><h2 class="song-title"></h2><p class="song-meta"></p></div><div style="display:flex;align-items:center;gap:8px"><span class="song-date"></span><button class="song-delete-button" type="button">削除</button></div></div><p class="song-preview"></p></article></template>
+  <script src="common-ui.js?v=3"></script><script src="app.js?v=16"></script><script src="structure-sync.js?v=1"></script><script src="chord-picker.js?v=6"></script><script src="print.js?v=2"></script>
+  <script>(()=>{const o=document.getElementById('menuOpenBtn'),c=document.getElementById('menuCloseBtn'),m=document.getElementById('sideMenu'),v=document.getElementById('menuOverlay');const open=()=>{m.classList.add('open');v.classList.add('open')},close=()=>{m.classList.remove('open');v.classList.remove('open')};o?.addEventListener('click',open);c?.addEventListener('click',close);v?.addEventListener('click',close)})();</script>
 </body>
 </html>
