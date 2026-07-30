@@ -8,29 +8,36 @@
   <link rel="stylesheet" href="style.css?v=3" />
   <link rel="stylesheet" href="background.css?v=1" />
   <link rel="stylesheet" href="ai-page.css?v=1" />
+  <link rel="stylesheet" href="common-ui.css?v=1" />
+  <style>
+    .ai-header-brand{display:flex;align-items:center;gap:12px}.menu-button{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid rgba(0,0,0,.1);border-radius:12px;background:rgba(255,255,255,.85);color:#1f2937;font-size:1.35rem;line-height:1;cursor:pointer}.menu-overlay{position:fixed;inset:0;z-index:9998;background:rgba(17,24,39,.42);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease}.menu-overlay.open{opacity:1;visibility:visible;pointer-events:auto}.side-menu{position:fixed;top:0;left:0;z-index:9999;width:min(82vw,300px);height:100dvh;padding:24px 18px;background:#fffdf8;box-shadow:14px 0 34px rgba(0,0,0,.18);transform:translateX(-110%);visibility:hidden;transition:transform .22s ease,visibility .22s ease}.side-menu.open{transform:translateX(0);visibility:visible}.side-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.side-menu-head h2{margin:0;font-size:1.15rem}.menu-close{width:36px;height:36px;border:0;border-radius:10px;background:#f1f1f1;font-size:1.3rem}.menu-link{display:flex;align-items:center;gap:12px;width:100%;padding:14px 12px;margin-bottom:8px;border:0;border-radius:12px;color:#1f2937;background:transparent;text-decoration:none;font-weight:700}.menu-link:hover,.menu-link:focus{background:#f2eee6}.menu-link.current{background:#e9e1d4}.menu-icon{width:28px;text-align:center;font-size:1.15rem}@media(max-width:680px){.ai-header{align-items:center}.ai-header-brand{gap:8px}.menu-button{width:38px;height:38px}}
+  </style>
 </head>
 <body>
+  <div id="menuOverlay" class="menu-overlay"></div>
+  <nav id="sideMenu" class="side-menu" aria-hidden="true" aria-label="サイトメニュー">
+    <div class="side-menu-head"><h2>NEET NOTE</h2><button id="menuCloseBtn" class="menu-close" type="button" aria-label="メニューを閉じる">×</button></div>
+    <a class="menu-link" href="./?mode=note"><span class="menu-icon">📝</span><span>ノート</span></a>
+    <a class="menu-link" href="https://akito0802.github.io/scale/"><span class="menu-icon">🎸</span><span>スケール</span></a>
+    <a class="menu-link" href="https://akito0802.github.io/-h/"><span class="menu-icon">🎵</span><span>指板</span></a>
+    <a class="menu-link" href="https://akito0802.github.io/Cordhyo-/index.html"><span class="menu-icon">📚</span><span>コード</span></a>
+    <a class="menu-link" href="tools.html"><span class="menu-icon">🧰</span><span>ツール</span></a>
+    <button class="theme-toggle" type="button" data-theme-toggle></button>
+  </nav>
+
   <div class="app-shell ai-shell">
     <header class="app-header ai-header">
-      <div>
-        <p class="eyebrow">GEMINI SONGWRITING ASSISTANT</p>
-        <h1>AI作曲アシスタント</h1>
+      <div class="ai-header-brand">
+        <button id="menuOpenBtn" class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false">☰</button>
+        <div><p class="eyebrow">GEMINI SONGWRITING ASSISTANT</p><h1>AI作曲アシスタント</h1></div>
       </div>
       <a id="backToEditorLink" class="ghost-button link-button" href="index.html">← 曲編集へ戻る</a>
     </header>
 
     <main class="ai-layout">
       <section class="ai-panel song-context-panel">
-        <div class="panel-heading">
-          <div>
-            <p class="eyebrow">CURRENT SONG</p>
-            <h2 id="contextTitle">無題の曲</h2>
-          </div>
-          <button id="reloadSongBtn" class="ghost-button" type="button">再読込</button>
-        </div>
-
+        <div class="panel-heading"><div><p class="eyebrow">CURRENT SONG</p><h2 id="contextTitle">無題の曲</h2></div><button id="reloadSongBtn" class="ghost-button" type="button">再読込</button></div>
         <div class="context-meta" id="contextMeta"></div>
-
         <label class="field"><span>曲の構成</span><textarea id="contextStructure" rows="5"></textarea></label>
         <label class="field"><span>コード進行</span><textarea id="contextChords" rows="10" wrap="off"></textarea></label>
         <div class="advice-input-grid">
@@ -38,50 +45,23 @@
           <label class="field"><span>テーマ・情景</span><input id="themeInput" type="text" placeholder="例：夏の帰り道、別れ、夜の街" /></label>
         </div>
         <label class="field"><span>歌詞の断片・入れたい言葉</span><textarea id="lyricIdeaInput" rows="6" placeholder="例：君のいない駅で、発車ベルだけが鳴っていた"></textarea></label>
-
-        <details class="ai-settings">
-          <summary>Gemini API設定</summary>
-          <div class="ai-settings-body">
-            <label class="field"><span>APIキー</span><input id="geminiApiKeyInput" type="password" placeholder="Google AI Studioで取得したキー" autocomplete="off" /></label>
-            <div class="ai-setting-actions">
-              <button id="saveApiKeyBtn" class="ghost-button" type="button">この端末に保存</button>
-              <button id="clearApiKeyBtn" class="danger-text-button" type="button">削除</button>
-              <span id="apiKeyStatus" class="save-status">未設定</span>
-            </div>
-          </div>
-        </details>
+        <details class="ai-settings"><summary>Gemini API設定</summary><div class="ai-settings-body"><label class="field"><span>APIキー</span><input id="geminiApiKeyInput" type="password" placeholder="Google AI Studioで取得したキー" autocomplete="off" /></label><div class="ai-setting-actions"><button id="saveApiKeyBtn" class="ghost-button" type="button">この端末に保存</button><button id="clearApiKeyBtn" class="danger-text-button" type="button">削除</button><span id="apiKeyStatus" class="save-status">未設定</span></div></div></details>
       </section>
 
       <section class="ai-panel chat-panel">
-        <div class="panel-heading">
-          <div><p class="eyebrow">CHAT</p><h2>Geminiに相談</h2></div>
-          <button id="clearChatBtn" class="ghost-button" type="button">履歴を消す</button>
-        </div>
-
-        <div id="chatMessages" class="chat-messages">
-          <div class="chat-message assistant-message">この曲について何でも聞いてね。「サビを考えて」「もっと切なく」「次のコード候補」みたいに相談できるよ。</div>
-        </div>
-
-        <div class="quick-prompts">
-          <button type="button" data-prompt="このコード進行の続きを3案考えて">次のコード</button>
-          <button type="button" data-prompt="印象に残るサビのメロディ案を考えて">サビ案</button>
-          <button type="button" data-prompt="この曲に合う歌詞のサビ案を作って">歌詞案</button>
-          <button type="button" data-prompt="曲全体をレビューして改善点を教えて">全体レビュー</button>
-        </div>
-
-        <div class="chat-composer">
-          <textarea id="chatInput" rows="4" placeholder="例：Bメロからサビへの盛り上げ方を教えて"></textarea>
-          <button id="sendChatBtn" class="primary-button" type="button">送信</button>
-        </div>
-
-        <div class="ai-actions">
-          <button id="copyLastBtn" class="ghost-button" type="button">最後の回答をコピー</button>
-          <button id="applyChordBtn" class="ghost-button" type="button">回答をコード進行へ追加</button>
-        </div>
+        <div class="panel-heading"><div><p class="eyebrow">CHAT</p><h2>Geminiに相談</h2></div><button id="clearChatBtn" class="ghost-button" type="button">履歴を消す</button></div>
+        <div id="chatMessages" class="chat-messages"><div class="chat-message assistant-message">この曲について何でも聞いてね。「サビを考えて」「もっと切なく」「次のコード候補」みたいに相談できるよ。</div></div>
+        <div class="quick-prompts"><button type="button" data-prompt="このコード進行の続きを3案考えて">次のコード</button><button type="button" data-prompt="印象に残るサビのメロディ案を考えて">サビ案</button><button type="button" data-prompt="この曲に合う歌詞のサビ案を作って">歌詞案</button><button type="button" data-prompt="曲全体をレビューして改善点を教えて">全体レビュー</button></div>
+        <div class="chat-composer"><textarea id="chatInput" rows="4" placeholder="例：Bメロからサビへの盛り上げ方を教えて"></textarea><button id="sendChatBtn" class="primary-button" type="button">送信</button></div>
+        <div class="ai-actions"><button id="copyLastBtn" class="ghost-button" type="button">最後の回答をコピー</button><button id="applyChordBtn" class="ghost-button" type="button">回答をコード進行へ追加</button></div>
       </section>
     </main>
   </div>
 
+  <script src="common-ui.js?v=1"></script>
   <script src="ai-page.js?v=1"></script>
+  <script>
+    (()=>{const menu=document.getElementById('sideMenu'),overlay=document.getElementById('menuOverlay'),openBtn=document.getElementById('menuOpenBtn'),closeBtn=document.getElementById('menuCloseBtn');const open=()=>{menu.classList.add('open');overlay.classList.add('open');menu.setAttribute('aria-hidden','false');openBtn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'};const close=()=>{menu.classList.remove('open');overlay.classList.remove('open');menu.setAttribute('aria-hidden','true');openBtn.setAttribute('aria-expanded','false');document.body.style.overflow=''};openBtn.addEventListener('click',open);closeBtn.addEventListener('click',close);overlay.addEventListener('click',close);document.addEventListener('keydown',e=>{if(e.key==='Escape')close()})})();
+  </script>
 </body>
 </html>
