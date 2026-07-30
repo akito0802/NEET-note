@@ -2,9 +2,20 @@
   'use strict';
 
   const params = new URLSearchParams(window.location.search);
-  if (!params.has('mode')) {
-    window.location.replace('./?mode=note&home=1');
-    return;
+  const normalizedPath = window.location.pathname.replace(/\/index\.html$/, '/');
+  const isHomePage = /\/NEET-note\/$/.test(normalizedPath);
+  const intro = document.getElementById('neetIntro');
+  const INTRO_SESSION_KEY = 'neet-note-intro-shown';
+  const cameFromNeetNote = document.referrer.startsWith(`${window.location.origin}/NEET-note/`);
+  const shouldShowIntro = isHomePage && !params.has('mode') && !params.has('song') && !cameFromNeetNote && sessionStorage.getItem(INTRO_SESSION_KEY) !== '1';
+
+  if (intro) {
+    if (shouldShowIntro) {
+      sessionStorage.setItem(INTRO_SESSION_KEY, '1');
+    } else {
+      intro.remove();
+      document.body.style.overflow = '';
+    }
   }
 
   const STORAGE_KEY = 'neet-note-theme';
