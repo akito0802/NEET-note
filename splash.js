@@ -1,6 +1,19 @@
 (() => {
   const params = new URLSearchParams(location.search);
-  if (params.has('song') || document.getElementById('neetIntro')) return;
+  const sameSiteReferrer = (() => {
+    try {
+      if (!document.referrer) return false;
+      const ref = new URL(document.referrer);
+      return ref.origin === location.origin && ref.pathname.startsWith('/NEET-note/');
+    } catch {
+      return false;
+    }
+  })();
+  const alreadySeen = sessionStorage.getItem('neet-note-intro-seen') === '1';
+  const directTopVisit = !params.has('song') && params.get('mode') !== 'note' && !sameSiteReferrer;
+
+  if (!directTopVisit || alreadySeen || document.getElementById('neetIntro')) return;
+  sessionStorage.setItem('neet-note-intro-seen', '1');
 
   const style = document.createElement('style');
   style.textContent = `
