@@ -1,16 +1,22 @@
 {
   "name": "NEET NOTE",
   "short_name": "NEET NOTE",
-  "start_url": "/NEET-note/",
+  "description": "作曲・練習・記録をひとつにまとめる音楽制作ノート",
+  "id": "/NEET-note/",
+  "start_url": "/NEET-note/?mode=note",
+  "scope": "/NEET-note/",
   "display": "standalone",
-  "background_color": "#fff3cf",
+  "background_color": "#fffdf8",
   "theme_color": "#d9c7a8",
+  "orientation": "portrait-primary",
+  "lang": "ja",
+  "categories": ["music", "productivity", "utilities"],
   "icons": [
-    {
-      "src": "apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    {"src":"apple-touch-icon.png","sizes":"180x180","type":"image/png","purpose":"any"},
+    {"src":"favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ],
+  "shortcuts": [
+    {"name":"作曲ノートを開く","short_name":"ノート","url":"/NEET-note/?mode=note"},
+    {"name":"制作ツールを開く","short_name":"ツール","url":"/NEET-note/tools.html"}
   ]
 }
