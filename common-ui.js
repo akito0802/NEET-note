@@ -30,4 +30,10 @@ if(list&&toolbar&&!document.getElementById('homeDashboard')){
  const d=document.createElement('div');d.id='homeDashboard';d.className='home-dashboard';d.innerHTML='<section class="home-welcome"><h2>思いついた音を、すぐ形に。</h2><p>曲の記録からコード・スケール確認まで、ここから音楽制作を始めよう。</p><div class="home-actions"><button id="homeNewSongBtn" class="primary-button">＋ 新しい曲を作る</button><a class="ghost-button" href="tools.html" style="text-decoration:none">🧰 ツールを開く</a></div><div class="home-tool-grid"><a class="home-tool-card" href="https://akito0802.github.io/Cordhyo-/index.html">📚 コード</a><a class="home-tool-card" href="https://akito0802.github.io/scale/">🎸 スケール</a><a class="home-tool-card" href="https://akito0802.github.io/-h/">🎵 指板</a><a class="home-tool-card" href="tools.html">🧰 ツール</a></div></section>';
  list.insertBefore(d,toolbar);document.getElementById('homeNewSongBtn')?.addEventListener('click',()=>document.getElementById('newSongBtn')?.click());
 }
+
+// PWA登録とクラウド同期の共通ローダー
+if(!document.querySelector('link[rel="manifest"]')){const manifest=document.createElement('link');manifest.rel='manifest';manifest.href='manifest.webmanifest?v=2';document.head.appendChild(manifest)}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(console.error))}
+const loadScript=(src)=>new Promise((resolve,reject)=>{if(document.querySelector(`script[src^="${src}"]`)){resolve();return}const s=document.createElement('script');s.src=`${src}?v=2`;s.onload=resolve;s.onerror=reject;document.body.appendChild(s)});
+loadScript('firebase-config.js').then(()=>loadScript('cloud-sync.js')).catch(console.error);
 })();
