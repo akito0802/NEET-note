@@ -1,27 +1,165 @@
 (()=>{
 'use strict';
-const KEY='song-note-songs-v1',cfg=window.NEET_FIREBASE_CONFIG||{},ready=Boolean(cfg.apiKey&&cfg.authDomain&&cfg.projectId&&cfg.appId),side=document.getElementById('sideMenu');if(!side)return;
-const b=document.createElement('button');b.className='menu-link';b.type='button';b.innerHTML='<span class="menu-icon">☁️</span><span id="cloudMenuLabel">ログイン・同期</span>';side.insertBefore(b,side.querySelector('[data-theme-toggle]')||null);
-const style=document.createElement('style');style.textContent='.cloud-toast{position:fixed;left:50%;top:18px;z-index:50000;display:flex;align-items:center;gap:12px;width:min(92vw,430px);padding:15px 18px;border:1px solid rgba(255,255,255,.45);border-radius:18px;background:rgba(28,28,30,.92);color:#fff;box-shadow:0 18px 50px rgba(0,0,0,.28);backdrop-filter:blur(18px);transform:translate(-50%,-140%);opacity:0;transition:.35s cubic-bezier(.2,.8,.2,1);pointer-events:none}.cloud-toast.show{transform:translate(-50%,0);opacity:1}.cloud-toast-icon{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:#34c759;font-size:1.35rem}.cloud-toast-copy b{display:block;font-size:1rem}.cloud-toast-copy small{display:block;margin-top:2px;color:rgba(255,255,255,.75);font-size:.8rem}.cloud-status-card{display:none;align-items:center;gap:12px;margin:12px 0 18px;padding:14px;border:1px solid rgba(52,199,89,.35);border-radius:16px;background:rgba(52,199,89,.12)}.cloud-status-card.show{display:flex}.cloud-status-check{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:#34c759;color:white;font-size:1.35rem;font-weight:900}.cloud-status-copy b{display:block;color:#16833b;font-size:1rem}.cloud-status-copy small{display:block;margin-top:3px;word-break:break-all;color:var(--ui-muted,#6b7280)}.cloud-celebrate{position:fixed;inset:0;z-index:49999;pointer-events:none;overflow:hidden}.cloud-spark{position:absolute;top:-20px;font-size:1.3rem;animation:cloudFall 1.5s ease-in forwards}@keyframes cloudFall{to{transform:translateY(105vh) rotate(480deg);opacity:0}}@media(prefers-reduced-motion:reduce){.cloud-toast{transition:none}.cloud-spark{display:none}}';document.head.appendChild(style);
-const toast=document.createElement('div');toast.className='cloud-toast';toast.innerHTML='<span class="cloud-toast-icon">✓</span><span class="cloud-toast-copy"><b id="cloudToastTitle">ログインできたよ！</b><small id="cloudToastText">クラウド同期を開始します</small></span>';document.body.appendChild(toast);
-let toastTimer=null;const notify=(title,text,celebrate=false)=>{toast.querySelector('#cloudToastTitle').textContent=title;toast.querySelector('#cloudToastText').textContent=text||'';toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),3200);if(celebrate){const layer=document.createElement('div');layer.className='cloud-celebrate';const marks=['✨','♪','★','🎉','☁️'];for(let i=0;i<18;i++){const s=document.createElement('span');s.className='cloud-spark';s.textContent=marks[i%marks.length];s.style.left=`${Math.random()*100}%`;s.style.animationDelay=`${Math.random()*.45}s`;s.style.animationDuration=`${1.1+Math.random()*.8}s`;layer.appendChild(s)}document.body.appendChild(layer);setTimeout(()=>layer.remove(),2400)}};
-const box=document.createElement('div');box.style.cssText='position:fixed;inset:0;z-index:32000;display:none;place-items:center;padding:18px;background:rgba(17,24,39,.58)';box.innerHTML='<section style="width:min(430px,100%);padding:22px;border-radius:22px;background:var(--ui-surface,#fffdf8);color:var(--ui-text,#1f2937)"><div style="display:flex;justify-content:space-between;align-items:center"><h2>☁️ クラウド同期</h2><button id="cloudClose" type="button">×</button></div><div id="cloudStatusCard" class="cloud-status-card"><span class="cloud-status-check">✓</span><span class="cloud-status-copy"><b>Googleログイン済み</b><small id="cloudAccountText"></small></span></div><p id="cloudMessage">曲データを端末間で同期できるよ。</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button id="cloudLogin" class="primary-button" type="button">Googleでログイン</button><button id="cloudSync" class="ghost-button" type="button">今すぐ同期</button><button id="cloudLogout" class="ghost-button" type="button">ログアウト</button></div></section>';document.body.appendChild(box);
-const msg=box.querySelector('#cloudMessage'),login=box.querySelector('#cloudLogin'),syncBtn=box.querySelector('#cloudSync'),logout=box.querySelector('#cloudLogout'),statusCard=box.querySelector('#cloudStatusCard'),accountText=box.querySelector('#cloudAccountText'),menuLabel=document.getElementById('cloudMenuLabel');b.onclick=()=>box.style.display='grid';box.querySelector('#cloudClose').onclick=()=>box.style.display='none';
-if(!ready){msg.textContent='Firebase設定がまだ入っていないよ。';login.disabled=syncBtn.disabled=logout.disabled=true;return;}
-(async()=>{try{
- const appMod=await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js');
- const authMod=await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js');
- const dbMod=await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
- const app=appMod.initializeApp(cfg),auth=authMod.getAuth(app),db=dbMod.getFirestore(app);let user=null,syncing=false,syncTimer=null,lastUid=sessionStorage.getItem('neet-note-last-auth-uid')||'';
- const provider=new authMod.GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});
- const read=()=>{try{const v=JSON.parse(localStorage.getItem(KEY));return Array.isArray(v)?v:[]}catch{return[]}};
- const merge=(a,b)=>{const m=new Map();[...a,...b].forEach(x=>{const old=m.get(x.id);if(!old||new Date(x.updatedAt||0)>new Date(old.updatedAt||0))m.set(x.id,x)});return[...m.values()]};
- const sync=async(manual=false)=>{if(!user||syncing)return;syncing=true;msg.textContent='同期中…';try{const ref=dbMod.doc(db,'users',user.uid),snap=await dbMod.getDoc(ref),remote=snap.exists()&&Array.isArray(snap.data().songs)?snap.data().songs:[],songs=merge(read(),remote);localStorage.setItem(KEY,JSON.stringify(songs));await dbMod.setDoc(ref,{songs,updatedAt:dbMod.serverTimestamp()},{merge:true});msg.textContent=`✅ 同期済み：${songs.length}曲`;if(manual)notify('同期できたよ！',`${songs.length}曲をクラウドに保存しました`);}catch(e){console.error(e);msg.textContent=`同期エラー：${e.code||e.message}`;}finally{syncing=false}};
- try{await authMod.getRedirectResult(auth)}catch(e){console.error(e);msg.textContent=`ログインエラー：${e.code||e.message}`;}
- authMod.onAuthStateChanged(auth,async u=>{user=u;login.hidden=Boolean(u);logout.hidden=!u;syncBtn.hidden=!u;statusCard.classList.toggle('show',Boolean(u));if(u){const account=u.displayName||u.email||'Googleアカウント';accountText.textContent=u.email||account;menuLabel.textContent='ログイン済み ✓';msg.textContent=`✅ ${account}でログイン中`;if(lastUid!==u.uid){notify('ログインできたよ！',`${account}で接続しました`,true);sessionStorage.setItem('neet-note-last-auth-uid',u.uid);lastUid=u.uid;}await sync();}else{menuLabel.textContent='ログイン・同期';accountText.textContent='';msg.textContent='未ログイン。データはこの端末に保存中。';sessionStorage.removeItem('neet-note-last-auth-uid');lastUid='';}});
- login.onclick=async()=>{login.disabled=true;msg.textContent='Googleログインを開いているよ…';try{const mobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)||window.matchMedia('(display-mode: standalone)').matches;if(mobile){await authMod.signInWithRedirect(auth,provider);}else{await authMod.signInWithPopup(auth,provider);}}catch(e){console.error(e);msg.textContent=`ログインエラー：${e.code||e.message}`;login.disabled=false;}};
- logout.onclick=async()=>{await authMod.signOut(auth);notify('ログアウトしたよ','データはこの端末にも残っています');};syncBtn.onclick=()=>sync(true);
- window.addEventListener('storage',e=>{if(e.key===KEY&&user){clearTimeout(syncTimer);syncTimer=setTimeout(sync,800)}});
- document.addEventListener('neet-note:saved',()=>{if(user){clearTimeout(syncTimer);syncTimer=setTimeout(sync,900)}});
-}catch(e){console.error(e);msg.textContent=`クラウド機能の読込エラー：${e.message}`;}})();
+const STORAGE_KEY='song-note-songs-v1';
+const cfg=window.NEET_FIREBASE_CONFIG||{};
+const side=document.getElementById('sideMenu');
+if(!side||document.getElementById('cloudSyncMenuButton'))return;
+
+const configured=Boolean(cfg.apiKey&&cfg.authDomain&&cfg.projectId&&cfg.appId);
+const menuButton=document.createElement('button');
+menuButton.id='cloudSyncMenuButton';
+menuButton.className='menu-link';
+menuButton.type='button';
+menuButton.innerHTML='<span class="menu-icon">☁️</span><span id="cloudMenuLabel">ログイン・同期</span>';
+side.insertBefore(menuButton,side.querySelector('[data-theme-toggle]')||null);
+
+const css=document.createElement('style');
+css.textContent=`
+.cloud-modal{position:fixed;inset:0;z-index:32000;display:none;place-items:center;padding:18px;background:rgba(17,24,39,.58)}
+.cloud-modal.open{display:grid}.cloud-panel{width:min(430px,100%);padding:22px;border-radius:22px;background:var(--ui-surface,#fffdf8);color:var(--ui-text,#1f2937);box-shadow:0 24px 70px rgba(0,0,0,.3)}
+.cloud-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.cloud-head h2{margin:0}.cloud-close{width:44px;height:44px;border:0;border-radius:999px;background:var(--ui-surface-2,#eee);color:inherit;font-size:1.25rem}
+.cloud-account{display:none;align-items:center;gap:12px;margin:16px 0;padding:14px;border:1px solid rgba(52,199,89,.35);border-radius:16px;background:rgba(52,199,89,.12)}.cloud-account.show{display:flex}
+.cloud-check{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:#34c759;color:#fff;font-weight:900}.cloud-account b,.cloud-account small{display:block}.cloud-account small{margin-top:3px;word-break:break-all;color:var(--ui-muted,#6b7280)}
+.cloud-actions{display:flex;gap:10px;flex-wrap:wrap}.cloud-error{color:#c62828}.cloud-toast{position:fixed;left:50%;top:max(18px,env(safe-area-inset-top));z-index:50000;width:min(92vw,430px);padding:15px 18px;border-radius:18px;background:rgba(28,28,30,.94);color:#fff;box-shadow:0 18px 50px rgba(0,0,0,.3);transform:translate(-50%,-150%);opacity:0;transition:.3s;pointer-events:none}.cloud-toast.show{transform:translate(-50%,0);opacity:1}.cloud-toast b,.cloud-toast small{display:block}.cloud-toast small{margin-top:3px;color:rgba(255,255,255,.75)}
+@media(max-width:600px){.cloud-modal{align-items:end;padding:0}.cloud-panel{border-radius:22px 22px 0 0;padding-bottom:calc(22px + env(safe-area-inset-bottom))}}
+`;
+document.head.appendChild(css);
+
+const modal=document.createElement('div');
+modal.className='cloud-modal';
+modal.innerHTML=`<section class="cloud-panel" role="dialog" aria-modal="true" aria-labelledby="cloudTitle">
+  <div class="cloud-head"><h2 id="cloudTitle">☁️ クラウド同期</h2><button class="cloud-close" type="button" aria-label="閉じる">×</button></div>
+  <div id="cloudAccount" class="cloud-account"><span class="cloud-check">✓</span><span><b>Googleログイン済み</b><small id="cloudAccountText"></small></span></div>
+  <p id="cloudMessage">曲データを端末間で同期できるよ。</p>
+  <div class="cloud-actions"><button id="cloudLogin" class="primary-button" type="button">Googleでログイン</button><button id="cloudSync" class="ghost-button" type="button" hidden>今すぐ同期</button><button id="cloudLogout" class="ghost-button" type="button" hidden>ログアウト</button></div>
+</section>`;
+document.body.appendChild(modal);
+
+const toast=document.createElement('div');
+toast.className='cloud-toast';
+toast.innerHTML='<b id="cloudToastTitle"></b><small id="cloudToastText"></small>';
+document.body.appendChild(toast);
+let toastTimer;
+function notify(title,text=''){
+  toast.querySelector('#cloudToastTitle').textContent=title;
+  toast.querySelector('#cloudToastText').textContent=text;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toast.classList.remove('show'),3200);
+}
+
+const label=document.getElementById('cloudMenuLabel');
+const message=modal.querySelector('#cloudMessage');
+const account=modal.querySelector('#cloudAccount');
+const accountText=modal.querySelector('#cloudAccountText');
+const loginButton=modal.querySelector('#cloudLogin');
+const syncButton=modal.querySelector('#cloudSync');
+const logoutButton=modal.querySelector('#cloudLogout');
+const close=()=>{modal.classList.remove('open');document.body.style.overflow=''};
+menuButton.addEventListener('click',()=>{modal.classList.add('open');document.body.style.overflow='hidden'});
+modal.querySelector('.cloud-close').addEventListener('click',close);
+modal.addEventListener('click',e=>{if(e.target===modal)close()});
+
+if(!configured){message.textContent='Firebase設定がまだ入っていないよ。';loginButton.disabled=true;return;}
+
+(async()=>{
+ try{
+  const version='12.17.0';
+  const appMod=await import(`https://www.gstatic.com/firebasejs/${version}/firebase-app.js`);
+  const authMod=await import(`https://www.gstatic.com/firebasejs/${version}/firebase-auth.js`);
+  const dbMod=await import(`https://www.gstatic.com/firebasejs/${version}/firebase-firestore.js`);
+  const app=appMod.getApps().length?appMod.getApp():appMod.initializeApp(cfg);
+  const auth=authMod.getAuth(app);
+  const db=dbMod.getFirestore(app);
+  const provider=new authMod.GoogleAuthProvider();
+  provider.setCustomParameters({prompt:'select_account'});
+  let currentUser=null;
+  let syncing=false;
+  let syncTimer=null;
+
+  try{
+    await authMod.setPersistence(auth,authMod.indexedDBLocalPersistence);
+  }catch(firstError){
+    console.warn('IndexedDB persistence unavailable',firstError);
+    await authMod.setPersistence(auth,authMod.browserLocalPersistence);
+  }
+
+  const readLocal=()=>{
+    try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY));return Array.isArray(value)?value:[];}catch{return[];}
+  };
+  const mergeSongs=(local,remote)=>{
+    const map=new Map();
+    [...remote,...local].forEach(song=>{
+      if(!song||!song.id)return;
+      const previous=map.get(song.id);
+      if(!previous||new Date(song.updatedAt||0)>=new Date(previous.updatedAt||0))map.set(song.id,song);
+    });
+    return [...map.values()].sort((a,b)=>new Date(b.updatedAt||0)-new Date(a.updatedAt||0));
+  };
+  const setSignedOut=()=>{
+    currentUser=null;label.textContent='ログイン・同期';account.classList.remove('show');accountText.textContent='';loginButton.hidden=false;loginButton.disabled=false;syncButton.hidden=true;logoutButton.hidden=true;message.className='';message.textContent='未ログイン。データはこの端末に保存中。';
+  };
+  const setSignedIn=user=>{
+    currentUser=user;const name=user.displayName||user.email||'Googleアカウント';label.textContent='ログイン済み ✓';account.classList.add('show');accountText.textContent=user.email||name;loginButton.hidden=true;syncButton.hidden=false;logoutButton.hidden=false;message.className='';message.textContent=`✅ ${name}でログイン中`;
+  };
+  const sync=async(manual=false)=>{
+    if(!currentUser||syncing)return;
+    syncing=true;syncButton.disabled=true;message.className='';message.textContent='同期中…';
+    try{
+      const ref=dbMod.doc(db,'users',currentUser.uid);
+      const snap=await dbMod.getDoc(ref);
+      const remote=snap.exists()&&Array.isArray(snap.data().songs)?snap.data().songs:[];
+      const songs=mergeSongs(readLocal(),remote);
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(songs));
+      await dbMod.setDoc(ref,{songs,updatedAt:dbMod.serverTimestamp(),email:currentUser.email||''},{merge:true});
+      message.textContent=`✅ 同期済み：${songs.length}曲`;
+      if(manual)notify('同期できたよ！',`${songs.length}曲をクラウドへ保存したよ`);
+      window.dispatchEvent(new CustomEvent('neet-note:cloud-synced',{detail:{songs}}));
+    }catch(error){
+      console.error(error);message.className='cloud-error';message.textContent=`同期エラー：${error.code||error.message}`;
+    }finally{syncing=false;syncButton.disabled=false;}
+  };
+
+  try{
+    const result=await authMod.getRedirectResult(auth);
+    if(result?.user){notify('ログインできたよ！',`${result.user.displayName||result.user.email||'Googleアカウント'}で接続したよ`);}
+  }catch(error){
+    console.error(error);message.className='cloud-error';message.textContent=`ログインエラー：${error.code||error.message}`;
+  }
+
+  authMod.onAuthStateChanged(auth,async user=>{
+    if(user){
+      const wasDifferent=sessionStorage.getItem('neet-note-auth-uid')!==user.uid;
+      setSignedIn(user);
+      sessionStorage.setItem('neet-note-auth-uid',user.uid);
+      if(wasDifferent)notify('ログインできたよ！',`${user.displayName||user.email||'Googleアカウント'}で接続したよ`);
+      await sync(false);
+    }else{
+      sessionStorage.removeItem('neet-note-auth-uid');setSignedOut();
+    }
+  });
+
+  loginButton.addEventListener('click',async()=>{
+    loginButton.disabled=true;message.className='';message.textContent='Googleログインを開いているよ…';
+    try{
+      const result=await authMod.signInWithPopup(auth,provider);
+      if(result.user){setSignedIn(result.user);notify('ログインできたよ！',`${result.user.displayName||result.user.email||'Googleアカウント'}で接続したよ`);await sync(false);}
+    }catch(error){
+      console.error(error);
+      const redirectCodes=['auth/popup-blocked','auth/operation-not-supported-in-this-environment','auth/cancelled-popup-request'];
+      if(redirectCodes.includes(error.code)){
+        message.textContent='画面を切り替えてログインするよ…';
+        await authMod.signInWithRedirect(auth,provider);
+        return;
+      }
+      message.className='cloud-error';message.textContent=`ログインエラー：${error.code||error.message}`;loginButton.disabled=false;
+    }
+  });
+  syncButton.addEventListener('click',()=>sync(true));
+  logoutButton.addEventListener('click',async()=>{await authMod.signOut(auth);notify('ログアウトしたよ','端末内のデータは残っているよ');});
+  document.addEventListener('neet-note:saved',()=>{if(currentUser){clearTimeout(syncTimer);syncTimer=setTimeout(()=>sync(false),1000);}});
+ }catch(error){
+  console.error(error);message.className='cloud-error';message.textContent=`クラウド機能の読込エラー：${error.message}`;
+ }
+})();
 })();
