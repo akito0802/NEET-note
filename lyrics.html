@@ -12,25 +12,33 @@
   <link rel="stylesheet" href="common-ui.css?v=1">
   <style>
     body{margin:0;background:var(--bg,#f3efe7);color:var(--text,#1f2937);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}
-    .lyrics-shell{width:min(1100px,calc(100% - 28px));margin:0 auto;padding:20px 0 48px}
-    .lyrics-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-    .lyrics-brand{display:flex;align-items:center;gap:12px}.lyrics-brand h1{margin:0;font-size:clamp(1.45rem,5vw,2rem)}
-    .back-link,.lyrics-button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 14px;border:1px solid var(--border,#ded6c9);border-radius:12px;background:var(--paper,#fffdf8);color:inherit;text-decoration:none;font-weight:800;cursor:pointer}
-    .lyrics-button.primary{border-color:#7b6140;background:#8b6f47;color:#fff}.lyrics-button.danger{color:#b42318}
-    .lyrics-layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px}.lyrics-panel{border:1px solid var(--border,#ded6c9);border-radius:20px;background:var(--paper,#fffdf8);box-shadow:var(--shadow,0 12px 30px rgba(0,0,0,.08))}
-    .lyrics-sidebar{padding:15px}.lyrics-search{width:100%;box-sizing:border-box;margin-top:10px;padding:12px 13px;border:1px solid var(--border,#ded6c9);border-radius:12px;background:var(--surface,#faf7f1);color:inherit;font:inherit}
-    .lyrics-note-list{display:grid;gap:8px;margin-top:12px;max-height:70dvh;overflow:auto}.lyrics-note{width:100%;padding:12px;border:1px solid transparent;border-radius:13px;background:transparent;color:inherit;text-align:left;cursor:pointer}.lyrics-note:hover,.lyrics-note.active{background:var(--surface,#f4eee4);border-color:var(--border,#ded6c9)}.lyrics-note b{display:block}.lyrics-note small{display:block;margin-top:4px;color:var(--muted,#6b7280)}
-    .lyrics-editor{padding:20px}.lyrics-empty{display:grid;place-items:center;min-height:420px;text-align:center;color:var(--muted,#6b7280)}.lyrics-editor-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}.lyrics-editor-head h2{margin:3px 0 0}.lyrics-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.lyrics-count{color:var(--muted,#6b7280);font-size:.82rem;font-weight:700}
-    #lyricsTitleInput{width:100%;box-sizing:border-box;margin-bottom:12px;padding:13px 14px;border:1px solid var(--border,#ded6c9);border-radius:13px;background:var(--surface,#faf7f1);color:inherit;font:inherit;font-size:1.2rem;font-weight:800}
-    #lyricsText{width:100%;min-height:560px;box-sizing:border-box;padding:18px;border:1px solid var(--border,#ded6c9);border-radius:15px;background:var(--surface,#faf7f1);color:inherit;font:inherit;font-size:1rem;line-height:1.95;resize:vertical}.lyrics-status{margin-top:9px;color:var(--muted,#6b7280);font-size:.82rem}
-    @media(max-width:760px){.lyrics-layout{grid-template-columns:1fr}.lyrics-note-list{max-height:230px}.lyrics-editor{padding:15px}#lyricsText{min-height:480px}.lyrics-header{align-items:flex-start}.lyrics-editor-head{display:block}.lyrics-actions{justify-content:flex-start;margin-top:10px}}
+    .menu-button{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid var(--border,#ded6c9);border-radius:12px;background:var(--paper,#fffdf8);color:inherit;font-size:1.35rem;cursor:pointer}
+    .menu-overlay{position:fixed;inset:0;z-index:9998;background:rgba(17,24,39,.42);opacity:0;visibility:hidden;pointer-events:none;transition:.2s}.menu-overlay.open{opacity:1;visibility:visible;pointer-events:auto}
+    .side-menu{position:fixed;top:0;left:0;z-index:9999;width:min(82vw,300px);height:100dvh;box-sizing:border-box;padding:24px 18px;background:var(--paper,#fffdf8);box-shadow:14px 0 34px rgba(0,0,0,.18);transform:translateX(-110%);visibility:hidden;transition:.22s}.side-menu.open{transform:translateX(0);visibility:visible}.side-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.side-menu-head h2{margin:0;font-size:1.15rem}.menu-close{width:36px;height:36px;border:0;border-radius:10px;background:var(--surface,#f1f1f1);color:inherit;font-size:1.3rem}.menu-link{display:flex;align-items:center;gap:12px;width:100%;box-sizing:border-box;padding:14px 12px;margin-bottom:8px;border:0;border-radius:12px;color:inherit;background:transparent;text-decoration:none;font:inherit;font-weight:700;text-align:left;cursor:pointer}.menu-link.current{background:var(--surface,#e9e1d4)}.menu-icon{width:28px;text-align:center;font-size:1.15rem}
+    .lyrics-shell{width:min(1100px,calc(100% - 28px));margin:0 auto;padding:20px 0 48px}.lyrics-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.lyrics-brand{display:flex;align-items:center;gap:12px}.lyrics-brand h1{margin:0;font-size:clamp(1.45rem,5vw,2rem)}
+    .lyrics-button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 14px;border:1px solid var(--border,#ded6c9);border-radius:12px;background:var(--paper,#fffdf8);color:inherit;text-decoration:none;font-weight:800;cursor:pointer}.lyrics-button.primary{border-color:#7b6140;background:#8b6f47;color:#fff}.lyrics-button.danger{color:#b42318}
+    .lyrics-layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px}.lyrics-panel{border:1px solid var(--border,#ded6c9);border-radius:20px;background:var(--paper,#fffdf8);box-shadow:var(--shadow,0 12px 30px rgba(0,0,0,.08))}.lyrics-sidebar{padding:15px}.lyrics-search{width:100%;box-sizing:border-box;margin-top:10px;padding:12px 13px;border:1px solid var(--border,#ded6c9);border-radius:12px;background:var(--surface,#faf7f1);color:inherit;font:inherit}.lyrics-note-list{display:grid;gap:8px;margin-top:12px;max-height:70dvh;overflow:auto}.lyrics-note{width:100%;padding:12px;border:1px solid transparent;border-radius:13px;background:transparent;color:inherit;text-align:left;cursor:pointer}.lyrics-note:hover,.lyrics-note.active{background:var(--surface,#f4eee4);border-color:var(--border,#ded6c9)}.lyrics-note b{display:block}.lyrics-note small{display:block;margin-top:4px;color:var(--muted,#6b7280)}
+    .lyrics-editor{padding:20px}.lyrics-empty{display:grid;place-items:center;min-height:420px;text-align:center;color:var(--muted,#6b7280)}.lyrics-editor-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}.lyrics-editor-head h2{margin:3px 0 0}.lyrics-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.lyrics-count{color:var(--muted,#6b7280);font-size:.82rem;font-weight:700}#lyricsTitleInput{width:100%;box-sizing:border-box;margin-bottom:12px;padding:13px 14px;border:1px solid var(--border,#ded6c9);border-radius:13px;background:var(--surface,#faf7f1);color:inherit;font:inherit;font-size:1.2rem;font-weight:800}#lyricsText{width:100%;min-height:560px;box-sizing:border-box;padding:18px;border:1px solid var(--border,#ded6c9);border-radius:15px;background:var(--surface,#faf7f1);color:inherit;font:inherit;font-size:1rem;line-height:1.95;resize:vertical}.lyrics-status{margin-top:9px;color:var(--muted,#6b7280);font-size:.82rem}
+    @media(max-width:760px){.lyrics-layout{grid-template-columns:1fr}.lyrics-note-list{max-height:230px}.lyrics-editor{padding:15px}#lyricsText{min-height:480px}.lyrics-header{align-items:flex-start}.lyrics-editor-head{display:block}.lyrics-actions{justify-content:flex-start;margin-top:10px}.menu-button{width:38px;height:38px}}
   </style>
 </head>
 <body>
+  <div id="menuOverlay" class="menu-overlay"></div>
+  <nav id="sideMenu" class="side-menu" aria-hidden="true" aria-label="サイトメニュー">
+    <div class="side-menu-head"><h2>NEET NOTE</h2><button id="menuCloseBtn" class="menu-close" type="button" aria-label="メニューを閉じる">×</button></div>
+    <a class="menu-link" href="./?mode=note"><span class="menu-icon">📝</span><span>ノート</span></a>
+    <a class="menu-link current" href="lyrics.html"><span class="menu-icon">🎤</span><span>歌詞メモ</span></a>
+    <a class="menu-link" href="tools.html"><span class="menu-icon">🧰</span><span>ツール</span></a>
+    <a class="menu-link" href="https://akito0802.github.io/Cordhyo-/index.html"><span class="menu-icon">📚</span><span>コード</span></a>
+    <a class="menu-link" href="https://akito0802.github.io/scale/"><span class="menu-icon">🎸</span><span>スケール</span></a>
+    <a class="menu-link" href="https://akito0802.github.io/-h/"><span class="menu-icon">🎵</span><span>指板</span></a>
+    <button class="menu-link" type="button" data-theme-toggle><span class="menu-icon">🌙</span><span>ダークモード</span></button>
+  </nav>
+
   <main class="lyrics-shell">
     <header class="lyrics-header">
-      <div class="lyrics-brand"><a class="back-link" href="./">← NEET NOTE</a><div><p class="eyebrow">LYRICS NOTE</p><h1>歌詞メモ</h1></div></div>
-      <a class="back-link" href="tools.html">🧰 ツール</a>
+      <div class="lyrics-brand"><button id="menuOpenBtn" class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false">☰</button><div><p class="eyebrow">LYRICS NOTE</p><h1>歌詞メモ</h1></div></div>
+      <button id="headerNewLyricsBtn" class="lyrics-button primary" type="button">＋ 新しい歌詞</button>
     </header>
     <div class="lyrics-layout">
       <aside class="lyrics-panel lyrics-sidebar">
@@ -39,12 +47,9 @@
         <div id="lyricsNoteList" class="lyrics-note-list"></div>
       </aside>
       <section class="lyrics-panel lyrics-editor">
-        <div id="lyricsEmpty" class="lyrics-empty"><div><div style="font-size:3rem">🎤</div><h2>歌詞メモを作ろう</h2><p>ノート機能とは別に、歌詞だけを自由に保存できるよ。</p><button id="emptyNewLyricsBtn" class="lyrics-button primary" type="button">＋ 最初の歌詞メモ</button></div></div>
+        <div id="lyricsEmpty" class="lyrics-empty"><div><div style="font-size:3rem">🎤</div><h2>歌詞メモを作ろう</h2><p>ノートとは別に、歌詞だけを自由に保存できるよ。</p><button id="emptyNewLyricsBtn" class="lyrics-button primary" type="button">＋ 最初の歌詞メモ</button></div></div>
         <div id="lyricsWorkspace" hidden>
-          <div class="lyrics-editor-head">
-            <div><p class="eyebrow">NOW EDITING</p><h2>歌詞を書く</h2><div id="lyricsCount" class="lyrics-count">0文字</div></div>
-            <div class="lyrics-actions"><button id="insertSection" class="lyrics-button" type="button">＋ セクション</button><button id="copyLyrics" class="lyrics-button" type="button">コピー</button><button id="deleteLyrics" class="lyrics-button danger" type="button">削除</button></div>
-          </div>
+          <div class="lyrics-editor-head"><div><p class="eyebrow">NOW EDITING</p><h2>歌詞を書く</h2><div id="lyricsCount" class="lyrics-count">0文字</div></div><div class="lyrics-actions"><button id="insertSection" class="lyrics-button" type="button">＋ セクション</button><button id="copyLyrics" class="lyrics-button" type="button">コピー</button><button id="deleteLyrics" class="lyrics-button danger" type="button">削除</button></div></div>
           <input id="lyricsTitleInput" type="text" maxlength="100" placeholder="歌詞タイトル">
           <textarea id="lyricsText" placeholder="【Aメロ】\n\n【Bメロ】\n\n【サビ】"></textarea>
           <div id="lyricsStatus" class="lyrics-status">保存済み</div>
@@ -52,7 +57,6 @@
       </section>
     </div>
   </main>
-  <script src="common-ui.js?v=6"></script>
-  <script src="lyrics-page.js?v=2"></script>
+  <script src="lyrics-page.js?v=3"></script>
 </body>
 </html>
