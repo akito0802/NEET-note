@@ -1,5 +1,6 @@
 (()=>{
 'use strict';
+if(!document.querySelector('script[src^="seo.js"]')){const s=document.createElement('script');s.src='seo.js?v=1';document.head.appendChild(s)}
 const root=document.documentElement,meta=document.querySelector('meta[name="theme-color"]'),THEME='neet-note-theme';
 const preferred=()=>{const s=localStorage.getItem(THEME);return s==='light'||s==='dark'?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')};
 const apply=t=>{root.dataset.theme=t;root.style.colorScheme=t;meta?.setAttribute('content',t==='dark'?'#141311':'#d9c7a8');document.querySelectorAll('[data-theme-toggle]').forEach(b=>{const d=t==='dark';b.innerHTML=`<span>${d?'☀️':'🌙'}</span><span>${d?'ライトモード':'ダークモード'}</span>`})};
@@ -23,7 +24,7 @@ if(list&&toolbar&&!document.getElementById('homeDashboard')){
  const d=document.createElement('div');d.id='homeDashboard';d.className='home-dashboard';d.innerHTML='<section class="home-welcome"><h2>思いついた音を、すぐ形に。</h2><p>作曲・歌詞・録音・アイデアを、それぞれ使いやすい場所に保存しよう。</p><div class="home-actions"><button id="homeNewSongBtn" class="primary-button">＋ 新しい曲を作る</button></div><p class="home-section-label">QUICK ACCESS</p><div class="home-tool-grid"><a class="home-tool-card lyrics" href="lyrics.html"><span>🎤 歌詞メモ</span><small>歌詞だけを独立して保存</small></a><a class="home-tool-card voice" href="voice-memo.html"><span>🎙 ボイスメモ</span><small>メロディをその場で録音</small></a><a class="home-tool-card ideas" href="ideas.html"><span>💡 アイデアメモ</span><small>曲名・MV・演出案を記録</small></a><a class="home-tool-card tools" href="tools.html"><span>🧰 制作ツール</span><small>移調・メトロノームなど</small></a><a class="home-tool-card" href="https://akito0802.github.io/Cordhyo-/index.html"><span>📚 コード</span><small>コードフォームを確認</small></a><a class="home-tool-card" href="https://akito0802.github.io/scale/"><span>🎸 スケール・指板</span><small>音階と指板上の音を確認</small></a></div></section>';list.insertBefore(d,toolbar);document.getElementById('homeNewSongBtn')?.addEventListener('click',()=>document.getElementById('newSongBtn')?.click())
 }
 
-if(!document.querySelector('link[rel="manifest"]')){const m=document.createElement('link');m.rel='manifest';m.href='manifest.webmanifest?v=15';document.head.appendChild(m)}
+if(!document.querySelector('link[rel="manifest"]')){const m=document.createElement('link');m.rel='manifest';m.href='manifest.webmanifest?v=16';document.head.appendChild(m)}
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(console.error));
 const load=(src,v='4')=>new Promise((r,j)=>{if(document.querySelector(`script[src^="${src}"]`)){r();return}const s=document.createElement('script');s.src=`${src}?v=${v}`;s.onload=r;s.onerror=j;document.body.appendChild(s)});
 if(!location.pathname.endsWith('voice-memo.html')&&!location.pathname.endsWith('ideas.html'))load('firebase-config.js').then(()=>load('cloud-sync.js')).catch(console.error);
