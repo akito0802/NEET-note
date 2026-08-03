@@ -1,6 +1,6 @@
-const CACHE='neet-note-pwa-v7';
+const CACHE='neet-note-pwa-v10';
 const OFFLINE='./offline.html';
-const CORE=['./','./?mode=note','./index.html','./tools.html','./offline.html','./style.css','./background.css','./chord-picker.css','./print.css','./common-ui.css','./common-ui.js','./app.js','./structure-sync.js','./chord-picker.js','./print.js','./favicon.svg','./apple-touch-icon.png','./manifest.webmanifest'];
+const CORE=['./','./?mode=note','./index.html','./tools.html','./offline.html','./style.css','./background.css','./chord-picker.css','./print.css','./common-ui.css','./common-ui.js','./app.js','./structure-sync.js','./chord-picker.js','./print.js','./favicon.svg','./apple-touch-icon.png?v=10','./icon-192.png?v=10','./icon-512.png?v=10','./favicon-32x32.png?v=10','./favicon-16x16.png?v=10','./manifest.webmanifest'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));
@@ -28,7 +28,7 @@ self.addEventListener('fetch',event=>{
     return;
   }
 
-  const alwaysFresh=['cloud-sync.js','firebase-config.js','common-ui.js','service-worker.js','auth-fix.js','manifest.webmanifest'].some(name=>url.pathname.endsWith(name));
+  const alwaysFresh=['cloud-sync.js','firebase-config.js','common-ui.js','service-worker.js','auth-fix.js','manifest.webmanifest','apple-touch-icon.png','icon-192.png','icon-512.png','favicon-32x32.png','favicon-16x16.png'].some(name=>url.pathname.endsWith(name));
   if(alwaysFresh){
     event.respondWith(fetch(event.request,{cache:'no-store'}).then(response=>{
       const copy=response.clone();
