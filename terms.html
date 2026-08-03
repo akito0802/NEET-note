@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#d9c7a8">
+  <title>利用規約 | NEET NOTE</title>
+  <link rel="icon" type="image/png" href="favicon-32x32.png?v=10">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=10">
+  <link rel="manifest" href="manifest.webmanifest?v=18">
+  <link rel="stylesheet" href="common-ui.css?v=1">
+  <style>
+    body{margin:0;background:var(--bg,#f3efe7);color:var(--text,#1f2937);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.85}
+    .menu-button{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--border,#ded6c9);border-radius:12px;background:var(--paper,#fffdf8);color:inherit;font-size:1.3rem;cursor:pointer}
+    .menu-overlay{position:fixed;inset:0;z-index:9998;background:rgba(17,24,39,.42);opacity:0;visibility:hidden;pointer-events:none;transition:.2s}.menu-overlay.open{opacity:1;visibility:visible;pointer-events:auto}
+    .side-menu{position:fixed;top:0;left:0;z-index:9999;width:min(82vw,300px);height:100dvh;box-sizing:border-box;padding:24px 18px calc(30px + env(safe-area-inset-bottom));overflow-y:auto;background:var(--paper,#fffdf8);box-shadow:14px 0 34px rgba(0,0,0,.18);transform:translateX(-110%);visibility:hidden;transition:.22s}.side-menu.open{transform:translateX(0);visibility:visible}.side-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.menu-close{width:36px;height:36px;border:0;border-radius:10px;background:var(--surface,#f1f1f1);color:inherit;font-size:1.25rem}.menu-link{display:flex;align-items:center;gap:12px;width:100%;box-sizing:border-box;padding:14px 12px;margin-bottom:8px;border:0;border-radius:12px;color:inherit;background:transparent;text-decoration:none;font:inherit;font-weight:700;text-align:left}.menu-link.current{background:var(--surface,#e9e1d4)}.menu-icon{width:28px;text-align:center}
+    .terms-shell{width:min(900px,calc(100% - 28px));margin:auto;padding:20px 0 64px}.terms-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}.terms-header h1{margin:0;font-size:clamp(1.55rem,6vw,2.2rem)}.terms-card{padding:clamp(20px,5vw,38px);border:1px solid var(--border,#ded6c9);border-radius:22px;background:var(--paper,#fffdf8);box-shadow:var(--shadow,0 12px 30px rgba(0,0,0,.08))}.terms-lead{margin:0 0 28px;padding:16px;border-radius:15px;background:var(--surface,#f7f2e9);font-weight:700}.terms-section{padding:22px 0;border-top:1px solid var(--border,#ded6c9)}.terms-section:first-of-type{border-top:0}.terms-section h2{margin:0 0 9px;font-size:1.12rem}.terms-section p,.terms-section ul{margin:0}.terms-section ul{padding-left:1.35em}.terms-note{margin-top:28px;color:var(--muted,#6b7280);font-size:.84rem}.back-link{display:inline-flex;margin-top:24px;padding:11px 15px;border:1px solid var(--border,#ded6c9);border-radius:12px;color:inherit;text-decoration:none;font-weight:800;background:var(--surface,#faf7f1)}
+  </style>
+</head>
+<body>
+  <div id="menuOverlay" class="menu-overlay"></div>
+  <nav id="sideMenu" class="side-menu" aria-hidden="true" aria-label="サイトメニュー">
+    <div class="side-menu-head"><h2>NEET NOTE</h2><button id="menuCloseBtn" class="menu-close" type="button" aria-label="メニューを閉じる">×</button></div>
+    <a class="menu-link" href="./?mode=note"><span class="menu-icon">📝</span><span>ノート</span></a>
+    <a class="menu-link" href="lyrics.html"><span class="menu-icon">🎤</span><span>歌詞メモ</span></a>
+    <a class="menu-link" href="voice-memo.html"><span class="menu-icon">🎙</span><span>ボイスメモ</span></a>
+    <a class="menu-link" href="ideas.html"><span class="menu-icon">💡</span><span>アイデアメモ</span></a>
+    <a class="menu-link" href="tools.html"><span class="menu-icon">🧰</span><span>ツール</span></a>
+    <a class="menu-link current" href="terms.html"><span class="menu-icon">📜</span><span>利用規約</span></a>
+    <button class="theme-toggle" type="button" data-theme-toggle></button>
+  </nav>
+
+  <main class="terms-shell">
+    <header class="terms-header"><button id="menuOpenBtn" class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false">☰</button><div><p class="eyebrow">TERMS OF USE</p><h1>利用規約</h1></div></header>
+    <article class="terms-card">
+      <p class="terms-lead">NEET NOTEは個人が開発・運営している無料のWebアプリです。本サービスを利用した時点で、以下の内容に同意したものとします。</p>
+      <section class="terms-section"><h2>第1条（適用）</h2><p>本規約は、NEET NOTE（以下「本サービス」）の利用条件を定めるものです。</p></section>
+      <section class="terms-section"><h2>第2条（利用）</h2><ul><li>本サービスは、利用者自身の判断と責任で利用してください。</li><li>未成年者は、必要に応じて保護者の同意を得たうえで利用してください。</li><li>本サービスの一部ではGoogleアカウントによるログイン機能を利用できます。</li></ul></section>
+      <section class="terms-section"><h2>第3条（保存データ）</h2><p>作曲ノート、歌詞メモ、アイデアメモ、ボイスメモその他の保存データは、利用者自身が管理するものとします。端末・ブラウザの設定変更、削除、故障、サービス障害等によりデータが消失する場合があるため、必要なデータは利用者自身でバックアップしてください。</p></section>
+      <section class="terms-section"><h2>第4条（禁止事項）</h2><ul><li>法令または公序良俗に違反する行為</li><li>他人の著作権、プライバシーその他の権利を侵害する行為</li><li>不正アクセス、妨害、攻撃、過度な負荷を与える行為</li><li>他人へのなりすまし、迷惑行為、スパム行為</li><li>その他、運営者が不適切と判断する行為</li></ul></section>
+      <section class="terms-section"><h2>第5条（著作権）</h2><p>利用者が本サービス上で作成した歌詞、楽曲情報、文章その他の作品に関する権利は、原則として利用者本人に帰属します。本サービスがそれらの著作権を取得するものではありません。</p></section>
+      <section class="terms-section"><h2>第6条（サービスの変更・停止）</h2><p>本サービスは個人開発のため、事前の予告なく機能、仕様、提供内容を変更し、一時停止または終了する場合があります。</p></section>
+      <section class="terms-section"><h2>第7条（免責事項）</h2><p>本サービスは現状有姿（as is）で提供されます。運営者は、内容の正確性、完全性、安全性、継続性、有用性、特定目的への適合性、不具合がないこと等について一切保証しません。</p><p style="margin-top:12px">本サービスの利用または利用できなかったこと、データの消失・破損、端末の不具合、第三者とのトラブルその他本サービスに関連して利用者または第三者に生じた損害について、運営者は、法令上免責が認められない場合を除き、一切の責任を負いません。</p><p style="margin-top:12px">利用者は、本サービスを自己の責任と判断において利用するものとします。</p></section>
+      <section class="terms-section"><h2>第8条（規約の変更）</h2><p>運営者は、必要に応じて本規約を変更できます。変更後の規約は、本ページに掲載した時点から適用されます。</p></section>
+      <p class="terms-note">制定日：2026年8月4日<br>※本ページは個人開発サービス向けの一般的な案内であり、法律上の助言を目的とするものではありません。</p>
+      <a class="back-link" href="./?mode=note">← NEET NOTEへ戻る</a>
+    </article>
+  </main>
+  <script src="common-ui.js?v=18"></script>
+  <script>(()=>{const m=document.getElementById('sideMenu'),o=document.getElementById('menuOverlay'),b=document.getElementById('menuOpenBtn'),c=document.getElementById('menuCloseBtn');const open=()=>{m.classList.add('open');o.classList.add('open');document.body.style.overflow='hidden'};const close=()=>{m.classList.remove('open');o.classList.remove('open');document.body.style.overflow=''};b?.addEventListener('click',open);c?.addEventListener('click',close);o?.addEventListener('click',close)})();</script>
+</body>
+</html>
