@@ -1,40 +1,117 @@
 (()=>{
 'use strict';
-const root=document.documentElement,meta=document.querySelector('meta[name="theme-color"]'),THEME='neet-note-theme';
-const params=new URLSearchParams(location.search),path=location.pathname.replace(/\/index\.html$/,'/'),isHome=/\/NEET-note\/$/.test(path),intro=document.getElementById('neetIntro');
+
+const root=document.documentElement;
+const meta=document.querySelector('meta[name="theme-color"]');
+const THEME_KEY='neet-note-theme';
+
+function preferredTheme(){
+  const saved=localStorage.getItem(THEME_KEY);
+  if(saved==='light'||saved==='dark')return saved;
+  return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+}
+function applyTheme(theme){
+  root.dataset.theme=theme;
+  root.style.colorScheme=theme;
+  meta?.setAttribute('content',theme==='dark'?'#141311':'#d9c7a8');
+  document.querySelectorAll('[data-theme-toggle]').forEach(button=>{
+    const dark=theme==='dark';
+    button.innerHTML=`<span aria-hidden="true">${dark?'☀️':'🌙'}</span><span>${dark?'ライトモード':'ダークモード'}</span>`;
+    button.setAttribute('aria-pressed',String(dark));
+  });
+}
+applyTheme(preferredTheme());
+document.addEventListener('click',event=>{
+  const button=event.target.closest('[data-theme-toggle]');
+  if(!button)return;
+  const next=root.dataset.theme==='dark'?'light':'dark';
+  localStorage.setItem(THEME_KEY,next);
+  applyTheme(next);
+});
+
+const params=new URLSearchParams(location.search);
+const path=location.pathname.replace(/\/index\.html$/,'/');
+const isHome=/\/NEET-note\/$/.test(path);
+const intro=document.getElementById('neetIntro');
 const shouldIntro=isHome&&!params.has('mode')&&!params.has('song')&&!document.referrer.startsWith(`${location.origin}/NEET-note/`)&&sessionStorage.getItem('neet-note-intro-shown')!=='1';
-if(intro){if(shouldIntro)sessionStorage.setItem('neet-note-intro-shown','1');else{intro.remove();document.body.style.overflow=''}}
-const preferred=()=>{const s=localStorage.getItem(THEME);return s==='light'||s==='dark'?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')};
-const apply=theme=>{root.dataset.theme=theme;root.style.colorScheme=theme;meta?.setAttribute('content',theme==='dark'?'#141311':'#d9c7a8');document.querySelectorAll('[data-theme-toggle]').forEach(b=>{const d=theme==='dark';b.innerHTML=`<span aria-hidden="true">${d?'☀️':'🌙'}</span><span>${d?'ライトモード':'ダークモード'}</span>`;b.setAttribute('aria-pressed',String(d))})};
-apply(preferred());
-document.addEventListener('click',e=>{const b=e.target.closest('[data-theme-toggle]');if(!b)return;const n=root.dataset.theme==='dark'?'light':'dark';localStorage.setItem(THEME,n);apply(n)});
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change',e=>{if(!localStorage.getItem(THEME))apply(e.matches?'dark':'light')});
-
-const side=document.getElementById('sideMenu');
-if(side&&!document.getElementById('neetHelpButton')){
- const helpButton=document.createElement('button');helpButton.id='neetHelpButton';helpButton.type='button';helpButton.className='menu-link';helpButton.innerHTML='<span class="menu-icon">❓</span><span>ヘルプ・使い方</span>';
- const theme=side.querySelector('[data-theme-toggle]');side.insertBefore(helpButton,theme||null);
- const style=document.createElement('style');style.textContent=`.neet-help-backdrop{position:fixed;inset:0;z-index:30000;display:none;place-items:center;padding:18px;background:rgba(17,24,39,.58)}.neet-help-backdrop.open{display:grid}.neet-help-dialog{width:min(720px,100%);max-height:84dvh;overflow:auto;padding:20px;background:var(--ui-surface,#fffdf8);color:var(--ui-text,#1f2937);border:1px solid var(--ui-line,#ded6c9);border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.3)}.neet-help-head{position:sticky;top:-20px;z-index:1;display:flex;align-items:center;justify-content:space-between;margin:-20px -20px 16px;padding:18px 20px;background:inherit;border-bottom:1px solid var(--ui-line,#ded6c9)}.neet-help-head h2{margin:0;font-size:1.25rem}.neet-help-close{width:38px;height:38px;border:0;border-radius:11px;background:var(--ui-surface-2,#f1f1f1);color:inherit;font-size:1.35rem}.neet-help-intro{color:var(--ui-muted,#6b7280);line-height:1.7}.neet-help-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.neet-help-item{padding:14px;border:1px solid var(--ui-line,#ded6c9);border-radius:14px;background:var(--ui-surface-2,#f7f2e9)}.neet-help-item b{display:block;margin-bottom:5px}.neet-help-item p{margin:0;color:var(--ui-muted,#6b7280);font-size:.88rem;line-height:1.65}@media(max-width:600px){.neet-help-backdrop{align-items:end;padding:0}.neet-help-dialog{max-height:88dvh;border-radius:22px 22px 0 0}.neet-help-grid{grid-template-columns:1fr}}`;
- document.head.appendChild(style);
- const tools=location.pathname.endsWith('/tools.html');
- const data=tools?['作曲・演奏支援ツール',[['コード進行ルーレット','キー・長短・ジャンルを選び、作曲の土台になる進行を生成する。'],['移調・カポ変換','コードを入力し、元のキーと変更先を選んで一括変換する。'],['メトロノーム','BPMと拍子を設定してテンポを確認する。'],['チューナー','マイクを許可し、中央に近づくよう楽器の音程を合わせる。'],['ドラム','スタイルとBPMを選び、簡易リズムを再生する。'],['AI Composer','保存した曲を選び、作曲アシスタントへ引き継ぐ。'],['バックアップ','曲データをJSONで保存・復元する。']]]:['作曲ノート',[['新しい曲','新規ノートを作り、タイトル・作家名・キー・BPMなどを入力する。'],['歌詞メモ','Aメロ・Bメロ・サビなどの歌詞を曲ごとに記録する。'],['コード進行メモ','ルート、種類、ベース音を選んでコードを追加する。'],['曲の構成','イントロ、Aメロ、サビなどの流れを記録する。'],['音源・ボイスメモ','録音したアイデアを曲ノートへ添付する。'],['検索','曲名・作家名・雰囲気・コード・歌詞から保存曲を探す。'],['保存と削除','保存して一覧へ戻る。不要な曲は編集画面から削除する。'],['AIに相談','現在の曲情報を作曲アシスタントへ引き継ぐ。']]];
- const modal=document.createElement('div');modal.className='neet-help-backdrop';modal.setAttribute('aria-hidden','true');modal.innerHTML=`<section class="neet-help-dialog" role="dialog" aria-modal="true"><div class="neet-help-head"><h2>${data[0]}の使い方</h2><button class="neet-help-close" type="button" aria-label="ヘルプを閉じる">×</button></div><p class="neet-help-intro">このページで使える機能をまとめているよ。</p><div class="neet-help-grid">${data[1].map(([t,d])=>`<div class="neet-help-item"><b>${t}</b><p>${d}</p></div>`).join('')}</div></section>`;document.body.appendChild(modal);
- const close=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow=''};
- helpButton.onclick=()=>{document.getElementById('sideMenu')?.classList.remove('open');document.getElementById('menuOverlay')?.classList.remove('open');modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'};
- modal.querySelector('.neet-help-close').onclick=close;modal.onclick=e=>{if(e.target===modal)close()};document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+if(intro){
+  if(shouldIntro)sessionStorage.setItem('neet-note-intro-shown','1');
+  else{intro.remove();document.body.style.overflow='';}
 }
 
-const list=document.getElementById('listView'),toolbar=list?.querySelector('.toolbar');
-if(list&&toolbar&&!document.getElementById('homeDashboard')){
- const style=document.createElement('style');style.textContent='.home-dashboard{margin-bottom:24px}.home-welcome{padding:26px;border:1px solid var(--border);border-radius:22px;background:var(--paper);box-shadow:var(--shadow)}.home-welcome h2{margin:0;font-size:clamp(1.55rem,5vw,2.25rem)}.home-welcome p{color:var(--muted);line-height:1.7}.home-actions{display:flex;gap:10px;flex-wrap:wrap}.home-tool-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:18px}.home-tool-card{padding:15px;border:1px solid var(--border);border-radius:16px;background:var(--paper);color:var(--text);text-decoration:none;font-weight:800}@media(max-width:760px){.home-tool-grid{grid-template-columns:repeat(2,1fr)}}';document.head.appendChild(style);
- const d=document.createElement('div');d.id='homeDashboard';d.className='home-dashboard';d.innerHTML='<section class="home-welcome"><h2>思いついた音を、すぐ形に。</h2><p>曲の記録からコード・スケール確認まで、ここから音楽制作を始めよう。</p><div class="home-actions"><button id="homeNewSongBtn" class="primary-button">＋ 新しい曲を作る</button><a class="ghost-button" href="tools.html" style="text-decoration:none">🧰 ツールを開く</a></div><div class="home-tool-grid"><a class="home-tool-card" href="https://akito0802.github.io/Cordhyo-/index.html">📚 コード</a><a class="home-tool-card" href="https://akito0802.github.io/scale/">🎸 スケール</a><a class="home-tool-card" href="https://akito0802.github.io/-h/">🎵 指板</a><a class="home-tool-card" href="tools.html">🧰 ツール</a></div></section>';
- list.insertBefore(d,toolbar);document.getElementById('homeNewSongBtn')?.addEventListener('click',()=>document.getElementById('newSongBtn')?.click());
+const sideMenu=document.getElementById('sideMenu');
+if(sideMenu){
+  const hasLyrics=[...sideMenu.querySelectorAll('a')].some(link=>link.getAttribute('href')?.includes('lyrics.html'));
+  if(!hasLyrics){
+    const lyricsLink=document.createElement('a');
+    lyricsLink.className='menu-link';
+    lyricsLink.href='lyrics.html';
+    lyricsLink.innerHTML='<span class="menu-icon">🎤</span><span>歌詞メモ</span>';
+    const toolsLink=[...sideMenu.querySelectorAll('a')].find(link=>link.getAttribute('href')?.includes('tools.html'));
+    sideMenu.insertBefore(lyricsLink,toolsLink||sideMenu.querySelector('[data-theme-toggle]')||null);
+  }
+
+  if(!document.getElementById('neetHelpButton')){
+    const helpButton=document.createElement('button');
+    helpButton.id='neetHelpButton';
+    helpButton.type='button';
+    helpButton.className='menu-link';
+    helpButton.innerHTML='<span class="menu-icon">❓</span><span>ヘルプ・使い方</span>';
+    sideMenu.insertBefore(helpButton,sideMenu.querySelector('[data-theme-toggle]')||null);
+
+    const style=document.createElement('style');
+    style.textContent='.neet-help-backdrop{position:fixed;inset:0;z-index:30000;display:none;place-items:center;padding:18px;background:rgba(17,24,39,.58)}.neet-help-backdrop.open{display:grid}.neet-help-dialog{width:min(680px,100%);max-height:84dvh;overflow:auto;padding:20px;background:var(--ui-surface,#fffdf8);color:var(--ui-text,#1f2937);border:1px solid var(--ui-line,#ded6c9);border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.3)}.neet-help-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.neet-help-close{width:38px;height:38px;border:0;border-radius:11px;background:var(--ui-surface-2,#f1f1f1);color:inherit;font-size:1.35rem}.neet-help-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.neet-help-item{padding:14px;border:1px solid var(--ui-line,#ded6c9);border-radius:14px;background:var(--ui-surface-2,#f7f2e9)}.neet-help-item b{display:block;margin-bottom:5px}.neet-help-item p{margin:0;color:var(--ui-muted,#6b7280);font-size:.88rem;line-height:1.65}@media(max-width:600px){.neet-help-backdrop{align-items:end;padding:0}.neet-help-dialog{max-height:88dvh;border-radius:22px 22px 0 0}.neet-help-grid{grid-template-columns:1fr}}';
+    document.head.appendChild(style);
+
+    const modal=document.createElement('div');
+    modal.className='neet-help-backdrop';
+    modal.setAttribute('aria-hidden','true');
+    modal.innerHTML='<section class="neet-help-dialog" role="dialog" aria-modal="true"><div class="neet-help-head"><h2>NEET NOTEの使い方</h2><button class="neet-help-close" type="button" aria-label="閉じる">×</button></div><div class="neet-help-grid"><div class="neet-help-item"><b>📝 作曲ノート</b><p>曲の情報、構成、コード、音源をまとめて保存する。</p></div><div class="neet-help-item"><b>🎤 歌詞メモ</b><p>作曲ノートとは別に、歌詞だけを独立して保存する。</p></div><div class="neet-help-item"><b>🧰 ツール</b><p>コード進行、移調、メトロノームなどを使う。</p></div><div class="neet-help-item"><b>☰ メニュー</b><p>各機能やダークモードへ移動する。</p></div></div></section>';
+    document.body.appendChild(modal);
+    const close=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';};
+    helpButton.addEventListener('click',()=>{
+      sideMenu.classList.remove('open');
+      document.getElementById('menuOverlay')?.classList.remove('open');
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    });
+    modal.querySelector('.neet-help-close')?.addEventListener('click',close);
+    modal.addEventListener('click',event=>{if(event.target===modal)close();});
+  }
 }
 
-// PWA登録とクラウド同期の共通ローダー
-if(!document.querySelector('link[rel="manifest"]')){const manifest=document.createElement('link');manifest.rel='manifest';manifest.href='manifest.webmanifest?v=2';document.head.appendChild(manifest)}
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(console.error))}
-const loadScript=(src,version='2')=>new Promise((resolve,reject)=>{if(document.querySelector(`script[src^="${src}"]`)){resolve();return}const s=document.createElement('script');s.src=`${src}?v=${version}`;s.onload=resolve;s.onerror=reject;document.body.appendChild(s)});
-loadScript('lyrics-memo.js','1').catch(console.error);
+const listView=document.getElementById('listView');
+const toolbar=listView?.querySelector('.toolbar');
+if(listView&&toolbar&&!document.getElementById('homeDashboard')){
+  const style=document.createElement('style');
+  style.textContent='.home-dashboard{margin-bottom:24px}.home-welcome{padding:26px;border:1px solid var(--border);border-radius:22px;background:var(--paper);box-shadow:var(--shadow)}.home-welcome h2{margin:0;font-size:clamp(1.55rem,5vw,2.25rem)}.home-welcome>p{color:var(--muted);line-height:1.7}.home-actions{display:flex;gap:10px;flex-wrap:wrap}.home-tool-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;margin-top:18px}.home-tool-card{display:flex;flex-direction:column;gap:6px;min-height:78px;padding:15px;border:1px solid var(--border);border-radius:16px;background:var(--paper);color:var(--text);text-decoration:none;font-weight:800}.home-tool-card small{color:var(--muted);font-size:.75rem;font-weight:600;line-height:1.45}.home-tool-card.lyrics{background:linear-gradient(145deg,var(--paper),rgba(236,72,153,.08))}@media(max-width:900px){.home-tool-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:620px){.home-tool-grid{grid-template-columns:repeat(2,1fr)}}';
+  document.head.appendChild(style);
+
+  const dashboard=document.createElement('div');
+  dashboard.id='homeDashboard';
+  dashboard.className='home-dashboard';
+  dashboard.innerHTML='<section class="home-welcome"><h2>思いついた音を、すぐ形に。</h2><p>曲の記録、独立した歌詞メモ、制作ツールまでここから始めよう。</p><div class="home-actions"><button id="homeNewSongBtn" class="primary-button">＋ 新しい曲を作る</button><a class="ghost-button" href="lyrics.html" style="text-decoration:none">🎤 歌詞メモを開く</a><a class="ghost-button" href="tools.html" style="text-decoration:none">🧰 ツールを開く</a></div><div class="home-tool-grid"><a class="home-tool-card lyrics" href="lyrics.html"><span>🎤 歌詞メモ</span><small>ノートとは別に歌詞を保存</small></a><a class="home-tool-card" href="https://akito0802.github.io/Cordhyo-/index.html"><span>📚 コード</span><small>コードフォームを確認</small></a><a class="home-tool-card" href="https://akito0802.github.io/scale/"><span>🎸 スケール</span><small>スケールを確認</small></a><a class="home-tool-card" href="https://akito0802.github.io/-h/"><span>🎵 指板</span><small>指板上の音を確認</small></a><a class="home-tool-card" href="tools.html"><span>🧰 ツール</span><small>制作支援機能を開く</small></a></div></section>';
+  listView.insertBefore(dashboard,toolbar);
+  document.getElementById('homeNewSongBtn')?.addEventListener('click',()=>document.getElementById('newSongBtn')?.click());
+}
+
+if(!document.querySelector('link[rel="manifest"]')){
+  const manifest=document.createElement('link');
+  manifest.rel='manifest';
+  manifest.href='manifest.webmanifest?v=13';
+  document.head.appendChild(manifest);
+}
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(console.error));
+}
+const loadScript=(src,version='3')=>new Promise((resolve,reject)=>{
+  if(document.querySelector(`script[src^="${src}"]`)){resolve();return;}
+  const script=document.createElement('script');
+  script.src=`${src}?v=${version}`;
+  script.onload=resolve;
+  script.onerror=reject;
+  document.body.appendChild(script);
+});
 loadScript('firebase-config.js').then(()=>loadScript('cloud-sync.js')).catch(console.error);
 })();
