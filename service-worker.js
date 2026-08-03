@@ -1,4 +1,4 @@
-const CACHE='neet-note-pwa-v11';
+const CACHE='neet-note-pwa-v12';
 const OFFLINE='./offline.html';
 const CORE=['./','./?mode=note','./index.html','./tools.html','./lyrics.html','./lyrics-page.js','./offline.html','./style.css','./background.css','./chord-picker.css','./print.css','./common-ui.css','./common-ui.js','./app.js','./structure-sync.js','./chord-picker.js','./print.js','./favicon.svg','./apple-touch-icon.png','./icon-192.png','./icon-512.png','./favicon-32x32.png','./favicon-16x16.png','./manifest.webmanifest'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()))});
