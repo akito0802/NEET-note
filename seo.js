@@ -8,6 +8,7 @@ const pages={
   '/NEET-note/voice-memo.html':{title:'無料のボイスメモ・メロディ録音 | NEET NOTE',description:'スマホやPCのマイクでメロディや音楽アイデアを録音・再生・保存できる無料のボイスメモWebアプリです。',canonical:BASE+'voice-memo.html'},
   '/NEET-note/ideas.html':{title:'音楽アイデアメモ | NEET NOTE',description:'曲名、歌詞、MV、ジャケット、演出などの音楽アイデアをカテゴリ別に保存・検索できる無料のメモWebアプリです。',canonical:BASE+'ideas.html'},
   '/NEET-note/tools.html':{title:'無料の作曲・演奏支援ツール | NEET NOTE',description:'コード進行ルーレット、移調・カポ変換、メトロノーム、チューナー、ドラムなどを無料で使える音楽制作ツール集です。',canonical:BASE+'tools.html'},
+  '/NEET-note/neeton-home.html':{title:'ニートンのおうち | NEET NOTE',description:'NEET NOTE公式マスコット「ニートン」のプロフィール、性格、好きなもの、ひみつの設定、今日のひとことを紹介するページです。',canonical:BASE+'neeton-home.html'},
   '/NEET-note/terms.html':{title:'利用規約 | NEET NOTE',description:'個人開発の無料音楽制作Webアプリ「NEET NOTE」の利用条件、禁止事項、保存データ、著作権、免責事項について掲載しています。',canonical:BASE+'terms.html'}
 };
 const data=pages[path]||pages['/NEET-note/'];
