@@ -1,6 +1,6 @@
-const CACHE='neet-note-pwa-v17';
+const CACHE='neet-note-pwa-v18';
 const OFFLINE='./offline.html';
-const CORE=['./','./?mode=note','./index.html','./tools.html','./lyrics.html','./lyrics-page.js','./voice-memo.html','./voice-memo.js','./ideas.html','./ideas.js','./seo.js','./robots.txt','./sitemap.xml','./offline.html','./style.css','./background.css','./chord-picker.css','./print.css','./common-ui.css','./common-ui.js','./app.js','./structure-sync.js','./chord-picker.js','./print.js','./favicon.svg','./apple-touch-icon.png','./icon-192.png','./icon-512.png','./favicon-32x32.png','./favicon-16x16.png','./manifest.webmanifest'];
+const CORE=['./','./?mode=note','./index.html','./tools.html','./lyrics.html','./lyrics-page.js','./voice-memo.html','./voice-memo.js','./ideas.html','./ideas.js','./terms.html','./seo.js','./robots.txt','./sitemap.xml','./offline.html','./style.css','./background.css','./chord-picker.css','./print.css','./common-ui.css','./common-ui.js','./app.js','./structure-sync.js','./chord-picker.js','./print.js','./favicon.svg','./apple-touch-icon.png','./icon-192.png','./icon-512.png','./favicon-32x32.png','./favicon-16x16.png','./manifest.webmanifest'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()).then(()=>self.clients.matchAll({type:'window'})).then(clients=>clients.forEach(client=>client.postMessage({type:'NEET_NOTE_UPDATED',cache:CACHE}))))});
 self.addEventListener('message',event=>{if(event.data?.type==='SKIP_WAITING')self.skipWaiting()});
