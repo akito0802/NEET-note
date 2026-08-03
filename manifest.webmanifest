@@ -3,7 +3,7 @@
   "short_name": "NEET NOTE",
   "description": "作曲・練習・記録をひとつにまとめる音楽制作ノート",
   "id": "/NEET-note/",
-  "start_url": "/NEET-note/?source=pwa",
+  "start_url": "/NEET-note/?source=pwa&icon=10",
   "scope": "/NEET-note/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
@@ -15,11 +15,12 @@
   "categories": ["music", "productivity", "utilities"],
   "prefer_related_applications": false,
   "icons": [
-    {"src":"apple-touch-icon.png","sizes":"180x180","type":"image/png","purpose":"any"},
-    {"src":"favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+    {"src":"icon-192.png?v=10","sizes":"180x180","type":"image/png","purpose":"any maskable"},
+    {"src":"icon-512.png?v=10","sizes":"180x180","type":"image/png","purpose":"any maskable"},
+    {"src":"apple-touch-icon.png?v=10","sizes":"180x180","type":"image/png","purpose":"any"}
   ],
   "shortcuts": [
-    {"name":"作曲ノートを開く","short_name":"ノート","description":"新しい曲や保存済みの曲を開く","url":"/NEET-note/?mode=note&source=shortcut","icons":[{"src":"apple-touch-icon.png","sizes":"180x180","type":"image/png"}]},
-    {"name":"制作ツールを開く","short_name":"ツール","description":"コード・メトロノームなどの制作ツールを開く","url":"/NEET-note/tools.html?source=shortcut","icons":[{"src":"apple-touch-icon.png","sizes":"180x180","type":"image/png"}]}
+    {"name":"作曲ノートを開く","short_name":"ノート","description":"新しい曲や保存済みの曲を開く","url":"/NEET-note/?mode=note&source=shortcut&icon=10","icons":[{"src":"apple-touch-icon.png?v=10","sizes":"180x180","type":"image/png"}]},
+    {"name":"制作ツールを開く","short_name":"ツール","description":"コード・メトロノームなどの制作ツールを開く","url":"/NEET-note/tools.html?source=shortcut&icon=10","icons":[{"src":"apple-touch-icon.png?v=10","sizes":"180x180","type":"image/png"}]}
   ]
 }
