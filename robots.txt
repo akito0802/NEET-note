@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://akito0802.github.io/NEET-note/sitemap.xml
