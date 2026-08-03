@@ -5,8 +5,8 @@ on:
   push:
     branches: [main]
     paths:
-      - icon-chunks/part1.txt
-      - .github/workflows/build-pwa-icons.yml
+      - 'icon-chunks/newpart*.txt'
+      - '.github/workflows/build-pwa-icons.yml'
 
 permissions:
   contents: write
@@ -17,9 +17,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Decode source icon
+      - name: Decode complete source icon
         run: |
-          base64 --decode icon-chunks/part1.txt > icon-source.png
+          cat icon-chunks/newpart1.txt icon-chunks/newpart2.txt icon-chunks/newpart3.txt icon-chunks/newpart4.txt icon-chunks/newpart5.txt icon-chunks/newpart6.txt | base64 --decode > icon-source.png
+          file icon-source.png
 
       - name: Install image tools
         run: sudo apt-get update && sudo apt-get install -y imagemagick
@@ -40,9 +41,9 @@ jobs:
           path = Path('manifest.webmanifest')
           data = json.loads(path.read_text())
           data['icons'] = [
-            {'src':'icon-192.png?v=9','sizes':'192x192','type':'image/png','purpose':'any maskable'},
-            {'src':'icon-512.png?v=9','sizes':'512x512','type':'image/png','purpose':'any maskable'},
-            {'src':'apple-touch-icon.png?v=9','sizes':'180x180','type':'image/png','purpose':'any'}
+            {'src':'icon-192.png?v=10','sizes':'192x192','type':'image/png','purpose':'any maskable'},
+            {'src':'icon-512.png?v=10','sizes':'512x512','type':'image/png','purpose':'any maskable'},
+            {'src':'apple-touch-icon.png?v=10','sizes':'180x180','type':'image/png','purpose':'any'}
           ]
           path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
           PY
@@ -54,7 +55,7 @@ jobs:
           import re
           path = Path('service-worker.js')
           text = path.read_text()
-          text = re.sub(r"const CACHE='[^']+';", "const CACHE='neet-note-pwa-v9';", text, count=1)
+          text = re.sub(r"const CACHE='[^']+';", "const CACHE='neet-note-pwa-v10';", text, count=1)
           for name in ['icon-192.png','icon-512.png','favicon-32x32.png','favicon-16x16.png']:
             entry = f"'./{name}'"
             if entry not in text:
