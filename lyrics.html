@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#d9c7a8">
+  <title>歌詞メモ | NEET NOTE</title>
+  <link rel="icon" type="image/png" href="favicon-32x32.png?v=10">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=10">
+  <link rel="manifest" href="manifest.webmanifest?v=10">
+  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="common-ui.css?v=1">
+  <style>
+    body{margin:0;background:var(--bg,#f3efe7);color:var(--text,#1f2937);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}
+    .lyrics-shell{width:min(1100px,calc(100% - 28px));margin:0 auto;padding:20px 0 48px}
+    .lyrics-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .lyrics-brand{display:flex;align-items:center;gap:12px}.lyrics-brand h1{margin:0;font-size:clamp(1.45rem,5vw,2rem)}
+    .back-link,.lyrics-button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 14px;border:1px solid var(--border,#ded6c9);border-radius:12px;background:var(--paper,#fffdf8);color:inherit;text-decoration:none;font-weight:800;cursor:pointer}
+    .lyrics-layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px}.lyrics-panel{border:1px solid var(--border,#ded6c9);border-radius:20px;background:var(--paper,#fffdf8);box-shadow:var(--shadow,0 12px 30px rgba(0,0,0,.08))}
+    .lyrics-sidebar{padding:15px}.lyrics-search{width:100%;box-sizing:border-box;padding:12px 13px;border:1px solid var(--border,#ded6c9);border-radius:12px;background:var(--surface,#faf7f1);color:inherit;font:inherit}
+    .lyrics-song-list{display:grid;gap:8px;margin-top:12px;max-height:70dvh;overflow:auto}.lyrics-song{width:100%;padding:12px;border:1px solid transparent;border-radius:13px;background:transparent;color:inherit;text-align:left;cursor:pointer}.lyrics-song:hover,.lyrics-song.active{background:var(--surface,#f4eee4);border-color:var(--border,#ded6c9)}.lyrics-song b{display:block}.lyrics-song small{display:block;margin-top:4px;color:var(--muted,#6b7280)}
+    .lyrics-editor{padding:20px}.lyrics-empty{display:grid;place-items:center;min-height:420px;text-align:center;color:var(--muted,#6b7280)}.lyrics-editor-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}.lyrics-editor-head h2{margin:3px 0 0}.lyrics-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.lyrics-count{color:var(--muted,#6b7280);font-size:.82rem;font-weight:700}
+    #lyricsText{width:100%;min-height:560px;box-sizing:border-box;padding:18px;border:1px solid var(--border,#ded6c9);border-radius:15px;background:var(--surface,#faf7f1);color:inherit;font:inherit;font-size:1rem;line-height:1.95;resize:vertical}.lyrics-status{margin-top:9px;color:var(--muted,#6b7280);font-size:.82rem}
+    @media(max-width:760px){.lyrics-layout{grid-template-columns:1fr}.lyrics-song-list{max-height:230px}.lyrics-editor{padding:15px}#lyricsText{min-height:480px}.lyrics-header{align-items:flex-start}.lyrics-editor-head{display:block}.lyrics-actions{justify-content:flex-start;margin-top:10px}}
+  </style>
+</head>
+<body>
+  <main class="lyrics-shell">
+    <header class="lyrics-header">
+      <div class="lyrics-brand"><a class="back-link" href="./?mode=note">← ノート</a><div><p class="eyebrow">LYRICS NOTE</p><h1>歌詞メモ</h1></div></div>
+      <a class="back-link" href="tools.html">🧰 ツール</a>
+    </header>
+    <div class="lyrics-layout">
+      <aside class="lyrics-panel lyrics-sidebar">
+        <input id="lyricsSearch" class="lyrics-search" type="search" placeholder="曲名・歌詞で検索">
+        <div id="lyricsSongList" class="lyrics-song-list"></div>
+      </aside>
+      <section class="lyrics-panel lyrics-editor">
+        <div id="lyricsEmpty" class="lyrics-empty"><div><div style="font-size:3rem">🎤</div><h2>曲を選んでね</h2><p>左の一覧から曲を選ぶと、歌詞を書けるよ。</p></div></div>
+        <div id="lyricsWorkspace" hidden>
+          <div class="lyrics-editor-head">
+            <div><p class="eyebrow">NOW EDITING</p><h2 id="lyricsTitle">無題の曲</h2><div id="lyricsCount" class="lyrics-count">0文字</div></div>
+            <div class="lyrics-actions"><button id="insertSection" class="lyrics-button" type="button">＋ セクション</button><button id="copyLyrics" class="lyrics-button" type="button">コピー</button><a id="openSong" class="lyrics-button" href="./?mode=note">曲情報を開く</a></div>
+          </div>
+          <textarea id="lyricsText" placeholder="【Aメロ】\n\n【Bメロ】\n\n【サビ】"></textarea>
+          <div id="lyricsStatus" class="lyrics-status">保存済み</div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="common-ui.js?v=6"></script>
+  <script src="lyrics-page.js?v=1"></script>
+</body>
+</html>
