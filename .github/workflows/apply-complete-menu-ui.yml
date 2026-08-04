@@ -17,14 +17,13 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re
 
           changed=[]
           for p in Path('.').glob('*.html'):
               s=p.read_text(encoding='utf-8')
               if 'menu-ui.js' in s:
                   continue
-              tag='<script src="menu-ui.js?v=20260805-1"></script>'
+              tag='<script src="menu-ui.js?v=20260805-2"></script>'
               if '</body>' in s:
                   s=s.replace('</body>',tag+'\n</body>',1)
               else:
@@ -32,8 +31,6 @@ jobs:
               p.write_text(s,encoding='utf-8')
               changed.append(str(p))
           print('updated:', ', '.join(changed))
-          if not changed:
-              print('No HTML files needed changes')
           PY
       - name: Commit unified menu
         run: |
