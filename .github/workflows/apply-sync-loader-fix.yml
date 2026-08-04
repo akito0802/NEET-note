@@ -46,3 +46,5 @@ jobs:
           git add common-ui.js lyrics.html calendar.html
           git commit -m "歌詞メモとカレンダーでクラウド同期を有効化"
           git push
+
+# trigger: 2026-08-05
