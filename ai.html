@@ -63,6 +63,6 @@
   <script>
     (()=>{const menu=document.getElementById('sideMenu'),overlay=document.getElementById('menuOverlay'),openBtn=document.getElementById('menuOpenBtn'),closeBtn=document.getElementById('menuCloseBtn');const open=()=>{menu.classList.add('open');overlay.classList.add('open');menu.setAttribute('aria-hidden','false');openBtn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'};const close=()=>{menu.classList.remove('open');overlay.classList.remove('open');menu.setAttribute('aria-hidden','true');openBtn.setAttribute('aria-expanded','false');document.body.style.overflow=''};openBtn.addEventListener('click',open);closeBtn.addEventListener('click',close);overlay.addEventListener('click',close);document.addEventListener('keydown',e=>{if(e.key==='Escape')close()})})();
   </script>
-<script src="menu-ui.js?v=20260805-1"></script>
+<script src="menu-ui.js?v=20260805-3"></script>
 </body>
 </html>
