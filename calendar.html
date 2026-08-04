@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#d9c7a8">
+  <title>制作カレンダー | NEET NOTE</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=12">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=12">
+  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="background.css?v=1">
+  <link rel="stylesheet" href="common-ui.css?v=1">
+  <style>
+    :root{--cal-accent:#a97845;--cal-soft:#f2e7d8}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100dvh;color:var(--text,#27231f);background:var(--bg,#eee7dc);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}
+    .calendar-shell{width:min(1120px,calc(100% - 28px));margin:0 auto;padding:20px 0 calc(36px + env(safe-area-inset-bottom))}
+    .calendar-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+    .header-left{display:flex;align-items:center;gap:12px}.header-left h1{margin:0;font-size:clamp(1.55rem,5vw,2.2rem)}.eyebrow{margin:0 0 4px;color:var(--muted,#756f67);font-size:.68rem;font-weight:800;letter-spacing:.16em}
+    .menu-button{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--border,rgba(0,0,0,.1));border-radius:12px;background:var(--paper,#fffdf8);color:var(--text,#27231f);font-size:1.3rem;cursor:pointer}
+    .menu-overlay{position:fixed;inset:0;z-index:9998;background:rgba(17,24,39,.42);opacity:0;visibility:hidden;pointer-events:none;transition:.2s}.menu-overlay.open{opacity:1;visibility:visible;pointer-events:auto}
+    .side-menu{position:fixed;top:0;left:0;z-index:9999;width:min(82vw,300px);height:100dvh;padding:24px 18px;background:var(--paper,#fffdf8);box-shadow:14px 0 34px rgba(0,0,0,.18);transform:translateX(-110%);visibility:hidden;transition:.22s}.side-menu.open{transform:translateX(0);visibility:visible}.side-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.side-menu-head h2{margin:0;font-size:1.15rem}.menu-close{width:36px;height:36px;border:0;border-radius:10px;background:rgba(127,127,127,.12);color:inherit;font-size:1.3rem}.menu-link{display:flex;align-items:center;gap:12px;width:100%;padding:14px 12px;margin-bottom:8px;border:0;border-radius:12px;color:var(--text,#27231f);background:transparent;text-decoration:none;font-weight:700}.menu-link.current{background:var(--cal-soft)}[data-theme="dark"] .menu-link.current{background:rgba(169,120,69,.22)}.menu-icon{width:28px;text-align:center;font-size:1.15rem}
+    .calendar-card{padding:clamp(16px,3vw,24px);border:1px solid var(--border,rgba(0,0,0,.1));border-radius:22px;background:var(--paper,#fffdf8);box-shadow:var(--shadow,0 10px 30px rgba(0,0,0,.07))}
+    .month-toolbar{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:10px;margin-bottom:18px}.month-toolbar h2{margin:0;text-align:center;font-size:clamp(1.2rem,4vw,1.55rem)}.nav-button{width:44px;height:44px;border:1px solid var(--border,rgba(0,0,0,.1));border-radius:13px;background:var(--paper,#fffdf8);color:inherit;font-size:1.25rem;cursor:pointer}.today-button{display:block;margin:0 auto 16px;padding:8px 15px;border:1px solid var(--border,rgba(0,0,0,.1));border-radius:999px;background:transparent;color:inherit;font-weight:800;cursor:pointer}
+    .weekday-grid,.days-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.weekday{padding:6px 0;text-align:center;color:var(--muted,#756f67);font-size:.72rem;font-weight:800}.day{position:relative;min-height:92px;padding:9px;border:1px solid var(--border,rgba(0,0,0,.08));border-radius:14px;background:var(--paper,#fffdf8);color:inherit;text-align:left;cursor:pointer;overflow:hidden}.day:hover{transform:translateY(-1px)}.day.other{opacity:.38}.day.today{outline:2px solid var(--cal-accent);outline-offset:-2px}.day.selected{background:var(--cal-soft)}[data-theme="dark"] .day.selected{background:rgba(169,120,69,.22)}.day-number{font-weight:900}.day-events{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}.event-dot{display:grid;place-items:center;width:24px;height:24px;border-radius:7px;background:rgba(169,120,69,.12);font-size:.78rem}
+    .content-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:18px;margin-top:18px}.detail-card,.stats-card{padding:20px;border:1px solid var(--border,rgba(0,0,0,.1));border-radius:20px;background:var(--paper,#fffdf8);box-shadow:var(--shadow,0 10px 30px rgba(0,0,0,.06))}.detail-card h2,.stats-card h2{margin:0 0 14px}.activity-list{display:grid;gap:9px}.activity{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;border:1px solid var(--border,rgba(0,0,0,.08));border-radius:14px}.activity-main{display:flex;align-items:center;gap:10px}.empty-message{padding:24px 10px;color:var(--muted,#756f67);text-align:center}.add-button{width:100%;margin-top:14px;padding:13px;border:0;border-radius:14px;background:var(--cal-accent);color:white;font-weight:900;cursor:pointer}.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:15px;border-radius:15px;background:var(--cal-soft)}[data-theme="dark"] .stat{background:rgba(169,120,69,.18)}.stat strong{display:block;font-size:1.4rem}.stat span{color:var(--muted,#756f67);font-size:.76rem;font-weight:700}
+    dialog{width:min(92vw,430px);padding:0;border:0;border-radius:22px;background:var(--paper,#fffdf8);color:var(--text,#27231f);box-shadow:0 28px 80px rgba(0,0,0,.3)}dialog::backdrop{background:rgba(0,0,0,.45)}.dialog-body{padding:22px}.dialog-body h2{margin-top:0}.field{display:grid;gap:7px;margin-bottom:14px}.field span{font-size:.78rem;font-weight:800}.field select,.field input,.field textarea{width:100%;padding:12px;border:1px solid var(--border,rgba(0,0,0,.12));border-radius:12px;background:var(--paper,#fffdf8);color:inherit;font:inherit}.dialog-actions{display:flex;justify-content:flex-end;gap:9px}.ghost,.save{padding:11px 16px;border-radius:12px;font-weight:800;cursor:pointer}.ghost{border:1px solid var(--border,rgba(0,0,0,.1));background:transparent;color:inherit}.save{border:0;background:var(--cal-accent);color:white}
+    @media(max-width:760px){.calendar-shell{width:min(100% - 18px,720px);padding-top:12px}.calendar-header{align-items:flex-start}.content-grid{grid-template-columns:1fr}.day{min-height:72px;padding:7px}.event-dot{width:20px;height:20px;font-size:.68rem}.weekday-grid,.days-grid{gap:4px}.calendar-card{padding:13px;border-radius:18px}}
+    @media(max-width:430px){.header-left h1{font-size:1.35rem}.day{min-height:62px;border-radius:11px}.day-events{gap:2px}.event-dot{width:18px;height:18px}.stats-grid{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <div id="menuOverlay" class="menu-overlay"></div>
+  <nav id="sideMenu" class="side-menu" aria-hidden="true" aria-label="サイトメニュー">
+    <div class="side-menu-head"><h2>NEET NOTE</h2><button id="menuCloseBtn" class="menu-close" type="button" aria-label="メニューを閉じる">×</button></div>
+    <a class="menu-link" href="./?mode=note"><span class="menu-icon">📝</span><span>ノート</span></a>
+    <a class="menu-link current" href="calendar.html"><span class="menu-icon">📅</span><span>制作カレンダー</span></a>
+    <button class="theme-toggle menu-link" type="button" data-theme-toggle></button>
+  </nav>
+
+  <main class="calendar-shell">
+    <header class="calendar-header">
+      <div class="header-left"><button id="menuOpenBtn" class="menu-button" type="button" aria-label="メニューを開く">☰</button><div><p class="eyebrow">CREATION LOG</p><h1>制作カレンダー</h1></div></div>
+    </header>
+
+    <section class="calendar-card">
+      <div class="month-toolbar"><button id="prevMonth" class="nav-button" aria-label="前の月">‹</button><h2 id="monthTitle"></h2><button id="nextMonth" class="nav-button" aria-label="次の月">›</button></div>
+      <button id="todayButton" class="today-button">今日へ戻る</button>
+      <div class="weekday-grid"><div class="weekday">日</div><div class="weekday">月</div><div class="weekday">火</div><div class="weekday">水</div><div class="weekday">木</div><div class="weekday">金</div><div class="weekday">土</div></div>
+      <div id="daysGrid" class="days-grid"></div>
+    </section>
+
+    <section class="content-grid">
+      <article class="detail-card"><h2 id="selectedTitle">今日の制作</h2><div id="activityList" class="activity-list"></div><button id="addActivity" class="add-button">＋ 制作記録を追加</button></article>
+      <aside class="stats-card"><h2>今月の記録</h2><div class="stats-grid"><div class="stat"><strong id="statDays">0</strong><span>制作日数</span></div><div class="stat"><strong id="statCount">0</strong><span>記録件数</span></div><div class="stat"><strong id="statMinutes">0分</strong><span>制作時間</span></div><div class="stat"><strong id="statStreak">0日</strong><span>連続制作</span></div></div></aside>
+    </section>
+  </main>
+
+  <dialog id="activityDialog"><form id="activityForm" class="dialog-body"><h2>制作記録を追加</h2><label class="field"><span>種類</span><select id="activityType"><option value="note">📝 ノート</option><option value="lyrics">🎤 歌詞</option><option value="voice">🎙 録音</option><option value="idea">💡 アイデア</option><option value="practice">🎸 練習</option><option value="mix">🎧 ミックス</option></select></label><label class="field"><span>制作時間（分）</span><input id="activityMinutes" type="number" min="0" max="1440" value="30"></label><label class="field"><span>メモ</span><textarea id="activityMemo" rows="3" maxlength="180" placeholder="今日やったこと"></textarea></label><div class="dialog-actions"><button id="cancelDialog" class="ghost" type="button">キャンセル</button><button class="save" type="submit">保存</button></div></form></dialog>
+
+  <script src="common-ui.js?v=7"></script>
+  <script>
+  (()=>{
+    const KEY='neet-note-calendar-v1';
+    const icons={note:'📝',lyrics:'🎤',voice:'🎙',idea:'💡',practice:'🎸',mix:'🎧'};
+    const labels={note:'ノート',lyrics:'歌詞',voice:'録音',idea:'アイデア',practice:'練習',mix:'ミックス'};
+    const pad=n=>String(n).padStart(2,'0');
+    const dateKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    const today=new Date();today.setHours(0,0,0,0);
+    let view=new Date(today.getFullYear(),today.getMonth(),1),selected=new Date(today);
+    let data={};try{data=JSON.parse(localStorage.getItem(KEY)||'{}')}catch{data={}}
+    const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
+    const monthTitle=document.getElementById('monthTitle'),daysGrid=document.getElementById('daysGrid'),selectedTitle=document.getElementById('selectedTitle'),activityList=document.getElementById('activityList');
+    function render(){monthTitle.textContent=`${view.getFullYear()}年${view.getMonth()+1}月`;daysGrid.innerHTML='';const start=new Date(view.getFullYear(),view.getMonth(),1-view.getDay());for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);const key=dateKey(d),items=data[key]||[];const b=document.createElement('button');b.type='button';b.className='day';if(d.getMonth()!==view.getMonth())b.classList.add('other');if(key===dateKey(today))b.classList.add('today');if(key===dateKey(selected))b.classList.add('selected');b.innerHTML=`<span class="day-number">${d.getDate()}</span><span class="day-events">${items.slice(0,4).map(x=>`<span class="event-dot">${icons[x.type]||'♪'}</span>`).join('')}</span>`;b.onclick=()=>{selected=new Date(d);render()};daysGrid.appendChild(b)}renderDetail();renderStats()}
+    function renderDetail(){const key=dateKey(selected),items=data[key]||[];selectedTitle.textContent=`${selected.getMonth()+1}月${selected.getDate()}日の制作`;activityList.innerHTML=items.length?items.map((x,i)=>`<div class="activity"><div class="activity-main"><span>${icons[x.type]||'♪'}</span><div><strong>${labels[x.type]||'制作'}</strong>${x.memo?`<div>${escapeHtml(x.memo)}</div>`:''}</div></div><div><strong>${x.minutes||0}分</strong> <button type="button" data-delete="${i}" aria-label="削除">×</button></div></div>`).join(''):'<div class="empty-message">まだ記録がないよ。<br>今日やった制作を残してみよう。</div>';activityList.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>{items.splice(Number(b.dataset.delete),1);if(items.length)data[key]=items;else delete data[key];save();render()})}
+    function renderStats(){const prefix=`${view.getFullYear()}-${pad(view.getMonth()+1)}-`;const entries=Object.entries(data).filter(([k])=>k.startsWith(prefix)&&data[k].length);const count=entries.reduce((n,[,v])=>n+v.length,0),mins=entries.reduce((n,[,v])=>n+v.reduce((a,x)=>a+(Number(x.minutes)||0),0),0);document.getElementById('statDays').textContent=entries.length;document.getElementById('statCount').textContent=count;document.getElementById('statMinutes').textContent=mins>=60?`${Math.floor(mins/60)}時間${mins%60?mins%60+'分':''}`:`${mins}分`;let streak=0,cursor=new Date(today);while((data[dateKey(cursor)]||[]).length){streak++;cursor.setDate(cursor.getDate()-1)}document.getElementById('statStreak').textContent=`${streak}日`}
+    const dialog=document.getElementById('activityDialog');document.getElementById('addActivity').onclick=()=>dialog.showModal();document.getElementById('cancelDialog').onclick=()=>dialog.close();document.getElementById('activityForm').onsubmit=e=>{e.preventDefault();const key=dateKey(selected);(data[key]??=[]).push({type:document.getElementById('activityType').value,minutes:Number(document.getElementById('activityMinutes').value)||0,memo:document.getElementById('activityMemo').value.trim(),createdAt:Date.now()});save();document.getElementById('activityMemo').value='';dialog.close();render()};
+    document.getElementById('prevMonth').onclick=()=>{view.setMonth(view.getMonth()-1);render()};document.getElementById('nextMonth').onclick=()=>{view.setMonth(view.getMonth()+1);render()};document.getElementById('todayButton').onclick=()=>{view=new Date(today.getFullYear(),today.getMonth(),1);selected=new Date(today);render()};
+    const esc={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>esc[m])}
+    const menu=document.getElementById('sideMenu'),overlay=document.getElementById('menuOverlay');const open=()=>{menu.classList.add('open');overlay.classList.add('open')},close=()=>{menu.classList.remove('open');overlay.classList.remove('open')};document.getElementById('menuOpenBtn').onclick=open;document.getElementById('menuCloseBtn').onclick=close;overlay.onclick=close;
+    render();
+  })();
+  </script>
+</body>
+</html>
