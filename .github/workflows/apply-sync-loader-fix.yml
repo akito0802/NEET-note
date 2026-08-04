@@ -1,4 +1,4 @@
-name: Apply sync loader fix
+name: Apply sync refresh fix
 
 on:
   push:
@@ -13,38 +13,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Patch sync loading
+      - name: Patch sync refresh
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
+          p = Path('cloud-sync.js')
+          s = p.read_text(encoding='utf-8')
+          old = "if(changed&&!sessionStorage.getItem('neet-sync-reloaded')){sessionStorage.setItem('neet-sync-reloaded','1');location.reload()}"
+          new = "if(changed){window.dispatchEvent(new CustomEvent('neet-note:cloud-synced'));location.reload()}"
+          if old not in s:
+              raise SystemExit('cloud refresh condition not found')
+          p.write_text(s.replace(old, new), encoding='utf-8')
+
           p = Path('common-ui.js')
-          s = p.read_text(encoding='utf-8')
-          old = "if(!location.pathname.endsWith('voice-memo.html')&&!location.pathname.endsWith('ideas.html')&&!location.pathname.endsWith('terms.html')&&!location.pathname.endsWith('neeton-home.html')&&!location.pathname.endsWith('calendar.html'))load('firebase-config.js').then(()=>load('cloud-sync.js')).catch(console.error);"
-          new = "if(!location.pathname.endsWith('terms.html')&&!location.pathname.endsWith('neeton-home.html'))load('firebase-config.js','20260805').then(()=>load('cloud-sync.js','20260805')).catch(console.error);"
-          if old not in s:
-              raise SystemExit('common-ui sync condition not found')
-          p.write_text(s.replace(old, new), encoding='utf-8')
-
-          p = Path('lyrics.html')
-          s = p.read_text(encoding='utf-8')
-          old = '<script src="lyrics-page.js?v=3"></script>'
-          new = '<script src="common-ui.js?v=20260805"></script><script src="lyrics-page.js?v=4"></script>'
-          if old not in s:
-              raise SystemExit('lyrics script tag not found')
-          p.write_text(s.replace(old, new), encoding='utf-8')
-
-          p = Path('calendar.html')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace('<script src="common-ui.js?v=7"></script>', '<script src="common-ui.js?v=20260805"></script>')
+          s = p.read_text(encoding='utf-8').replace("load('firebase-config.js','20260805').then(()=>load('cloud-sync.js','20260805'))", "load('firebase-config.js','20260805b').then(()=>load('cloud-sync.js','20260805b'))")
           p.write_text(s, encoding='utf-8')
+
+          for name in ('lyrics.html','calendar.html'):
+              p = Path(name)
+              s = p.read_text(encoding='utf-8').replace('common-ui.js?v=20260805', 'common-ui.js?v=20260805b')
+              p.write_text(s, encoding='utf-8')
           PY
       - name: Commit fix
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add common-ui.js lyrics.html calendar.html
-          git commit -m "歌詞メモとカレンダーでクラウド同期を有効化"
+          git add cloud-sync.js common-ui.js lyrics.html calendar.html
+          git commit -m "同期後に各ページを確実に更新"
           git push
 
-# trigger: 2026-08-05
+# trigger: refresh-fix
