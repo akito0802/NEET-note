@@ -1,0 +1,36 @@
+name: Add theory links to complete menu
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-theory-links-to-menu.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add code scale and fretboard links
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('menu-ui.js')
+          s=p.read_text(encoding='utf-8')
+          old=" ['calendar.html','📅','制作カレンダー',page==='calendar.html'],\n ['neeton-home.html','🏡','ニートンのおうち',page==='neeton-home.html'],"
+          new=" ['calendar.html','📅','制作カレンダー',page==='calendar.html'],\n ['https://akito0802.github.io/Cordhyo-/index.html','📚','コード辞典',false],\n ['https://akito0802.github.io/scale/','🎸','スケール辞典',false],\n ['https://akito0802.github.io/-h/','🎵','指板',false],\n ['neeton-home.html','🏡','ニートンのおうち',page==='neeton-home.html'],"
+          if old not in s:
+              raise SystemExit('menu insertion point not found')
+          s=s.replace(old,new,1)
+          s=s.replace("ノート・歌詞・録音・アイデア・制作ツール・制作カレンダーを、同じメニューから移動できるよ。","ノート・歌詞・録音・アイデア・制作ツール・制作カレンダー・コード・スケール・指板へ、同じメニューから移動できるよ。")
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add menu-ui.js
+          git commit -m "ホームメニューにコード・スケール・指板を追加"
+          git push
