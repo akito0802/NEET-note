@@ -24,6 +24,21 @@ if(list&&toolbar&&!document.getElementById('homeDashboard')){
  const d=document.createElement('div');d.id='homeDashboard';d.className='home-dashboard';d.innerHTML='<section class="home-welcome"><h2>思いついた音を、すぐ形に。</h2><p>作曲・歌詞・録音・アイデアを、それぞれ使いやすい場所に保存しよう。</p><div class="home-actions"><button id="homeNewSongBtn" class="primary-button">＋ 新しい曲を作る</button></div><p class="home-section-label">QUICK ACCESS</p><div class="home-tool-grid"><a class="home-tool-card lyrics" href="lyrics.html"><span>🎤 歌詞メモ</span><small>歌詞だけを独立して保存</small></a><a class="home-tool-card voice" href="voice-memo.html"><span>🎙 ボイスメモ</span><small>メロディをその場で録音</small></a><a class="home-tool-card ideas" href="ideas.html"><span>💡 アイデアメモ</span><small>曲名・MV・演出案を記録</small></a><a class="home-tool-card tools" href="tools.html"><span>🧰 制作ツール</span><small>移調・メトロノームなど</small></a><a class="home-tool-card" href="https://akito0802.github.io/Cordhyo-/index.html"><span>📚 コード</span><small>コードフォームを確認</small></a><a class="home-tool-card" href="https://akito0802.github.io/scale/"><span>🎸 スケール・指板</span><small>音階と指板上の音を確認</small></a></div></section>';list.insertBefore(d,toolbar);document.getElementById('homeNewSongBtn')?.addEventListener('click',()=>document.getElementById('newSongBtn')?.click())
 }
 
+if(!document.getElementById('neetonPageMascot')&&!location.pathname.endsWith('neeton-home.html')){
+ const page=location.pathname.split('/').pop()||'index.html';
+ const variants={
+  'index.html':{label:'今日もいっしょに作ろう',x:'0%',y:'0%'},
+  'lyrics.html':{label:'歌詞のひらめき、メモしよ',x:'50%',y:'0%'},
+  'voice-memo.html':{label:'メロディを忘れないうちに',x:'100%',y:'0%'},
+  'ideas.html':{label:'そのアイデア、最高かも',x:'0%',y:'33.333%'},
+  'tools.html':{label:'制作をちょっとお手伝い',x:'50%',y:'33.333%'},
+  'terms.html':{label:'大事なことを確認中',x:'100%',y:'33.333%'}
+ };
+ const v=variants[page]||variants['index.html'];
+ const style=document.createElement('style');style.textContent='.neeton-page-mascot{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:8500;display:flex;align-items:center;gap:10px;padding:8px 12px 8px 8px;border:1px solid var(--ui-line,rgba(0,0,0,.12));border-radius:999px;background:color-mix(in srgb,var(--ui-surface,#fffdf8) 94%,transparent);box-shadow:0 10px 28px rgba(0,0,0,.14);backdrop-filter:blur(10px);color:var(--ui-text,#1f2937);font-size:.76rem;font-weight:800;line-height:1.25;transition:.2s}.neeton-page-mascot:hover{transform:translateY(-2px)}.neeton-page-face{width:54px;height:54px;flex:0 0 auto;border-radius:50%;background-image:url("neeton-versions.svg?v=2");background-size:300% 400%;background-repeat:no-repeat;background-position:var(--nx) var(--ny);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}.neeton-page-close{display:grid;place-items:center;width:24px;height:24px;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.07);color:inherit;font-size:14px;cursor:pointer}@media(max-width:520px){.neeton-page-mascot{max-width:170px}.neeton-page-mascot span{display:none}.neeton-page-face{width:50px;height:50px}}';document.head.appendChild(style);
+ const mascot=document.createElement('aside');mascot.id='neetonPageMascot';mascot.className='neeton-page-mascot';mascot.setAttribute('aria-label',`ニートン：${v.label}`);mascot.innerHTML=`<div class="neeton-page-face" style="--nx:${v.x};--ny:${v.y}"></div><span>${v.label}</span><button class="neeton-page-close" type="button" aria-label="ニートンを閉じる">×</button>`;document.body.appendChild(mascot);mascot.querySelector('button').onclick=()=>mascot.remove();
+}
+
 if(!document.querySelector('link[rel="manifest"]')){const m=document.createElement('link');m.rel='manifest';m.href='manifest.webmanifest?v=19';document.head.appendChild(m)}
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(console.error));
 const load=(src,v='4')=>new Promise((r,j)=>{if(document.querySelector(`script[src^="${src}"]`)){r();return}const s=document.createElement('script');s.src=`${src}?v=${v}`;s.onload=r;s.onerror=j;document.body.appendChild(s)});
