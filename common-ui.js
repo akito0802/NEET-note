@@ -57,5 +57,5 @@ if(!document.getElementById('neetonPageMascot')&&!location.pathname.endsWith('ne
 if(!document.querySelector('link[rel="manifest"]')){const m=document.createElement('link');m.rel='manifest';m.href='manifest.webmanifest?v=19';document.head.appendChild(m)}
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(console.error));
 const load=(src,v='4')=>new Promise((r,j)=>{if(document.querySelector(`script[src^="${src}"]`)){r();return}const s=document.createElement('script');s.src=`${src}?v=${v}`;s.onload=r;s.onerror=j;document.body.appendChild(s)});
-if(!location.pathname.endsWith('voice-memo.html')&&!location.pathname.endsWith('ideas.html')&&!location.pathname.endsWith('terms.html')&&!location.pathname.endsWith('neeton-home.html')&&!location.pathname.endsWith('calendar.html'))load('firebase-config.js').then(()=>load('cloud-sync.js')).catch(console.error);
+if(!location.pathname.endsWith('terms.html')&&!location.pathname.endsWith('neeton-home.html'))load('firebase-config.js','20260805').then(()=>load('cloud-sync.js','20260805')).catch(console.error);
 })();
