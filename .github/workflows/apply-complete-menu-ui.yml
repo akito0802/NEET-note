@@ -20,8 +20,10 @@ jobs:
 
           changed=[]
           for p in Path('.').glob('*.html'):
+              if p.name.startswith('google'):
+                  continue
               s=p.read_text(encoding='utf-8')
-              if 'menu-ui.js' in s:
+              if '<body' not in s.lower() or 'menu-ui.js' in s:
                   continue
               tag='<script src="menu-ui.js?v=20260805-2"></script>'
               if '</body>' in s:
