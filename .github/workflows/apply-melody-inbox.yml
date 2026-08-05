@@ -1,0 +1,62 @@
+name: Apply melody and idea inbox
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-melody-inbox.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch existing files
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,re
+
+          p=Path('menu-ui.js'); s=p.read_text(encoding='utf-8')
+          marker=" ['calendar.html','📅','制作カレンダー',page==='calendar.html'],"
+          add=marker+"\n ['melody.html','🎹','メロディ入力',page==='melody.html'],"
+          if "'melody.html'" not in s and marker in s: s=s.replace(marker,add)
+          s=s.replace('ノート・歌詞・録音・アイデア・制作ツール・制作カレンダーを、同じメニューから移動できるよ。','ノート・歌詞・録音・アイデア・メロディ・制作ツール・制作カレンダーを、同じメニューから移動できるよ。')
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('cloud-sync.js'); s=p.read_text(encoding='utf-8')
+          s=s.replace("'neet-note-theme'];","'neet-note-theme','neet-note-melodies-v1'];")
+          s=s.replace("key==='neet-note-ideas-v1'","key==='neet-note-ideas-v1'||key==='neet-note-melodies-v1'")
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('ideas.html'); s=p.read_text(encoding='utf-8')
+          if 'idea-inbox.js' not in s:
+              s=s.replace('<script src="ideas.js?v=1"></script>','<script src="ideas.js?v=2"></script><script src="idea-inbox.js?v=1"></script>')
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('manifest.webmanifest'); data=json.loads(p.read_text(encoding='utf-8'))
+          data['share_target']={
+            'action':'/NEET-note/ideas.html',
+            'method':'GET',
+            'enctype':'application/x-www-form-urlencoded',
+            'params':{'title':'title','text':'text','url':'url'}
+          }
+          shortcuts=data.setdefault('shortcuts',[])
+          if not any(x.get('url','').startswith('/NEET-note/melody.html') for x in shortcuts):
+              shortcuts.append({'name':'メロディ入力を開く','short_name':'メロディ','description':'ピアノロールでメロディを入力','url':'/NEET-note/melody.html?source=shortcut','icons':[{'src':'apple-touch-icon.png?v=10','sizes':'180x180','type':'image/png'}]})
+          if not any(x.get('url','').startswith('/NEET-note/ideas.html') for x in shortcuts):
+              shortcuts.append({'name':'アイデア受信箱を開く','short_name':'受信箱','description':'共有されたリンクや文章を保存','url':'/NEET-note/ideas.html?source=shortcut','icons':[{'src':'apple-touch-icon.png?v=10','sizes':'180x180','type':'image/png'}]})
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+
+          for p in Path('.').glob('*.html'):
+              s=p.read_text(encoding='utf-8')
+              s=re.sub(r'menu-ui\.js\?v=[^"\']+', 'menu-ui.js?v=20260805-4', s)
+              p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add menu-ui.js cloud-sync.js ideas.html manifest.webmanifest '*.html'
+          git commit -m "メロディ入力とアイデア受信箱を既存機能へ統合"
+          git push
