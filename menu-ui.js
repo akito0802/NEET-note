@@ -10,6 +10,7 @@ const items=[
  ['ideas.html','💡','アイデアメモ',page==='ideas.html'],
  ['tools.html','🧰','制作ツール',page==='tools.html'],
  ['calendar.html','📅','制作カレンダー',page==='calendar.html'],
+ ['melody.html','🎹','メロディ入力',page==='melody.html'],
  ['https://akito0802.github.io/Cordhyo-/index.html','📚','コード辞典',false],
  ['https://akito0802.github.io/scale/','🎸','スケール辞典',false],
  ['https://akito0802.github.io/-h/','🎵','指板',false],

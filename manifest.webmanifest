@@ -6,21 +6,104 @@
   "start_url": "/NEET-note/?source=pwa&icon=10",
   "scope": "/NEET-note/",
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
   "background_color": "#141311",
   "theme_color": "#141311",
   "orientation": "portrait-primary",
   "lang": "ja",
   "dir": "ltr",
-  "categories": ["music", "productivity", "utilities"],
+  "categories": [
+    "music",
+    "productivity",
+    "utilities"
+  ],
   "prefer_related_applications": false,
   "icons": [
-    {"src":"icon-192.png?v=10","sizes":"180x180","type":"image/png","purpose":"any maskable"},
-    {"src":"icon-512.png?v=10","sizes":"180x180","type":"image/png","purpose":"any maskable"},
-    {"src":"apple-touch-icon.png?v=10","sizes":"180x180","type":"image/png","purpose":"any"}
+    {
+      "src": "icon-192.png?v=10",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png?v=10",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "apple-touch-icon.png?v=10",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
   ],
   "shortcuts": [
-    {"name":"作曲ノートを開く","short_name":"ノート","description":"新しい曲や保存済みの曲を開く","url":"/NEET-note/?mode=note&source=shortcut&icon=10","icons":[{"src":"apple-touch-icon.png?v=10","sizes":"180x180","type":"image/png"}]},
-    {"name":"制作ツールを開く","short_name":"ツール","description":"コード・メトロノームなどの制作ツールを開く","url":"/NEET-note/tools.html?source=shortcut&icon=10","icons":[{"src":"apple-touch-icon.png?v=10","sizes":"180x180","type":"image/png"}]}
-  ]
+    {
+      "name": "作曲ノートを開く",
+      "short_name": "ノート",
+      "description": "新しい曲や保存済みの曲を開く",
+      "url": "/NEET-note/?mode=note&source=shortcut&icon=10",
+      "icons": [
+        {
+          "src": "apple-touch-icon.png?v=10",
+          "sizes": "180x180",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "制作ツールを開く",
+      "short_name": "ツール",
+      "description": "コード・メトロノームなどの制作ツールを開く",
+      "url": "/NEET-note/tools.html?source=shortcut&icon=10",
+      "icons": [
+        {
+          "src": "apple-touch-icon.png?v=10",
+          "sizes": "180x180",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "メロディ入力を開く",
+      "short_name": "メロディ",
+      "description": "ピアノロールでメロディを入力",
+      "url": "/NEET-note/melody.html?source=shortcut",
+      "icons": [
+        {
+          "src": "apple-touch-icon.png?v=10",
+          "sizes": "180x180",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "アイデア受信箱を開く",
+      "short_name": "受信箱",
+      "description": "共有されたリンクや文章を保存",
+      "url": "/NEET-note/ideas.html?source=shortcut",
+      "icons": [
+        {
+          "src": "apple-touch-icon.png?v=10",
+          "sizes": "180x180",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/NEET-note/ideas.html",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }
