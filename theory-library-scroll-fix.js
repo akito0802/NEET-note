@@ -1,19 +1,29 @@
 (()=>{
 'use strict';
-function anchorLibrary(){
-  const root=document.getElementById('textbookLibrary');
-  if(!root)return;
-  const top=root.getBoundingClientRect().top+window.scrollY-8;
-  window.scrollTo({top,behavior:'smooth'});
-}
 function install(){
   const root=document.getElementById('textbookLibrary');
-  if(!root){setTimeout(install,120);return;}
+  if(!root){setTimeout(install,100);return;}
+
+  const selector='.tb-cat,.tb-row,.tb-result,.tb-back,[data-back="home"],[data-back="chapter"]';
+
   root.addEventListener('click',e=>{
-    const target=e.target.closest('.tb-cat,.tb-row,.tb-result,.tb-back');
+    const target=e.target.closest(selector);
     if(!target)return;
-    setTimeout(anchorLibrary,20);
-  });
+    const y=window.scrollY;
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        window.scrollTo({top:y,left:0,behavior:'auto'});
+      });
+    });
+  },true);
+
+  const level=root.querySelector('#tbLevel');
+  if(level){
+    level.addEventListener('change',()=>{
+      const y=window.scrollY;
+      requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:y,left:0,behavior:'auto'})));
+    },true);
+  }
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
 })();
