@@ -32,51 +32,36 @@
       }
     });
 
-    return {
-      preamble: preamble.join("\n").trim(),
-      blocks
-    };
+    return { preamble: preamble.join("\n").trim(), blocks };
   }
 
   function buildChordTemplate(sections, parsed) {
     const pools = new Map();
-
     parsed.blocks.forEach(block => {
       if (!pools.has(block.name)) pools.set(block.name, []);
       pools.get(block.name).push(block.body.join("\n").trim());
     });
-
     const useCount = new Map();
     const output = [];
-
     if (parsed.preamble) output.push(parsed.preamble);
-
     sections.forEach(section => {
       const index = useCount.get(section) || 0;
       const savedBodies = pools.get(section) || [];
       const body = savedBodies[index] || "";
       useCount.set(section, index + 1);
-
       output.push(`［${section}］${body ? `\n${body}` : ""}`);
     });
-
     return output.join("\n\n").trim();
   }
 
   function syncChordSections() {
     const sections = parseStructure(structureInput.value);
     if (!sections.length) return;
-
     const current = chordsInput.value;
     const parsed = parseChordBlocks(current);
-
-    // 既にコードだけを書いている場合は、勝手に内容を壊さない。
-    // 空欄、または見出し付きのコード欄だけを自動同期する。
     if (current.trim() && parsed.blocks.length === 0) return;
-
     const nextValue = buildChordTemplate(sections, parsed);
     if (nextValue === current.trim()) return;
-
     chordsInput.value = nextValue;
     chordsInput.dispatchEvent(new Event("input", { bubbles: true }));
   }
@@ -85,11 +70,10 @@
   structureInput.addEventListener("change", syncChordSections);
 })();
 
-// Main screen quick access loader
 (()=>{
   if(document.querySelector('script[data-neet-home-dashboard]'))return;
   const s=document.createElement('script');
-  s.src='home-dashboard.js?v=20260811-2';
+  s.src='home-dashboard.js?v=20260811-3';
   s.dataset.neetHomeDashboard='1';
   document.body.appendChild(s);
 })();
