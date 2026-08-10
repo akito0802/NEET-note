@@ -6,7 +6,7 @@ const isHome=page==='index.html'||page==='';
 const items=[
  ['index.html?mode=note','📝','ノート',isHome],
  ['lyrics.html','🎤','歌詞メモ',page==='lyrics.html'],
- ['voice-memo.html','🎙','ボイスメモ',page==='voice-memo.html'],
+ ['voice-memo.html','🎙','ボイスメモ',page==='voice-memo'],
  ['ideas.html','💡','アイデアメモ',page==='ideas.html'],
  ['tools.html','🧰','制作ツール',page==='tools.html'],
  ['calendar.html','📅','制作カレンダー',page==='calendar.html'],
@@ -45,4 +45,5 @@ nav.querySelector('#neetHelpMenu').onclick=()=>alert('ノート・歌詞・録�
 const cloudSlot=nav.querySelector('#neetCloudMenuSlot');
 const connectCloud=()=>{const original=document.getElementById('cloudSyncMenuButton');if(!original)return false;cloudSlot.onclick=()=>original.click();const label=original.querySelector('#cloudMenuLabel')?.textContent||'ログイン・同期';cloudSlot.querySelector('span:last-child').textContent=label;new MutationObserver(()=>{cloudSlot.querySelector('span:last-child').textContent=original.querySelector('#cloudMenuLabel')?.textContent||'ログイン・同期'}).observe(original,{subtree:true,childList:true,characterData:true});return true};
 if(!connectCloud()){let tries=0;const timer=setInterval(()=>{if(connectCloud()||++tries>30)clearInterval(timer)},300)}
+if(page==='theory-assist.html'&&!document.querySelector('script[data-neet-theory-guide]')){const g=document.createElement('script');g.src='theory-guide.js?v=20260810-1';g.dataset.neetTheoryGuide='1';document.body.appendChild(g)}
 })();
