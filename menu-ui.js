@@ -46,4 +46,5 @@ const cloudSlot=nav.querySelector('#neetCloudMenuSlot');
 const connectCloud=()=>{const original=document.getElementById('cloudSyncMenuButton');if(!original)return false;cloudSlot.onclick=()=>original.click();const label=original.querySelector('#cloudMenuLabel')?.textContent||'ログイン・同期';cloudSlot.querySelector('span:last-child').textContent=label;new MutationObserver(()=>{cloudSlot.querySelector('span:last-child').textContent=original.querySelector('#cloudMenuLabel')?.textContent||'ログイン・同期'}).observe(original,{subtree:true,childList:true,characterData:true});return true};
 if(!connectCloud()){let tries=0;const timer=setInterval(()=>{if(connectCloud()||++tries>30)clearInterval(timer)},300)}
 if(page==='theory-assist.html'&&!document.querySelector('script[data-neet-theory-guide]')){const g=document.createElement('script');g.src='theory-guide.js?v=20260810-2';g.dataset.neetTheoryGuide='1';document.body.appendChild(g)}
+if(page==='theory-assist.html'&&!document.querySelector('script[data-neet-theory-layout]')){const l=document.createElement('script');l.src='theory-layout-split.js?v=20260810-1';l.dataset.neetTheoryLayout='1';document.body.appendChild(l)}
 })();
