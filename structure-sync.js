@@ -85,11 +85,11 @@
   structureInput.addEventListener("change", syncChordSections);
 })();
 
-// Main screen dashboard loader
+// Main screen quick access loader
 (()=>{
   if(document.querySelector('script[data-neet-home-dashboard]'))return;
   const s=document.createElement('script');
-  s.src='home-dashboard.js?v=20260811-1';
+  s.src='home-dashboard.js?v=20260811-2';
   s.dataset.neetHomeDashboard='1';
   document.body.appendChild(s);
 })();
