@@ -12,17 +12,8 @@ function installStyles(){
   .neet-theory-nav-group.library-group{background:#fff9ef;border-color:#d8c9b5}
   .neet-theory-nav-label{display:block;margin:0 0 7px 3px;color:var(--muted,#71695f);font-size:.66rem;font-weight:950;letter-spacing:.08em}
   .neet-theory-nav-group .tabs{margin:0;padding:0;overflow-x:auto}
-  .neet-theory-nav-group.library-group .tab{min-width:150px;justify-content:center;background:#fff}
-  .neet-theory-nav-group.library-group .tab.active{background:var(--accent,#8b6f47)}
-  #library{position:relative}
-  #library>.grid{padding-top:2px}
-  .neet-library-intro{border:1px solid #d8c9b5!important;background:#fff9ef!important}
-  .neet-library-intro h2{margin-bottom:5px!important}
-  .neet-library-intro p{margin:0;color:#685a48;font-size:.78rem;line-height:1.62}
-  #neetUnifiedTheory{margin-top:0!important;grid-column:1/-1}
-  #library #neetUnifiedTheory{box-shadow:var(--shadow,0 10px 28px rgba(80,60,30,.07))}
-  .neet-guide-grid a{cursor:pointer}
-  @media(max-width:760px){.neet-theory-nav-shell{grid-template-columns:1fr}.neet-theory-nav-group.library-group .tab{min-width:0;width:100%}}
+  .neet-library-link{display:flex;align-items:center;justify-content:center;min-height:40px;padding:9px 14px;border:1px solid var(--accent,#8b6f47);border-radius:999px;background:var(--accent,#8b6f47);color:#fff;text-decoration:none;font-weight:850;white-space:nowrap}
+  @media(max-width:760px){.neet-theory-nav-shell{grid-template-columns:1fr}.neet-library-link{width:100%}}
   `;
   document.head.appendChild(s);
 }
@@ -33,7 +24,10 @@ function splitTopNavigation(){
   const buttons=[...tabs.querySelectorAll('.tab')];
   const lib=buttons.find(b=>b.dataset.tab==='library');
   const assist=buttons.filter(b=>b!==lib);
-  if(!lib||!assist.length)return;
+  if(!assist.length)return;
+
+  lib?.remove();
+  document.getElementById('library')?.remove();
 
   const shell=document.createElement('div');
   shell.className='neet-theory-nav-shell';
@@ -47,62 +41,36 @@ function splitTopNavigation(){
 
   const library=document.createElement('div');
   library.className='neet-theory-nav-group library-group';
-  library.innerHTML='<span class="neet-theory-nav-label">📚 読んで学ぶ</span>';
-  const libraryTabs=document.createElement('div');
-  libraryTabs.className='tabs';
-  libraryTabs.appendChild(lib);
-  library.appendChild(libraryTabs);
+  library.innerHTML='<span class="neet-theory-nav-label">📚 理論を読む</span><a class="neet-library-link" href="theory-library.html">統合理論ライブラリ →</a>';
 
   tabs.replaceWith(shell);
   shell.append(tools,library);
   shell.dataset.neetSplit='1';
 }
 
-function prepareLibraryPane(){
-  const pane=document.getElementById('library');
-  const grid=pane?.querySelector(':scope > .grid');
-  if(!pane||!grid)return;
-  if(!grid.querySelector('.neet-library-intro')){
-    const intro=document.createElement('section');
-    intro.className='card wide neet-library-intro';
-    intro.innerHTML='<h2>📚 理論ライブラリ <span class="hint">アシスト機能とは別エリア</span></h2><p>ここは分析や候補生成をする場所ではなく、理論を読んで理解するための専用エリア。PDFベースのコア理論と、コード辞典から統合したコード構成・ボイシング・モード・作曲理論をまとめて確認できるよ。</p>';
-    grid.prepend(intro);
-  }
-}
-
-function moveUnifiedLibrary(){
-  const pane=document.getElementById('library');
-  const grid=pane?.querySelector(':scope > .grid');
-  const unified=document.getElementById('neetUnifiedTheory');
-  if(!grid||!unified)return false;
-  if(unified.parentElement!==grid)grid.appendChild(unified);
-  unified.querySelector('.neet-original-link')?.remove();
-  const h=unified.querySelector('h2');
-  if(h)h.textContent='📚 統合理論ライブラリ';
-  return true;
+function removeInjectedLibrary(){
+  document.getElementById('neetUnifiedTheory')?.remove();
+  document.getElementById('neetQuickGlossary')?.remove();
+  document.getElementById('library')?.remove();
+  document.querySelector('.tab[data-tab="library"]')?.remove();
 }
 
 function fixGuideLinks(){
   document.querySelectorAll('.neet-guide-grid a').forEach(a=>{
-    a.removeAttribute('href');
-    a.setAttribute('role','button');
-    a.setAttribute('tabindex','0');
-    const openLibrary=()=>document.querySelector('.tab[data-tab="library"]')?.click();
-    a.onclick=e=>{e.preventDefault();openLibrary();window.scrollTo({top:0,behavior:'smooth'})};
-    a.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLibrary()}};
+    a.href='theory-library.html';
+    a.removeAttribute('role');
+    a.removeAttribute('tabindex');
+    a.onclick=null;
+    a.onkeydown=null;
   });
 }
 
 function run(){
   installStyles();
   splitTopNavigation();
-  prepareLibraryPane();
+  removeInjectedLibrary();
   fixGuideLinks();
-  if(moveUnifiedLibrary())return;
-  const obs=new MutationObserver(()=>{
-    fixGuideLinks();
-    if(moveUnifiedLibrary())obs.disconnect();
-  });
+  const obs=new MutationObserver(()=>{removeInjectedLibrary();fixGuideLinks()});
   obs.observe(document.body,{childList:true,subtree:true});
   setTimeout(()=>obs.disconnect(),10000);
 }
