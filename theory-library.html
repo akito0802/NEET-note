@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#d9c7a8">
+<title>統合理論ライブラリ | NEET NOTE</title>
+<link rel="icon" href="favicon.svg?v=2">
+<link rel="stylesheet" href="common-ui.css?v=1">
+<style>
+:root{--paper:#fffdf8;--ink:#1f2937;--muted:#71695f;--line:#ded6c9;--accent:#8b6f47;--soft:#f4eee4;--shadow:0 10px 28px rgba(80,60,30,.07)}
+*{box-sizing:border-box}body{margin:0;background:#f4efe6;color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Sans","Yu Gothic UI",sans-serif}.wrap{max-width:1120px;margin:auto;padding:16px 14px 110px}.top{display:flex;gap:12px;align-items:center;margin-bottom:10px}.menu-button{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--line);border-radius:12px;background:var(--paper);font-size:1.3rem}.eyebrow{font-size:.7rem;font-weight:900;letter-spacing:.14em;color:var(--muted)}h1{margin:2px 0 0;font-size:clamp(1.4rem,4vw,1.78rem)}.lead{margin:0 0 13px;color:var(--muted);line-height:1.65}.source-note{display:flex;gap:9px;align-items:flex-start;margin-bottom:13px;padding:11px 12px;border:1px solid #d8c9b5;border-radius:14px;background:#fff9ef;color:#685a48;font-size:.78rem;line-height:1.55}.source-note b{color:#443728}.back-link{display:inline-flex;align-items:center;gap:6px;margin:0 0 14px;padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--accent);font-size:.78rem;font-weight:900;text-decoration:none}.card{background:rgba(255,253,248,.98);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow)}#neetUnifiedTheory{margin-top:0!important}.library-placeholder{padding:22px;text-align:center;color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top"><button id="menuOpenBtn" class="menu-button" aria-label="メニューを開く">☰</button><div><div class="eyebrow">NEET NOTE THEORY LIBRARY</div><h1>統合理論ライブラリ</h1></div></header>
+<p class="lead">理論アシストとは切り離して、<b>音楽理論を読む・調べる・復習するための専用ページ</b>にしたよ。基礎からコード構成、進行、モード、転調、作曲応用までまとめて見られる。</p>
+<div class="source-note"><span>📘</span><div><b>理論アシスト＋旧コード辞典理論を統合</b><br>PDFをベースに強化した理論アシストの内容と、コード辞典側にあった理論項目を1つのライブラリとして整理。検索とカテゴリ分けで必要な項目だけ引けるようにしてるよ。</div></div>
+<a class="back-link" href="theory-assist.html">← 理論アシストへ戻る</a>
+<div id="libraryMount" class="library-placeholder">理論ライブラリを読み込み中...</div>
+</main>
+<script src="common-ui.js?v=4"></script>
+<script src="menu-ui.js?v=20260810-3"></script>
+<script>
+(()=>{
+  const mount=document.getElementById('libraryMount');
+  const clean=()=>{
+    const lib=document.getElementById('neetUnifiedTheory');
+    if(lib){
+      mount?.remove();
+      lib.querySelector('.neet-original-link')?.remove();
+      const head=lib.querySelector('.neet-unified-head p');
+      if(head)head.textContent='NEETNOTEの理論を独立した学習ライブラリとして整理。項目を開くと「超ざっくり → 仕組み → 例 → 作曲で使う」の順で読めるよ。';
+    }
+  };
+  clean();
+  const obs=new MutationObserver(clean);obs.observe(document.body,{childList:true,subtree:true});setTimeout(()=>obs.disconnect(),10000);
+})();
+</script>
+</body>
+</html>
