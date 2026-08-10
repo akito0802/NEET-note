@@ -14,26 +14,15 @@
 <body>
 <main class="wrap">
 <header class="top"><button id="menuOpenBtn" class="menu-button" aria-label="メニューを開く">☰</button><div><div class="eyebrow">NEET NOTE THEORY LIBRARY</div><h1>統合理論ライブラリ</h1></div></header>
-<p class="lead">理論アシストとは切り離して、<b>音楽理論を読む・調べる・復習するための専用ページ</b>にしてるよ。基礎からコード構成、進行、モード、転調、作曲応用までまとめて見られる。</p>
-<div class="source-note"><span>📘</span><div><b>理論アシスト＋旧コード辞典理論を統合</b><br>PDFをベースに強化した理論アシストの内容と、コード辞典側にあった理論項目を1つのライブラリとして整理してるよ。</div></div>
+<p class="lead"><b>コード理論大全の体系を土台に大幅強化。</b> 基礎→長調→短調→テンション→セカンダリードミナント→借用→ドミナント発展→dim→転調→コードスケール→その他の和声→コンパウンドコードまで、学ぶ順番ごと整理してるよ。</p>
+<div class="source-note"><span>📘</span><div><b>PDF「コード理論大全」ベース</b><br>PDFの12編の構成と用語体系をNEETNOTE向けに再構成し、既存の統合理論ライブラリと併用できるようにしたよ。本文の丸写しではなく、理解・作曲・分析に使いやすい説明へ整理してる。</div></div>
 <a class="back-link" href="theory-assist.html">← 理論アシストへ戻る</a>
 <div id="libraryMount" class="library-placeholder">理論ライブラリを表示中...</div>
 </main>
 <script src="theory-guide.js?v=20260810-5"></script>
+<script src="theory-library-pdf.js?v=20260810-1"></script>
 <script>
-(()=>{
-  const finish=()=>{
-    const lib=document.getElementById('neetUnifiedTheory');
-    if(!lib)return false;
-    document.getElementById('libraryMount')?.remove();
-    lib.querySelector('.neet-original-link')?.remove();
-    document.querySelector('.neet-guide-top')?.remove();
-    const head=lib.querySelector('.neet-unified-head p');
-    if(head)head.textContent='NEETNOTEの理論を独立した学習ライブラリとして整理。項目を開くと「超ざっくり → 仕組み → 例 → 作曲で使う」の順で読めるよ。';
-    return true;
-  };
-  if(!finish()) requestAnimationFrame(finish);
-})();
+(()=>{const finish=()=>{const lib=document.getElementById('neetUnifiedTheory');if(!lib)return false;document.getElementById('libraryMount')?.remove();lib.querySelector('.neet-original-link')?.remove();document.querySelector('.neet-guide-top')?.remove();const head=lib.querySelector('.neet-unified-head p');if(head)head.textContent='既存の実践理論辞典。上の「12編・発展理論ガイド」と合わせて、用語検索や個別項目の復習に使えるよ。';return true};if(!finish())requestAnimationFrame(finish)})();
 </script>
 <script src="menu-ui.js?v=20260810-4"></script>
 </body>
