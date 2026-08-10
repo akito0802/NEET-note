@@ -15,13 +15,14 @@
 <main class="wrap">
 <header class="top"><button id="menuOpenBtn" class="menu-button" aria-label="メニューを開く">☰</button><div><div class="eyebrow">NEET NOTE THEORY LIBRARY</div><h1>統合理論ライブラリ</h1></div></header>
 <p class="lead"><b>コード理論大全の本文を読みながら、理論そのものを学べる形に作り直したよ。</b> タイトル一覧ではなく、意味・仕組み・具体例・作曲での使い方まで展開してる。</p>
-<div class="source-note"><span>📘</span><div><b>PDF「コード理論大全」ベース</b><br>本文を確認できた第1編〜第6編を中心に教科書型の講座へ再構成。PDFの用語と考え方を保ちながら、NEETNOTEで読みやすい説明にしてる。本文未確認の後半編は、PDF由来の説明として勝手に補完してないよ。</div></div>
+<div class="source-note"><span>📘</span><div><b>PDF「コード理論大全」ベース</b><br>本文を確認できた範囲を順次講座化中。テンション、短調、セカンダリードミナント、リレイティッドII-7、モードまで掘り下げてる。</div></div>
 <a class="back-link" href="theory-assist.html">← 理論アシストへ戻る</a>
 <div id="libraryMount" class="library-placeholder">理論ライブラリを表示中...</div>
 </main>
 <script src="theory-guide.js?v=20260810-5"></script>
 <script src="theory-library-pdf.js?v=20260810-1"></script>
 <script src="theory-library-deep.js?v=20260810-1"></script>
+<script src="theory-library-more.js?v=20260810-1"></script>
 <script>
 (()=>{const finish=()=>{const lib=document.getElementById('neetUnifiedTheory');if(!lib)return false;document.getElementById('libraryMount')?.remove();lib.querySelector('.neet-original-link')?.remove();document.querySelector('.neet-guide-top')?.remove();const head=lib.querySelector('.neet-unified-head p');if(head)head.textContent='用語をピンポイントで引きたい時に使う実践辞典。上の教科書型講座で流れを学んで、ここで個別理論を復習できるよ。';return true};if(!finish())requestAnimationFrame(finish)})();
 </script>
