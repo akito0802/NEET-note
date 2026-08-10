@@ -12,9 +12,10 @@ const items=[
  ['calendar.html','📅','制作カレンダー',page==='calendar.html'],
  ['melody.html','🎹','メロディ入力',page==='melody.html'],
  ['theory-assist.html','🧠','理論アシスト',page==='theory-assist.html'],
- ['https://akito0802.github.io/Cordhyo-/index.html','📚','コード辞典',false],
+ ['theory-library.html','📚','統合理論ライブラリ',page==='theory-library.html'],
+ ['https://akito0802.github.io/Cordhyo-/index.html','🎸','コード辞典',false],
  ['https://akito0802.github.io/Cordhyo-/mix-lab.html','🎛️','Mix Lab',false],
- ['https://akito0802.github.io/scale/','🎸','スケール辞典',false],
+ ['https://akito0802.github.io/scale/','🎼','スケール辞典',false],
  ['https://akito0802.github.io/-h/','🎵','指板',false],
  ['neeton-home.html','🏡','ニートンのおうち',page==='neeton-home.html'],
  ['about.html','ℹ️','NEET NOTEについて',page==='about.html'],
@@ -41,10 +42,10 @@ let triggers=[...document.querySelectorAll('#menuOpenBtn,#openMenu,.menu-button,
 if(!triggers.length){const fallback=document.createElement('button');fallback.id='neetFallbackMenuButton';fallback.type='button';fallback.className='neet-menu-hamburger neet-menu-fallback';fallback.setAttribute('aria-label','メニューを開く');fallback.setAttribute('aria-expanded','false');fallback.textContent='☰';document.body.appendChild(fallback);triggers=[fallback]}
 triggers.forEach(btn=>{btn.classList.add('neet-menu-hamburger');btn.innerHTML='☰';btn.setAttribute('aria-label','メニューを開く');btn.setAttribute('aria-expanded','false');btn.onclick=e=>{e.preventDefault();open();btn.setAttribute('aria-expanded','true')}});
 nav.querySelector('.neet-menu-close').onclick=()=>{close();triggers.forEach(btn=>btn.setAttribute('aria-expanded','false'))};overlay.onclick=()=>{close();triggers.forEach(btn=>btn.setAttribute('aria-expanded','false'))};nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape'){close();triggers.forEach(btn=>btn.setAttribute('aria-expanded','false'))}});
-nav.querySelector('#neetHelpMenu').onclick=()=>alert('ノート・歌詞・録音・アイデア・制作ツール・制作カレンダー・コード・Mix Lab・スケール・指板・理論アシストへ、同じメニューから移動できるよ。');
+nav.querySelector('#neetHelpMenu').onclick=()=>alert('ノート・歌詞・録音・アイデア・制作ツール・制作カレンダー・コード・Mix Lab・スケール・指板・理論アシスト・統合理論ライブラリへ、同じメニューから移動できるよ。');
 const cloudSlot=nav.querySelector('#neetCloudMenuSlot');
 const connectCloud=()=>{const original=document.getElementById('cloudSyncMenuButton');if(!original)return false;cloudSlot.onclick=()=>original.click();const label=original.querySelector('#cloudMenuLabel')?.textContent||'ログイン・同期';cloudSlot.querySelector('span:last-child').textContent=label;new MutationObserver(()=>{cloudSlot.querySelector('span:last-child').textContent=original.querySelector('#cloudMenuLabel')?.textContent||'ログイン・同期'}).observe(original,{subtree:true,childList:true,characterData:true});return true};
 if(!connectCloud()){let tries=0;const timer=setInterval(()=>{if(connectCloud()||++tries>30)clearInterval(timer)},300)}
-if(page==='theory-assist.html'&&!document.querySelector('script[data-neet-theory-guide]')){const g=document.createElement('script');g.src='theory-guide.js?v=20260810-2';g.dataset.neetTheoryGuide='1';document.body.appendChild(g)}
-if(page==='theory-assist.html'&&!document.querySelector('script[data-neet-theory-layout]')){const l=document.createElement('script');l.src='theory-layout-split.js?v=20260810-1';l.dataset.neetTheoryLayout='1';document.body.appendChild(l)}
+if((page==='theory-assist.html'||page==='theory-library.html')&&!document.querySelector('script[data-neet-theory-guide]')){const g=document.createElement('script');g.src='theory-guide.js?v=20260810-3';g.dataset.neetTheoryGuide='1';document.body.appendChild(g)}
+if(page==='theory-assist.html'&&!document.querySelector('script[data-neet-theory-layout]')){const l=document.createElement('script');l.src='theory-layout-split.js?v=20260810-2';l.dataset.neetTheoryLayout='1';document.body.appendChild(l)}
 })();
