@@ -138,6 +138,7 @@ $('key').innerHTML=ROOTS.map(n=>`<option>${n}</option>`).join('');loadSettings()
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));$('analyze').onclick=()=>{renderAssist();renderKeyLab()};$('reset').onclick=()=>{$('key').value='C';$('mode').value='major';$('prev').value='G7';$('melody').value='B D';$('mood').value='natural';$('voicing').value='7';renderAssist();renderKeyLab()};$('key').onchange=()=>{renderAssist();renderKeyLab()};$('mode').onchange=()=>{renderAssist();renderKeyLab()};$('voicing').onchange=()=>{renderAssist();renderKeyLab()};$('play').onclick=()=>{if(!prog.length)return;ac=ac||new(window.AudioContext||window.webkitAudioContext)();prog.forEach((c,i)=>playSymbol(c,ac.currentTime+i*.82))};$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(prog.join(' - '));$('copy').textContent='コピー済み';setTimeout(()=>$('copy').textContent='コピー',900)}catch(e){}};$('clear').onclick=()=>{prog=[];renderBuilder()};$('sendToAnalysis').onclick=()=>{$('progInput').value=prog.join(' ');switchTab('progression');analyzeProgression()};$('loadBuilder').onclick=()=>{$('progInput').value=prog.join(' ');analyzeProgression()};$('analyzeProg').onclick=analyzeProgression;$('topicSearch').oninput=renderTopics;$('topicLevel').onchange=renderTopics;$('showAnswer').onclick=()=>$('quizA').classList.add('show');$('newQuiz').onclick=newQuiz;
 })();
 </script>
-<script src="https://akito0802.github.io/NEET-note/global-menu.js?v=20260812-3"></script>
-<script src="https://akito0802.github.io/NEET-note/menu-dedupe.js?v=20260812-2"></script>
+
+
+<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260813-1"></script>
 </body></html>

@@ -34,7 +34,8 @@
 (()=>{const menu=document.getElementById('sideMenu'),overlay=document.getElementById('menuOverlay');const open=()=>{menu.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden'};const close=()=>{menu.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow=''};menuOpenBtn.onclick=open;menuCloseBtn.onclick=close;overlay.onclick=close;const quotes=['「保存した？ ニートンはちゃんと見てるよ。」','「いいメロディだね。忘れる前に残そう！」','「完成してなくても、今日の一歩は作品の一部だよ。」','「思いついたら5秒以内にメモ！」','「キミのひらめき、ぼくが大切に預かるよ。」'];let last=-1;newQuote.onclick=()=>{let i;do{i=Math.floor(Math.random()*quotes.length)}while(i===last&&quotes.length>1);last=i;neetonQuote.textContent=quotes[i]}})();
 </script>
 <script src="menu-ui.js?v=20260805-4"></script>
-<script src="https://akito0802.github.io/NEET-note/global-menu.js?v=20260812-3"></script>
-<script src="https://akito0802.github.io/NEET-note/menu-dedupe.js?v=20260812-2"></script>
+
+
+<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260813-1"></script>
 </body>
 </html>
