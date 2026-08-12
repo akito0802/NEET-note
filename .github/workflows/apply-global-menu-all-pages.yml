@@ -1,0 +1,44 @@
+name: Apply global menu to all pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'global-menu.js'
+      - '.github/workflows/apply-global-menu-all-pages.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inject global menu loader into every HTML page
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          tag='<script src="https://akito0802.github.io/NEET-note/global-menu.js?v=20260812-1"></script>'
+          changed=[]
+          for p in Path('.').rglob('*.html'):
+              if '.git' in p.parts:
+                  continue
+              s=p.read_text(encoding='utf-8')
+              if 'global-menu.js' in s:
+                  continue
+              if '</body>' in s:
+                  s=s.replace('</body>',tag+'\n</body>',1)
+              else:
+                  s += '\n'+tag+'\n'
+              p.write_text(s,encoding='utf-8')
+              changed.append(str(p))
+          print('Updated',len(changed),'files')
+          for x in changed: print(x)
+          PY
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html' '**/*.html' || true
+          git commit -m "Apply shared NEETNOTE menu to all HTML pages"
+          git push
