@@ -12,7 +12,16 @@
   const alreadySeen = sessionStorage.getItem('neet-note-intro-seen') === '1';
   const directTopVisit = !params.has('song') && params.get('mode') !== 'note' && !sameSiteReferrer;
 
-  if (!directTopVisit || alreadySeen || document.getElementById('neetIntro')) return;
+  const loadHome = () => {
+    if (document.querySelector('script[data-neet-home-v2]')) return;
+    const script = document.createElement('script');
+    script.src = 'home-v2.js?v=20260813-2';
+    script.dataset.neetHomeV2 = '1';
+    document.body.appendChild(script);
+  };
+
+  if (!directTopVisit) return;
+  if (alreadySeen || document.getElementById('neetIntro')) { loadHome(); return; }
   sessionStorage.setItem('neet-note-intro-seen', '1');
 
   const style = document.createElement('style');
@@ -60,5 +69,6 @@
     style.remove();
     document.body.style.overflow = '';
     window.scrollTo({top: 0, behavior: 'instant'});
+    loadHome();
   }, 2950);
 })();
