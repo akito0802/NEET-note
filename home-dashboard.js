@@ -1,27 +1,42 @@
 (()=>{
 'use strict';
+const ROOT='https://akito0802.github.io/NEET-note/';
+const NEETON=ROOT+'neeton.svg?v=4';
+const items=[
+ [ROOT+'?mode=note','▤','ノート'],[ROOT+'lyrics.html','♬','歌詞メモ'],[ROOT+'voice-memo.html','♩','ボイスメモ','（録音）'],[ROOT+'ideas.html','♧','アイデアメモ'],
+ [ROOT+'tools.html','⌘','制作ツール'],[ROOT+'calendar.html','▣','制作カレンダー'],[ROOT+'melody.html','♪','メロディ入力'],[ROOT+'theory-assist.html','✣','理論アシスト'],
+ [ROOT+'theory-library.html','▥','統合理論','ライブラリ'],['https://akito0802.github.io/Cordhyo-/','♮','コード辞典'],['https://akito0802.github.io/scale/','♯','スケール辞典'],['https://akito0802.github.io/-h/','♯','指板']
+];
 function install(){
-  const list=document.getElementById('listView');
-  if(!list||document.getElementById('neetHomeDashboard'))return;
-  const toolbar=list.querySelector('.toolbar');
-  const dashboard=document.createElement('div');
-  dashboard.id='neetHomeDashboard';
-  dashboard.innerHTML=`
-    <section class="nh-section">
-      <div class="nh-section-head"><div><span>QUICK ACCESS</span><h3>クイックアクセス</h3></div></div>
-      <div class="nh-feature-grid">
-        <a class="nh-feature" href="theory-assist.html"><span class="nh-feature-icon">🧠</span><span><b>理論アシスト</b><small>進行・キー・次コードを分析</small></span><em>›</em></a>
-        <a class="nh-feature" href="theory-library.html"><span class="nh-feature-icon">📖</span><span><b>統合理論ライブラリ</b><small>基礎から発展まで順番に学ぶ</small></span><em>›</em></a>
-        <a class="nh-feature" href="https://akito0802.github.io/Cordhyo-/index.html"><span class="nh-feature-icon">🎹</span><span><b>コード辞典</b><small>コードフォームと構成音を確認</small></span><em>›</em></a>
-        <a class="nh-feature" href="tools.html"><span class="nh-feature-icon">🧰</span><span><b>作曲ツール</b><small>制作に使うツールを開く</small></span><em>›</em></a>
-        <a class="nh-feature" href="https://akito0802.github.io/scale/"><span class="nh-feature-icon">🎸</span><span><b>スケール</b><small>音階とポジションを確認</small></span><em>›</em></a>
-        <a class="nh-feature" href="https://akito0802.github.io/-h/"><span class="nh-feature-icon">🎵</span><span><b>指板</b><small>指板上の音を確認</small></span><em>›</em></a>
-      </div>
-    </section>`;
-  if(toolbar)toolbar.insertAdjacentElement('beforebegin',dashboard);else list.prepend(dashboard);
-  const style=document.createElement('style');
-  style.textContent=`#neetHomeDashboard{margin-bottom:18px}.nh-section{margin:4px 0 20px}.nh-section-head{margin-bottom:9px;padding:0 2px}.nh-section-head span{font-size:.64rem;font-weight:900;letter-spacing:.14em;color:#8b6f47}.nh-section-head h3{margin:2px 0 0;font-size:1rem}.nh-feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.nh-feature{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:10px;min-height:68px;padding:11px 13px;border:1px solid var(--ui-line,#ded6c9);border-radius:15px;background:rgba(255,253,248,.96);color:#1f2937;text-decoration:none}.nh-feature-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:#f4eee4;font-size:1.18rem}.nh-feature b{display:block;font-size:.82rem}.nh-feature small{display:block;margin-top:2px;color:#71695f;font-size:.63rem}.nh-feature em{font-style:normal;color:#8b6f47;font-size:1rem}@media(max-width:650px){.nh-feature-grid{grid-template-columns:1fr}.nh-feature{min-height:64px;padding:10px 12px}}`;
-  document.head.appendChild(style);
+ const list=document.getElementById('listView'); if(!list||document.getElementById('neetHomeDashboard'))return;
+ const params=new URLSearchParams(location.search); if(params.get('mode')==='note'||params.has('song'))return;
+ document.body.classList.add('neet-home-mode');
+ const dashboard=document.createElement('section'); dashboard.id='neetHomeDashboard';
+ dashboard.innerHTML=`<div class="nh-card">
+  <header class="nh-brand"><div><b>NEETNOTE</b><span>音楽と、いつまでも。</span></div><img src="${NEETON}" alt="ニートン"></header>
+  <section class="nh-account"><div class="nh-avatar"><img src="${NEETON}" alt="ニートン"><i></i></div><div class="nh-account-copy"><b id="nhName">ニートン</b><span id="nhMail">未ログイン</span><small id="nhState">この端末に保存中</small></div><span class="nh-chevron">›</span></section>
+  <button class="nh-sync" id="nhSync" type="button"><span>♧</span> ログイン・同期</button>
+  <nav class="nh-grid">${items.map(([href,icon,label,sub])=>`<a href="${href}" class="nh-tile"><span class="nh-icon">${icon}</span><b>${label}</b>${sub?`<small>${sub}</small>`:''}</a>`).join('')}</nav>
+  <a class="nh-wide" href="${ROOT}neeton-home.html"><span class="nh-house">⌂</span><b>ニートンのおうち</b></a>
+  <button class="nh-wide nh-theme" id="nhTheme" type="button"><span>☾</span><b>ダークモード</b><i></i></button>
+  <button class="nh-wide" id="nhHelp" type="button"><span>?</span><b>ヘルプ・使い方</b><em>›</em></button>
+ </div>`;
+ list.prepend(dashboard);
+ const style=document.createElement('style');style.id='neet-home-approved-style';style.textContent=`
+ body.neet-home-mode{background:#f3eadc!important}.neet-home-mode .app-header{display:none!important}.neet-home-mode #listView>.toolbar,.neet-home-mode #emptyState,.neet-home-mode #songList{display:none!important}.neet-home-mode .app-shell{width:100%;max-width:none;padding:0!important}.neet-home-mode main{width:100%;max-width:none!important;padding:0!important}
+ #neetHomeDashboard{width:100%;padding:max(18px,env(safe-area-inset-top)) 12px calc(26px + env(safe-area-inset-bottom));font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;color:#3d2b1e}
+ .nh-card{width:min(100%,540px);margin:0 auto;padding:18px;border:1px solid #dfcdb5;border-radius:24px;background:linear-gradient(180deg,#fffaf1 0%,#fcf5ea 100%);box-shadow:0 12px 36px rgba(94,65,34,.12)}
+ .nh-brand{display:grid;grid-template-columns:1fr 64px;align-items:center;padding:2px 8px 14px;border-bottom:1px solid #eadccb;text-align:center}.nh-brand div{padding-left:64px}.nh-brand b{display:block;font-size:1.12rem;letter-spacing:.12em}.nh-brand span{display:block;margin-top:5px;font-size:.78rem;font-weight:700}.nh-brand img{width:62px;height:62px;object-fit:contain}
+ .nh-account{display:grid;grid-template-columns:52px 1fr 24px;align-items:center;gap:11px;margin-top:14px;padding:12px 13px;border:1px solid #e3d3bf;border-radius:15px;background:#fffdf8;box-shadow:0 4px 13px rgba(80,52,27,.06)}.nh-avatar{position:relative;display:grid;place-items:center;width:50px;height:50px;border:1px solid #dec8aa;border-radius:50%;background:#f8efe3}.nh-avatar img{width:43px;height:43px}.nh-avatar i{position:absolute;right:0;bottom:2px;width:12px;height:12px;border:2px solid #fff;border-radius:50%;background:#70bd59}.nh-account-copy b,.nh-account-copy span,.nh-account-copy small{display:block}.nh-account-copy b{font-size:.92rem}.nh-account-copy span{margin-top:2px;font-size:.69rem;color:#6f5d4d}.nh-account-copy small{margin-top:3px;font-size:.66rem;font-weight:750;color:#806a56}.nh-chevron{font-size:1.5rem;color:#6f4b2b}
+ .nh-sync{width:100%;min-height:50px;margin:11px 0;border:1px solid #dfcdb7;border-radius:13px;background:#fffaf3;color:#4b3422;font:inherit;font-size:.86rem;font-weight:900;box-shadow:0 3px 10px rgba(79,51,25,.05)}.nh-sync span{font-size:1.1rem;color:#8b623d}
+ .nh-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.nh-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;min-height:105px;padding:10px 4px;border:1px solid #e3d2bd;border-radius:13px;background:#fffdf8;color:#4a3322;text-align:center;text-decoration:none;box-shadow:0 3px 10px rgba(82,53,28,.055);transition:transform .12s ease,background .12s ease}.nh-tile:active{transform:scale(.97);background:#f6eadb}.nh-icon{display:grid;place-items:center;height:35px;margin-bottom:7px;color:#8c6039;font-family:Georgia,serif;font-size:1.65rem;line-height:1}.nh-tile b{font-size:.69rem;line-height:1.3}.nh-tile small{margin-top:1px;font-size:.59rem;font-weight:750}
+ .nh-wide{display:grid;grid-template-columns:38px 1fr 28px;align-items:center;gap:9px;min-height:58px;margin-top:11px;padding:8px 13px;border:1px solid #e0cfba;border-radius:13px;background:#fffdf8;color:#493321;text-decoration:none;box-shadow:0 3px 10px rgba(82,53,28,.05);font:inherit;text-align:left;width:100%}.nh-wide>span{display:grid;place-items:center;width:34px;height:34px;color:#7f5735;font-size:1.55rem}.nh-wide b{font-size:.84rem}.nh-wide em{justify-self:end;font-style:normal;font-size:1.35rem}.nh-theme i{justify-self:end;width:48px;height:27px;padding:3px;border-radius:999px;background:#b49a78}.nh-theme i:after{content:'';display:block;width:21px;height:21px;border-radius:50%;background:white;transition:.2s}.nh-theme.on i{background:#765536}.nh-theme.on i:after{transform:translateX(21px)}
+ html[data-theme="dark"] body.neet-home-mode{background:#241f1a!important}html[data-theme="dark"] .nh-card{background:#2c251f;border-color:#514438;color:#f6ecdf}html[data-theme="dark"] .nh-brand{border-color:#514438}html[data-theme="dark"] .nh-account,html[data-theme="dark"] .nh-sync,html[data-theme="dark"] .nh-tile,html[data-theme="dark"] .nh-wide{background:#332b24;border-color:#514438;color:#f6ecdf}html[data-theme="dark"] .nh-account-copy span,html[data-theme="dark"] .nh-account-copy small{color:#cdbca8}
+ @media(max-width:430px){#neetHomeDashboard{padding-left:8px;padding-right:8px}.nh-card{padding:14px 11px;border-radius:19px}.nh-brand{grid-template-columns:1fr 54px}.nh-brand div{padding-left:54px}.nh-brand img{width:52px;height:52px}.nh-grid{gap:6px}.nh-tile{min-height:91px;padding:8px 2px}.nh-icon{height:30px;margin-bottom:5px;font-size:1.42rem}.nh-tile b{font-size:.62rem}.nh-tile small{font-size:.53rem}.nh-wide{min-height:54px;margin-top:8px}.nh-account{margin-top:10px}}
+ `;document.head.appendChild(style);
+ const theme=document.getElementById('nhTheme');const apply=t=>{document.documentElement.dataset.theme=t;theme.classList.toggle('on',t==='dark')};apply(localStorage.getItem('neet-note-theme')==='dark'?'dark':'light');theme.onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';localStorage.setItem('neet-note-theme',t);apply(t)};
+ document.getElementById('nhHelp').onclick=()=>alert('上のカードからNEETNOTEの各機能へ移動できるよ。');
+ document.getElementById('nhSync').onclick=()=>{const btn=document.querySelector('.ngm-btn,.n4-trigger');if(btn)btn.click();else alert('ハンバーガーメニューの「ログイン・同期」から設定できるよ。')};
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
 })();
