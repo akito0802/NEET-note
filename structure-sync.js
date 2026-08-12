@@ -70,10 +70,13 @@
   structureInput.addEventListener("change", syncChordSections);
 })();
 
+// ホーム専用ダッシュボードはトップページでだけ読み込む。
 (()=>{
-  if(document.querySelector('script[data-neet-home-dashboard]'))return;
-  const s=document.createElement('script');
-  s.src='home-dashboard.js?v=20260811-3';
-  s.dataset.neetHomeDashboard='1';
+  const params = new URLSearchParams(location.search);
+  if (params.get('mode') === 'note' || params.has('song')) return;
+  if (document.querySelector('script[data-neet-home-dashboard]')) return;
+  const s = document.createElement('script');
+  s.src = 'home-dashboard.js?v=20260813-6';
+  s.dataset.neetHomeDashboard = '1';
   document.body.appendChild(s);
 })();
