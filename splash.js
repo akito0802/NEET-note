@@ -15,13 +15,33 @@
   const loadHome = () => {
     if (document.querySelector('script[data-neet-home-v2]')) return;
     const script = document.createElement('script');
-    script.src = 'home-v2.js?v=20260813-2';
+    script.src = 'home-v2.js?v=20260813-4';
     script.dataset.neetHomeV2 = '1';
     document.body.appendChild(script);
   };
 
+  const loadHomeAfterExistingIntro = () => {
+    const existing = document.getElementById('neetIntro');
+    if (!existing) { loadHome(); return; }
+    const observer = new MutationObserver(() => {
+      if (!document.getElementById('neetIntro')) {
+        observer.disconnect();
+        requestAnimationFrame(() => requestAnimationFrame(loadHome));
+      }
+    });
+    observer.observe(document.body, {childList:true, subtree:true});
+  };
+
   if (!directTopVisit) return;
-  if (alreadySeen || document.getElementById('neetIntro')) { loadHome(); return; }
+
+  // index.html側のタイトル演出が既に出ている場合は、演出が完全に消えてからトップを表示
+  if (document.getElementById('neetIntro')) {
+    sessionStorage.setItem('neet-note-intro-seen', '1');
+    loadHomeAfterExistingIntro();
+    return;
+  }
+
+  if (alreadySeen) { loadHome(); return; }
   sessionStorage.setItem('neet-note-intro-seen', '1');
 
   const style = document.createElement('style');
@@ -69,6 +89,6 @@
     style.remove();
     document.body.style.overflow = '';
     window.scrollTo({top: 0, behavior: 'instant'});
-    loadHome();
+    requestAnimationFrame(() => requestAnimationFrame(loadHome));
   }, 2950);
 })();
