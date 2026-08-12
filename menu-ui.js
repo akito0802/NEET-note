@@ -35,4 +35,16 @@ const open=()=>{overlay.classList.add('open');nav.classList.add('open');nav.setA
 const close=()=>{overlay.classList.remove('open');nav.classList.remove('open');nav.setAttribute('aria-hidden','true');document.body.style.overflow=''};
 triggers.forEach(btn=>{btn.classList.add('neet-menu-hamburger');btn.textContent='☰';btn.onclick=e=>{e.preventDefault();open()}});
 nav.querySelector('.neet-menu-close').onclick=close;overlay.onclick=close;nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+
+// TOPページでは承認済みカードUIを必ず読み込む
+if(isHome){
+ const params=new URLSearchParams(location.search);
+ if(params.get('mode')!=='note'&&!params.has('song')&&!document.querySelector('script[data-neet-home-dashboard]')){
+  const s=document.createElement('script');
+  s.src='home-dashboard.js?v=20260813-2';
+  s.dataset.neetHomeDashboard='1';
+  s.defer=true;
+  document.body.appendChild(s);
+ }
+}
 })();
