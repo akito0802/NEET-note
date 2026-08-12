@@ -10,5 +10,15 @@ const overlay=document.createElement('div');overlay.className='neet-menu-overlay
 const triggers=[...document.querySelectorAll('#menuOpenBtn,#openMenu,.menu-button,[aria-label*="メニューを開く"]')];const open=()=>{overlay.classList.add('open');nav.classList.add('open');document.body.style.overflow='hidden'},close=()=>{overlay.classList.remove('open');nav.classList.remove('open');document.body.style.overflow=''};triggers.forEach(btn=>{btn.classList.add('neet-menu-hamburger');btn.textContent='☰';btn.onclick=e=>{e.preventDefault();open()}});nav.querySelector('.neet-menu-close').onclick=close;overlay.onclick=close;
 const p=new URLSearchParams(location.search);
 if(isHome&&p.get('mode')!=='note'&&!p.has('song')){const old=document.getElementById('neetHomeDashboard');if(old)old.remove();const s=document.createElement('script');s.src='home-dashboard.js?v=20260813-5-'+Date.now();s.dataset.neetHomeDashboard='1';document.body.appendChild(s)}
-if(isHome&&(p.get('mode')==='note'||p.has('song'))&&!document.querySelector('script[data-note-workspace]')){const s=document.createElement('script');s.src='note-workspace.js?v=20260813-1-'+Date.now();s.dataset.noteWorkspace='1';document.body.appendChild(s)}
+if(isHome&&(p.get('mode')==='note'||p.has('song'))){
+ const loadPremium=()=>{
+  if(document.querySelector('script[data-note-premium]'))return;
+  const premium=document.createElement('script');premium.src='note-premium-ui.js?v=20260813-1-'+Date.now();premium.dataset.notePremium='1';premium.onload=()=>{
+   const h=document.querySelector('.app-header h1');if(h)h.textContent='NEET NOTE';
+   const e=document.querySelector('.app-header .eyebrow');if(e)e.textContent='COMPOSITION NOTE';
+   document.querySelector('.note-home-link')?.remove();
+  };document.body.appendChild(premium);
+ };
+ if(!document.querySelector('script[data-note-workspace]')){const s=document.createElement('script');s.src='note-workspace.js?v=20260813-1-'+Date.now();s.dataset.noteWorkspace='1';s.onload=loadPremium;document.body.appendChild(s)}else loadPremium();
+}
 })();
