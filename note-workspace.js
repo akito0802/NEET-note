@@ -4,12 +4,19 @@ const params=new URLSearchParams(location.search);
 if(params.get('mode')!=='note'&&!params.has('song'))return;
 if(window.__NEET_NOTE_WORKSPACE__)return;window.__NEET_NOTE_WORKSPACE__=true;
 
-// ノート本体には触れず、トップ専用UIだけを削除する。
 function stripHomeOnly(){
  document.querySelectorAll('#noteWorkspaceIntro,.neet-home,#neetHomeDashboard,.neet-final-home').forEach(el=>el.remove());
+ const list=document.getElementById('listView');
+ if(list){
+  [...list.children].forEach(el=>{
+   const t=(el.textContent||'').replace(/\s+/g,' ').trim();
+   if(t.includes('QUICK ACCESS')||t.includes('思いついた音を、すぐ形に。')||t.includes('作曲・歌詞・録音・アイデアを、それぞれ使いやすい場所に保存しよう。')) el.remove();
+  });
+ }
 }
 stripHomeOnly();
-new MutationObserver(stripHomeOnly).observe(document.body,{childList:true,subtree:false});
+const listForWatch=document.getElementById('listView');
+if(listForWatch)new MutationObserver(stripHomeOnly).observe(listForWatch,{childList:true,subtree:false});
 document.body.classList.remove('neet-home-mode');
 const shell=document.querySelector('.app-shell');if(shell){shell.style.display='block';shell.style.visibility='visible';shell.style.opacity='1'}
 
