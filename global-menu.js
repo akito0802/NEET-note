@@ -77,8 +77,10 @@ menu.innerHTML=`
   <div class="ngm-footer-note">NEETNOTE × NEETON</div>`;
 
 const btn=document.createElement('button');btn.className='ngm-btn';btn.type='button';btn.innerHTML='☰';btn.setAttribute('aria-label','メニューを開く');
-const topReturn=document.createElement('a');topReturn.className='ngm-top-return';topReturn.href=ROOT;topReturn.setAttribute('aria-label','NEETNOTEトップへ戻る');topReturn.innerHTML='<span class="ngm-top-return-icon" aria-hidden="true">⌂</span><span class="ngm-top-return-label">トップへ戻る</span>';
-document.body.append(overlay,menu,btn,topReturn);
+let topReturn=document.querySelector('.ngm-top-return,.neet-top-return');
+if(!topReturn){topReturn=document.createElement('a');topReturn.href=ROOT;topReturn.setAttribute('aria-label','NEETNOTEトップへ戻る');topReturn.innerHTML='<span class="ngm-top-return-icon" aria-hidden="true">⌂</span><span class="ngm-top-return-label">トップへ戻る</span>';document.body.appendChild(topReturn)}
+topReturn.classList.add('ngm-top-return','neet-top-return');
+document.body.append(overlay,menu,btn);
 hideOldMenus();
 
 const open=()=>{overlay.classList.add('open');menu.classList.add('open');document.body.style.overflow='hidden'};
