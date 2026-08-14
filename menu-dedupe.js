@@ -32,6 +32,37 @@ const hideLegacy=()=>{
   keepOne('.ngm-overlay');
 };
 
+const isHomeControl=el=>{
+  if(!(el instanceof Element))return false;
+  if(el.matches('.neet-top-return,.ngm-top-return'))return true;
+  const label=[el.textContent,el.getAttribute('aria-label'),el.getAttribute('title')].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
+  const idClass=`${el.id||''} ${typeof el.className==='string'?el.className:''}`;
+  if(/ホーム|トップへ戻る|トップに戻る|トップへ|⌂|🏠/.test(label))return true;
+  if(/^(home|top)$/i.test(label))return true;
+  return /(?:^|[-_\s])(home|top)(?:[-_\s]|$)/i.test(idClass)&&!/dashboard/i.test(idClass);
+};
+
+const normalizeHomeControls=()=>{
+  document.querySelectorAll('a,button').forEach(el=>{
+    if(!isHomeControl(el))return;
+    // 「ノート」と明記された本来のノート導線は変更しない。
+    const label=[el.textContent,el.getAttribute('aria-label'),el.getAttribute('title')].filter(Boolean).join(' ');
+    if(/ノート/.test(label)&&!/ホーム|トップ/.test(label))return;
+    if(el.tagName==='A'&&el.getAttribute('href')!==TOP_URL)el.setAttribute('href',TOP_URL);
+    el.dataset.neetHomeControl='current';
+  });
+};
+
+document.addEventListener('click',e=>{
+  const el=e.target instanceof Element?e.target.closest('a,button'):null;
+  if(!el||!isHomeControl(el))return;
+  const label=[el.textContent,el.getAttribute('aria-label'),el.getAttribute('title')].filter(Boolean).join(' ');
+  if(/ノート/.test(label)&&!/ホーム|トップ/.test(label))return;
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  window.location.assign(TOP_URL);
+},true);
+
 const ensureTopButton=()=>{
   let button=document.querySelector('.neet-top-return,.ngm-top-return');
   if(!button){
@@ -43,7 +74,7 @@ const ensureTopButton=()=>{
   }
   button.classList.add('neet-top-return');
   button.href=TOP_URL;
-  button.onclick=e=>{e.preventDefault();window.location.assign(TOP_URL)};
+  button.dataset.neetHomeControl='current';
   return button;
 };
 
@@ -57,12 +88,12 @@ const forceCurrentHome=()=>{
   if(!document.getElementById('listView'))return;
   if(document.querySelector('script[data-force-current-home]'))return;
   const s=document.createElement('script');
-  s.src=ROOT+'home-dashboard.js?v=20260814-2-'+Date.now();
+  s.src=ROOT+'home-dashboard.js?v=20260814-3-'+Date.now();
   s.dataset.forceCurrentHome='1';
   document.body.appendChild(s);
 };
 
-const apply=()=>{hideLegacy();ensureTopButton();forceCurrentHome()};
+const apply=()=>{hideLegacy();ensureTopButton();normalizeHomeControls();forceCurrentHome()};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
 new MutationObserver(apply).observe(document.documentElement,{childList:true,subtree:true});
 })();
