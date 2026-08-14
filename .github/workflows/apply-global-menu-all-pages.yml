@@ -6,6 +6,7 @@ on:
       - 'global-menu-v4.js'
       - 'global-menu.js'
       - 'menu-dedupe.js'
+      - 'home-route-fix.js'
       - 'note-workspace.js'
       - '.github/workflows/apply-global-menu-all-pages.yml'
   workflow_dispatch:
@@ -21,7 +22,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re
-          tag='<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260814-4"></script>'
+          tag='<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260814-6"></script>'
           changed=[]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts: continue
