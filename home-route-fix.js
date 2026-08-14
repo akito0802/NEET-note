@@ -4,8 +4,8 @@ if(window.__NEET_HOME_ROUTE_FIX__)return;
 window.__NEET_HOME_ROUTE_FIX__=true;
 
 const ROOT='https://akito0802.github.io/NEET-note/';
-const TOP_URL=ROOT+'?home=current';
-const TOP_PATH_RE=/\/NEET-note\/(?:index\.html)?$/;
+const TOP_URL=ROOT+'home.html';
+const INDEX_PATH_RE=/\/NEET-note\/(?:index\.html)?$/;
 
 const labelOf=el=>[el?.textContent,el?.getAttribute?.('aria-label'),el?.getAttribute?.('title')].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
 const isHomeControl=el=>{
@@ -28,6 +28,14 @@ const normalizeHomeControls=()=>{
   });
 };
 
+const routeLegacyHome=()=>{
+  if(!INDEX_PATH_RE.test(location.pathname))return false;
+  const params=new URLSearchParams(location.search);
+  if(params.get('mode')==='note'||params.has('song'))return false;
+  location.replace(TOP_URL);
+  return true;
+};
+
 document.addEventListener('click',e=>{
   const el=e.target instanceof Element?e.target.closest('a,button'):null;
   if(!el||!isHomeControl(el))return;
@@ -39,46 +47,10 @@ document.addEventListener('click',e=>{
   window.location.assign(TOP_URL);
 },true);
 
-const ensureGuardStyle=()=>{
-  if(document.getElementById('neet-current-home-route-guard'))return;
-  const style=document.createElement('style');
-  style.id='neet-current-home-route-guard';
-  style.textContent=`html.neet-current-home-loading .app-header,html.neet-current-home-loading #listView>.toolbar,html.neet-current-home-loading #songList,html.neet-current-home-loading #emptyState{display:none!important}`;
-  document.head.appendChild(style);
-};
-
-const forceCurrentHome=()=>{
-  if(!TOP_PATH_RE.test(location.pathname))return;
-  const params=new URLSearchParams(location.search);
-  if(params.get('home')!=='current')return;
-  if(params.has('mode')||params.has('song')){location.replace(TOP_URL);return;}
-
-  ensureGuardStyle();
-  document.documentElement.classList.add('neet-current-home-loading');
-  document.body?.classList.remove('note-premium-ui');
-  document.getElementById('homeDashboard')?.remove();
-  document.getElementById('neetHomeDashboard')?.remove();
-
-  if(document.getElementById('neetCurrentHomeDashboard')){
-    document.documentElement.classList.remove('neet-current-home-loading');
-    return;
-  }
-  if(!document.getElementById('listView'))return;
-  if(document.querySelector('script[data-neet-current-home-force]'))return;
-
-  const s=document.createElement('script');
-  s.src=ROOT+'home-dashboard.js?v=20260814-6-'+Date.now();
-  s.dataset.neetCurrentHomeForce='1';
-  s.onload=()=>{
-    if(document.getElementById('neetCurrentHomeDashboard'))document.documentElement.classList.remove('neet-current-home-loading');
-  };
-  document.body.appendChild(s);
-};
-
-const apply=()=>{normalizeHomeControls();forceCurrentHome()};
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
-new MutationObserver(()=>{
+const apply=()=>{
+  if(routeLegacyHome())return;
   normalizeHomeControls();
-  if(document.getElementById('neetCurrentHomeDashboard'))document.documentElement.classList.remove('neet-current-home-loading');
-}).observe(document.documentElement,{childList:true,subtree:true});
+};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
+new MutationObserver(normalizeHomeControls).observe(document.documentElement,{childList:true,subtree:true});
 })();
