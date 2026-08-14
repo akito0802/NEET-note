@@ -7,6 +7,7 @@ on:
       - 'global-menu.js'
       - 'menu-dedupe.js'
       - 'home-route-fix.js'
+      - 'home.html'
       - 'note-workspace.js'
       - '.github/workflows/apply-global-menu-all-pages.yml'
   workflow_dispatch:
@@ -22,7 +23,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re
-          tag='<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260814-6"></script>'
+          tag='<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260814-7"></script>'
           changed=[]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts: continue
@@ -42,6 +43,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Refresh current-home routing on all NEETNOTE pages"
+          git commit -m "Use dedicated NEETNOTE home page on all pages"
           git pull --rebase origin main
           git push
