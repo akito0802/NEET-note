@@ -28,7 +28,7 @@ if(header){
  if(title)title.textContent='NEET NOTE';
  if(eyebrow)eyebrow.textContent='COMPOSITION NOTE';
  if(!header.querySelector('.note-home-link')){
-  const home=document.createElement('a');home.className='note-home-link';home.href='https://akito0802.github.io/NEET-note/?home=current';home.textContent='← ホーム';
+  const home=document.createElement('a');home.className='note-home-link';home.href='https://akito0802.github.io/NEET-note/home.html';home.textContent='← ホーム';
   header.insertBefore(home,header.lastElementChild);
  }
 }

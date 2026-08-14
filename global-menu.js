@@ -79,6 +79,7 @@ menu.innerHTML=`
 const btn=document.createElement('button');btn.className='ngm-btn';btn.type='button';btn.innerHTML='☰';btn.setAttribute('aria-label','メニューを開く');
 let topReturn=document.querySelector('.ngm-top-return,.neet-top-return');
 if(!topReturn){topReturn=document.createElement('a');topReturn.href=ROOT;topReturn.setAttribute('aria-label','NEETNOTEトップへ戻る');topReturn.innerHTML='<span class="ngm-top-return-icon" aria-hidden="true">⌂</span><span class="ngm-top-return-label">トップへ戻る</span>';document.body.appendChild(topReturn)}
+topReturn.href=ROOT+'home.html';
 topReturn.classList.add('ngm-top-return','neet-top-return');
 document.body.append(overlay,menu,btn);
 hideOldMenus();
