@@ -4,6 +4,7 @@ if(window.__NEET_MENU_DEDUPE__)return;
 window.__NEET_MENU_DEDUPE__=true;
 
 const ROOT='https://akito0802.github.io/NEET-note/';
+const TOP_URL=ROOT+'?home=current';
 const style=document.createElement('style');
 style.id='neet-menu-dedupe-style';
 style.textContent=`
@@ -32,14 +33,17 @@ const hideLegacy=()=>{
 };
 
 const ensureTopButton=()=>{
-  let button=document.querySelector('.neet-top-return');
-  if(button)return button;
-  button=document.createElement('a');
-  button.className='neet-top-return';
-  button.href=ROOT;
-  button.setAttribute('aria-label','NEETNOTEトップへ戻る');
-  button.innerHTML='<span class="neet-top-return-icon" aria-hidden="true">⌂</span><span class="neet-top-return-label">トップへ戻る</span>';
-  document.body.appendChild(button);
+  let button=document.querySelector('.neet-top-return,.ngm-top-return');
+  if(!button){
+    button=document.createElement('a');
+    button.className='neet-top-return';
+    button.setAttribute('aria-label','NEETNOTEトップへ戻る');
+    button.innerHTML='<span class="neet-top-return-icon" aria-hidden="true">⌂</span><span class="neet-top-return-label">トップへ戻る</span>';
+    document.body.appendChild(button);
+  }
+  button.classList.add('neet-top-return');
+  button.href=TOP_URL;
+  button.onclick=e=>{e.preventDefault();window.location.assign(TOP_URL)};
   return button;
 };
 
