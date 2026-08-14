@@ -4,7 +4,7 @@ if(window.__NEET_MENU_DEDUPE__)return;
 window.__NEET_MENU_DEDUPE__=true;
 
 const ROOT='https://akito0802.github.io/NEET-note/';
-const TOP_URL=ROOT+'?home=current';
+const TOP_URL=ROOT+'home.html';
 const style=document.createElement('style');
 style.id='neet-menu-dedupe-style';
 style.textContent=`
@@ -19,7 +19,6 @@ button[aria-label*="メニューを開く"]:not(.ngm-btn),
 document.head.appendChild(style);
 
 const legacySelector='#menuOpenBtn,#open,#siteMenuOpenBtn,#openMenu,#menuBtn,#hamburgerBtn,.menu-button,.site-menu-button,.neet-menu-trigger,.neet-menu-open,.neet-menu-hamburger,.n4-trigger,button[aria-label*="メニューを開く"],#sideMenu,#menuOverlay,#siteSideMenu,#siteMenuOverlay,.neet-side-menu,.neet-menu-overlay,.neet-full-menu';
-
 const hideLegacy=()=>{
   document.querySelectorAll(legacySelector).forEach(el=>{
     if(el.classList.contains('ngm-btn')||el.classList.contains('ngm-menu')||el.classList.contains('ngm-overlay')||el.closest('.ngm-menu'))return;
@@ -27,28 +26,24 @@ const hideLegacy=()=>{
     el.setAttribute('aria-hidden','true');
   });
   const keepOne=selector=>{const nodes=[...document.querySelectorAll(selector)];nodes.slice(1).forEach(node=>node.remove())};
-  keepOne('.ngm-btn');
-  keepOne('.ngm-menu');
-  keepOne('.ngm-overlay');
+  keepOne('.ngm-btn');keepOne('.ngm-menu');keepOne('.ngm-overlay');
 };
 
 const isHomeControl=el=>{
   if(!(el instanceof Element))return false;
-  if(el.matches('.neet-top-return,.ngm-top-return'))return true;
+  if(el.matches('.neet-top-return,.ngm-top-return,.note-home-link,[data-neet-home-control="current"]'))return true;
   const label=[el.textContent,el.getAttribute('aria-label'),el.getAttribute('title')].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
-  const idClass=`${el.id||''} ${typeof el.className==='string'?el.className:''}`;
   if(/ホーム|トップへ戻る|トップに戻る|トップへ|⌂|🏠/.test(label))return true;
   if(/^(home|top)$/i.test(label))return true;
-  return /(?:^|[-_\s])(home|top)(?:[-_\s]|$)/i.test(idClass)&&!/dashboard/i.test(idClass);
+  const idClass=`${el.id||''} ${typeof el.className==='string'?el.className:''}`;
+  return /(?:^|[-_\s])(home|top)(?:[-_\s]|$)/i.test(idClass)&&!/dashboard|neeton/i.test(idClass);
 };
-
 const normalizeHomeControls=()=>{
   document.querySelectorAll('a,button').forEach(el=>{
     if(!isHomeControl(el))return;
-    // 「ノート」と明記された本来のノート導線は変更しない。
     const label=[el.textContent,el.getAttribute('aria-label'),el.getAttribute('title')].filter(Boolean).join(' ');
     if(/ノート/.test(label)&&!/ホーム|トップ/.test(label))return;
-    if(el.tagName==='A'&&el.getAttribute('href')!==TOP_URL)el.setAttribute('href',TOP_URL);
+    if(el.tagName==='A')el.setAttribute('href',TOP_URL);
     el.dataset.neetHomeControl='current';
   });
 };
@@ -58,42 +53,19 @@ document.addEventListener('click',e=>{
   if(!el||!isHomeControl(el))return;
   const label=[el.textContent,el.getAttribute('aria-label'),el.getAttribute('title')].filter(Boolean).join(' ');
   if(/ノート/.test(label)&&!/ホーム|トップ/.test(label))return;
-  e.preventDefault();
-  e.stopImmediatePropagation();
-  window.location.assign(TOP_URL);
+  e.preventDefault();e.stopImmediatePropagation();window.location.assign(TOP_URL);
 },true);
 
 const ensureTopButton=()=>{
   let button=document.querySelector('.neet-top-return,.ngm-top-return');
   if(!button){
-    button=document.createElement('a');
-    button.className='neet-top-return';
-    button.setAttribute('aria-label','NEETNOTEトップへ戻る');
+    button=document.createElement('a');button.className='neet-top-return';button.setAttribute('aria-label','NEETNOTEトップへ戻る');
     button.innerHTML='<span class="neet-top-return-icon" aria-hidden="true">⌂</span><span class="neet-top-return-label">トップへ戻る</span>';
     document.body.appendChild(button);
   }
-  button.classList.add('neet-top-return');
-  button.href=TOP_URL;
-  button.dataset.neetHomeControl='current';
-  return button;
+  button.classList.add('neet-top-return');button.href=TOP_URL;button.dataset.neetHomeControl='current';return button;
 };
-
-const forceCurrentHome=()=>{
-  const isTopPath=/\/NEET-note\/(?:index\.html)?$/.test(location.pathname);
-  const params=new URLSearchParams(location.search);
-  if(!isTopPath||params.get('home')!=='current')return;
-  document.getElementById('homeDashboard')?.remove();
-  document.getElementById('neetHomeDashboard')?.remove();
-  if(document.getElementById('neetCurrentHomeDashboard'))return;
-  if(!document.getElementById('listView'))return;
-  if(document.querySelector('script[data-force-current-home]'))return;
-  const s=document.createElement('script');
-  s.src=ROOT+'home-dashboard.js?v=20260814-3-'+Date.now();
-  s.dataset.forceCurrentHome='1';
-  document.body.appendChild(s);
-};
-
-const apply=()=>{hideLegacy();ensureTopButton();normalizeHomeControls();forceCurrentHome()};
+const apply=()=>{hideLegacy();ensureTopButton();normalizeHomeControls()};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
 new MutationObserver(apply).observe(document.documentElement,{childList:true,subtree:true});
 })();
