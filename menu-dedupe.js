@@ -47,7 +47,22 @@ const ensureTopButton=()=>{
   return button;
 };
 
-const apply=()=>{hideLegacy();ensureTopButton()};
+const forceCurrentHome=()=>{
+  const isTopPath=/\/NEET-note\/(?:index\.html)?$/.test(location.pathname);
+  const params=new URLSearchParams(location.search);
+  if(!isTopPath||params.get('home')!=='current')return;
+  document.getElementById('homeDashboard')?.remove();
+  document.getElementById('neetHomeDashboard')?.remove();
+  if(document.getElementById('neetCurrentHomeDashboard'))return;
+  if(!document.getElementById('listView'))return;
+  if(document.querySelector('script[data-force-current-home]'))return;
+  const s=document.createElement('script');
+  s.src=ROOT+'home-dashboard.js?v=20260814-2-'+Date.now();
+  s.dataset.forceCurrentHome='1';
+  document.body.appendChild(s);
+};
+
+const apply=()=>{hideLegacy();ensureTopButton();forceCurrentHome()};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
 new MutationObserver(apply).observe(document.documentElement,{childList:true,subtree:true});
 })();
