@@ -18,6 +18,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Hardwire dedicated home targets
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          g=Path('global-menu.js')
+          if g.exists():
+              s=g.read_text(encoding='utf-8')
+              old=s
+              marker="topReturn.classList.add('ngm-top-return','neet-top-return');"
+              if marker in s and "topReturn.href=ROOT+'home.html';" not in s:
+                  s=s.replace(marker,"topReturn.href=ROOT+'home.html';\n"+marker,1)
+              if s!=old:g.write_text(s,encoding='utf-8')
+          n=Path('note-workspace.js')
+          if n.exists():
+              s=n.read_text(encoding='utf-8')
+              s2=s.replace('https://akito0802.github.io/NEET-note/?home=current','https://akito0802.github.io/NEET-note/home.html')
+              if s2!=s:n.write_text(s2,encoding='utf-8')
+          PY
       - name: Replace old shared menu loader on every HTML page
         run: |
           python - <<'PY'
@@ -43,6 +61,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Use dedicated NEETNOTE home page on all pages"
+          git commit -m "Hardwire all home actions to dedicated NEETNOTE home"
           git pull --rebase origin main
           git push
