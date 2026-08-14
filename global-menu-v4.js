@@ -4,12 +4,12 @@ if(window.__NEET_MENU_V4_LOADER__)return;
 window.__NEET_MENU_V4_LOADER__=true;
 const ROOT='https://akito0802.github.io/NEET-note/';
 const menu=document.createElement('script');
-menu.src=ROOT+'global-menu.js?v=20260814-1';
+menu.src=ROOT+'global-menu.js?v=20260814-2';
 menu.defer=true;
 menu.onload=()=>{
   if(document.querySelector('script[data-neet-menu-dedupe]'))return;
   const dedupe=document.createElement('script');
-  dedupe.src=ROOT+'menu-dedupe.js?v=20260814-1';
+  dedupe.src=ROOT+'menu-dedupe.js?v=20260814-2';
   dedupe.defer=true;
   dedupe.dataset.neetMenuDedupe='1';
   document.head.appendChild(dedupe);
