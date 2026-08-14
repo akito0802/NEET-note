@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths:
       - 'global-menu-v4.js'
+      - 'global-menu.js'
+      - 'menu-dedupe.js'
+      - 'note-workspace.js'
       - '.github/workflows/apply-global-menu-all-pages.yml'
   workflow_dispatch:
 permissions:
@@ -18,7 +21,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re
-          tag='<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260813-1"></script>'
+          tag='<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260814-4"></script>'
           changed=[]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts: continue
@@ -38,5 +41,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Switch all pages to redesigned NEETNOTE menu v4"
+          git commit -m "Refresh current-home routing on all NEETNOTE pages"
           git push
