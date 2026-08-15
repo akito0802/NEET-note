@@ -28,13 +28,33 @@ function install(){
     if(chapter)chapter.hidden=false;
   }
 
+  // 本来のReader処理は各項目を開く時に window.scrollTo({top:0}) を呼ぶ。
+  // iPhoneで一瞬ページ上部へ飛ぶため、行クリックの処理中だけscrollToを抑止する。
+  root.addEventListener('click',e=>{
+    const row=e.target.closest('.tb-row');
+    if(!row)return;
+    const y=window.scrollY;
+    const original=window.scrollTo;
+    let active=true;
+    try{
+      window.scrollTo=function(){
+        if(active)return;
+        return original.apply(window,arguments);
+      };
+    }catch(_){ }
+    setTimeout(()=>{
+      active=false;
+      try{window.scrollTo=original}catch(_){ }
+      try{original.call(window,{top:y,behavior:'auto'})}catch(_){window.scrollTo(0,y)}
+    },0);
+  },true);
+
   root.addEventListener('click',e=>{
     const row=e.target.closest('.tb-row');
     if(!row)return;
 
     const already=row.nextElementSibling;
     if(already&&already.classList.contains('tb-inline-reader')){
-      // 既に開いている項目は閉じる。本来の行クリック処理を走らせない。
       e.preventDefault();
       e.stopPropagation();
       already.remove();
@@ -46,8 +66,7 @@ function install(){
     root.querySelectorAll('.tb-inline-reader').forEach(x=>x.remove());
     root.querySelectorAll('.tb-row.is-open').forEach(x=>x.classList.remove('is-open'));
 
-    // 重要: 行自身に登録された本来のclickハンドラを先に実行させる。
-    // このリスナーはbubble段階なので、ここに到達した時点でReaderの本文が生成済み。
+    // 行自身の本来のclickハンドラがReader本文を生成した後に、同じ位置へインライン表示する。
     setTimeout(()=>{
       const reader=visibleReader();
       const {head,body}=readerParts(reader);
