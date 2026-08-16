@@ -31,18 +31,6 @@ function visibleChapter(){
   return null;
 }
 
-function visibleContentsBack(){
-  const ch=visibleChapter();
-  if(!ch)return null;
-  const buttons=[...ch.querySelectorAll('.tb-back,button,a')];
-  return buttons.find(btn=>{
-    const t=(btn.textContent||'').replace(/\s+/g,'');
-    if(!(t.includes('目次へ')||t.includes('目次に戻る')))return false;
-    const box=btn.getBoundingClientRect();
-    return box.width>0&&box.height>0&&!btn.closest('[hidden]');
-  })||null;
-}
-
 let active=false;
 let activeNo=0;
 let timer=0;
@@ -57,13 +45,6 @@ function rawScrollTo(y){
   try{fn.call(window,{top:target,behavior:'auto'});}catch(_){try{fn.call(window,0,target);}catch(__){}}
 }
 
-function defaultBackTop(back){
-  const style=getComputedStyle(back);
-  const top=parseFloat(style.top);
-  if((style.position==='sticky'||style.position==='fixed')&&Number.isFinite(top))return top;
-  return 0;
-}
-
 function captureContentsPosition(){
   const h=home();
   if(!h)return;
@@ -72,21 +53,12 @@ function captureContentsPosition(){
 
 function align(){
   if(!active)return;
+  const ch=visibleChapter();
+  if(!ch)return;
 
-  // 第13〜21編は、章を開く直前に「目次」が始まっていた位置へ戻す。
-  // ライブラリ全体の先頭ではなく #tbHome の位置を基準にする。
-  if(activeNo>=13){
-    const ch=visibleChapter();
-    if(!ch)return;
-    rawScrollTo(contentsDocTop);
-    return;
-  }
-
-  // 第1〜12編は既存位置を維持。
-  const back=visibleContentsBack();
-  if(!back)return;
-  const box=back.getBoundingClientRect();
-  rawScrollTo(window.scrollY+box.top-defaultBackTop(back));
+  // 第1〜21編すべて、章を開く直前に目次 #tbHome が始まっていた
+  // 文書上の位置へ統一して表示する。
+  rawScrollTo(contentsDocTop);
 }
 
 function unlock(){
