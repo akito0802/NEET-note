@@ -7,13 +7,14 @@ let lastCardId='';
 function install(){
   const root=document.getElementById('textbookLibrary');
   if(!root){setTimeout(install,120);return;}
-  if(root.dataset.backPositionV2==='1')return;
-  root.dataset.backPositionV2='1';
+  if(root.dataset.backPositionV3==='1')return;
+  root.dataset.backPositionV3='1';
 
-  const home=()=>root.querySelector('#tbHome');
-  const homeCards=()=>[...(home()?.querySelectorAll('button')||[])].filter(b=>
-    b.matches('.tb-cat,.tb-catx,[class*="card"]') ||
-    /第\s*\d+編/.test(b.textContent||'')
+  const home=root.querySelector('#tbHome');
+  if(!home)return;
+
+  const homeCards=()=>[...home.querySelectorAll('button')].filter(b=>
+    b.matches('.tb-cat,.tb-catx,[class*="card"]') || /第\s*\d+編/.test(b.textContent||'')
   );
 
   function rememberCard(card){
@@ -44,46 +45,53 @@ function install(){
       el.dataset.styleHistoryBack==='home';
   }
 
-  root.addEventListener('click',e=>{
-    const h=home();
-    if(h&&!h.hidden){
-      const card=e.target.closest('button');
-      if(card&&h.contains(card)&&homeCards().includes(card)){
-        rememberCard(card);
-        return;
-      }
-    }
+  function showContentsOnly(){
+    const ids=[
+      'tbChapter','tbReader','tbResults',
+      'tbMelodyChapter','tbMelodyReader',
+      'tbArrangementChapter','tbArrangementReader',
+      'tbSoundChapter','tbSoundReader',
+      'tbTuningChapter','tbTuningReader',
+      'tbStyleHistoryChapter','tbStyleHistoryReader'
+    ];
+    ids.forEach(id=>{const el=root.querySelector('#'+id);if(el)el.hidden=true;});
+    home.hidden=false;
+  }
 
+  function restorePosition(){
+    const target=rememberedCard();
+    let y=homeScrollY;
+    if(target){
+      // 元のスクロール位置が不自然な場合でも、その章カード付近を基準に戻す。
+      const r=target.getBoundingClientRect();
+      const targetDocY=window.scrollY+r.top;
+      if(!Number.isFinite(y)||y<0)y=Math.max(0,targetDocY-window.innerHeight*.32);
+    }
+    try{window.scrollTo({top:y,behavior:'auto'})}catch(_){window.scrollTo(0,y)}
+  }
+
+  // 目次の章カードを開く直前の位置を記憶。
+  root.addEventListener('click',e=>{
+    if(home.hidden)return;
+    const card=e.target.closest('button');
+    if(card&&home.contains(card)&&homeCards().includes(card))rememberCard(card);
+  },true);
+
+  // 「目次へ」は元の各章ハンドラへ渡さず、ここだけで処理する。
+  root.addEventListener('click',e=>{
     const back=e.target.closest('.tb-back');
     if(!isContentsBack(back))return;
 
-    // 各章固有の showHome() が呼ぶ scrollTo(0) を、このクリック中だけ無効化する。
-    const originalScrollTo=window.scrollTo;
-    try{
-      window.scrollTo=function(){return undefined;};
-      queueMicrotask(()=>{try{window.scrollTo=originalScrollTo}catch(_){}});
-    }catch(_){ }
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
 
-    const restore=()=>{
-      const target=rememberedCard();
-      if(target){
-        const r=target.getBoundingClientRect();
-        const topPad=90;
-        const bottomPad=24;
-        if(r.top<topPad||r.bottom>window.innerHeight-bottomPad){
-          const y=Math.max(0,window.scrollY+r.top-window.innerHeight*0.34);
-          try{originalScrollTo.call(window,{top:y,behavior:'auto'})}catch(_){originalScrollTo.call(window,0,y)}
-        }else{
-          try{originalScrollTo.call(window,{top:homeScrollY,behavior:'auto'})}catch(_){originalScrollTo.call(window,0,homeScrollY)}
-        }
-      }else{
-        try{originalScrollTo.call(window,{top:homeScrollY,behavior:'auto'})}catch(_){originalScrollTo.call(window,0,homeScrollY)}
-      }
-    };
-
-    requestAnimationFrame(()=>requestAnimationFrame(restore));
-    setTimeout(restore,90);
-    setTimeout(restore,220);
+    showContentsOnly();
+    restorePosition();
+    requestAnimationFrame(restorePosition);
+    requestAnimationFrame(()=>requestAnimationFrame(restorePosition));
+    setTimeout(restorePosition,80);
+    setTimeout(restorePosition,220);
   },true);
 }
 
