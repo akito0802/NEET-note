@@ -8,16 +8,16 @@ function reorderCard(){
  if(!meaning||!detail)return;
  const meaningSec=meaning.closest('.tb-glossary-sec');
  if(!meaningSec)return;
- // 内容はそのまま。表示順だけ「もう少しくわしく」→「やさしく説明すると」にする。
+ // 内容は入れ替えず、詳しい説明を一番上へ。最初から開いた状態にする。
  if(detail.nextElementSibling!==meaningSec) meaningSec.before(detail);
  const summary=detail.querySelector('summary');
- if(summary) summary.textContent='もう少しくわしく';
+ if(summary) summary.textContent='もう少し詳しく';
  const label=meaning.previousElementSibling;
  if(label&&label.textContent.trim()==='もう少しくわしく') label.textContent='やさしく説明すると';
- detail.open=false;
+ detail.open=true;
 }
 function schedule(){
- [0,8,24,60].forEach(ms=>setTimeout(reorderCard,ms));
+ [0,8,24,60,120].forEach(ms=>setTimeout(reorderCard,ms));
 }
 function run(){
  document.addEventListener('click',e=>{if(e.target.closest?.('.tb-glossary-term'))schedule()},true);
