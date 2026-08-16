@@ -3,8 +3,8 @@
 function install(){
   const root=document.getElementById('textbookLibrary');
   if(!root){setTimeout(install,120);return;}
-  if(root.dataset.inlineReaderFixed==='4')return;
-  root.dataset.inlineReaderFixed='4';
+  if(root.dataset.inlineReaderFixed==='5')return;
+  root.dataset.inlineReaderFixed='5';
 
   const map={
     tbChapter:'tbReader',
@@ -23,6 +23,7 @@ function install(){
   };
   const chapters=Object.keys(map);
   const openState=new WeakMap();
+  const openAnchor=new WeakMap();
 
   function sourceChapter(row){
     for(const id of chapters){
@@ -50,10 +51,13 @@ function install(){
     };
   }
   function realScroll(fn,y){
-    if(typeof fn!=='function')return;
-    try{fn.call(window,{top:y,behavior:'auto'});}catch(_){
-      try{fn.call(window,0,y);}catch(__){}
+    const target=Math.max(0,y||0);
+    if(typeof fn==='function'){
+      try{fn.call(window,{top:target,behavior:'auto'});return;}catch(_){
+        try{fn.call(window,0,target);return;}catch(__){}
+      }
     }
+    try{window.scrollTo({top:target,behavior:'auto'})}catch(_){try{window.scrollTo(0,target)}catch(__){}}
   }
   function keepRowAtSamePlace(row,state){
     if(!state||state.no<13||!Number.isFinite(state.top))return;
@@ -62,20 +66,35 @@ function install(){
     const target=Math.max(0,window.scrollY+nowTop-state.top);
     realScroll(state.originalScrollTo,target);
   }
+  function returnToOpenedRow(row,anchor){
+    if(!anchor||!Number.isFinite(anchor.top))return;
+    const nowTop=row.getBoundingClientRect().top;
+    if(!Number.isFinite(nowTop))return;
+    const target=Math.max(0,window.scrollY+nowTop-anchor.top);
+    realScroll(anchor.originalScrollTo,target);
+  }
   function closeInline(row,ch,box){
-    const top=row.getBoundingClientRect().top;
-    const y=window.scrollY;
+    const anchor=openAnchor.get(row)||{
+      top:Math.max(0,Math.min(row.getBoundingClientRect().top,window.innerHeight*.45)),
+      y:window.scrollY,
+      originalScrollTo:window.scrollTo
+    };
     const reader=readerFor(row);
+
+    // Remove the expanded body, then force the originally opened lesson number
+    // back to the exact viewport height where it was tapped.
     if(box)box.remove();
     row.classList.remove('is-open');
     ch.hidden=false;
     ch.classList.remove('tb-inline-keep-chapter');
     if(reader)reader.hidden=true;
-    requestAnimationFrame(()=>{
-      const now=row.getBoundingClientRect().top;
-      const target=Number.isFinite(top)&&Number.isFinite(now)?Math.max(0,window.scrollY+now-top):y;
-      try{window.scrollTo({top:target,behavior:'auto'})}catch(_){window.scrollTo(0,target)}
-    });
+
+    returnToOpenedRow(row,anchor);
+    requestAnimationFrame(()=>returnToOpenedRow(row,anchor));
+    requestAnimationFrame(()=>requestAnimationFrame(()=>returnToOpenedRow(row,anchor)));
+    setTimeout(()=>returnToOpenedRow(row,anchor),60);
+    setTimeout(()=>returnToOpenedRow(row,anchor),140);
+    openAnchor.delete(row);
   }
 
   // Capture: remember the tapped lesson's exact viewport position before native readers run.
@@ -95,12 +114,14 @@ function install(){
     }
 
     const original=window.scrollTo;
-    openState.set(row,{
+    const state={
       y:window.scrollY,
       top:row.getBoundingClientRect().top,
       no:chapterNo(ch),
       originalScrollTo:original
-    });
+    };
+    openState.set(row,state);
+    openAnchor.set(row,{top:state.top,y:state.y,originalScrollTo:original});
     ch.classList.add('tb-inline-keep-chapter');
 
     // Absorb each chapter's native top() while the click is being handled.
@@ -122,6 +143,7 @@ function install(){
       no:chapterNo(ch),
       originalScrollTo:window.scrollTo
     };
+    if(!openAnchor.has(row))openAnchor.set(row,{top:state.top,y:state.y,originalScrollTo:state.originalScrollTo});
 
     root.querySelectorAll('.tb-inline-reader').forEach(x=>x.remove());
     root.querySelectorAll('.tb-row.is-open').forEach(x=>x.classList.remove('is-open'));
@@ -132,6 +154,7 @@ function install(){
       ch.hidden=false;
       ch.classList.remove('tb-inline-keep-chapter');
       openState.delete(row);
+      openAnchor.delete(row);
       return;
     }
 
@@ -154,7 +177,7 @@ function install(){
       requestAnimationFrame(()=>requestAnimationFrame(()=>keepRowAtSamePlace(row,state)));
       setTimeout(()=>keepRowAtSamePlace(row,state),80);
     }else{
-      // Preserve the existing chapters 1-12 behavior.
+      // Preserve the existing chapters 1-12 open behavior.
       realScroll(state.originalScrollTo,state.y);
     }
     openState.delete(row);
@@ -167,7 +190,7 @@ function install(){
   },false);
 
   const st=document.createElement('style');
-  st.textContent=`.tb-inline-keep-chapter[hidden]{display:block!important}.tb-inline-reader{margin:0 0 10px;padding:15px;border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;background:#fff;box-shadow:0 8px 20px rgba(80,60,30,.06)}.tb-row.is-open{background:#fffaf2;border-radius:12px 12px 0 0}.tb-inline-head .tb-breadcrumb{margin-top:0}.tb-inline-head h2{margin:4px 0 12px;font-size:1.12rem}.tb-inline-body{line-height:1.75}.tb-inline-body p,.tb-inline-body li,.tb-inline-body dd{font-size:.84rem;line-height:1.75}.tb-inline-body h3,.tb-inline-body h4{color:var(--accent);margin:16px 0 6px}.tb-inline-body ul{padding-left:1.25rem}.tb-inline-empty{padding:12px;color:var(--muted);background:var(--soft);border-radius:10px}.tb-inline-close{width:100%;margin-top:12px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--accent);font-weight:900}@media(max-width:650px){.tb-inline-reader{padding:13px}.tb-inline-head h2{font-size:1.05rem}}`;
+  st.textContent=`.tb-inline-keep-chapter[hidden]{display:block!important}.tb-inline-reader{overflow-anchor:none;margin:0 0 10px;padding:15px;border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;background:#fff;box-shadow:0 8px 20px rgba(80,60,30,.06)}.tb-row.is-open{overflow-anchor:none;background:#fffaf2;border-radius:12px 12px 0 0}.tb-inline-head .tb-breadcrumb{margin-top:0}.tb-inline-head h2{margin:4px 0 12px;font-size:1.12rem}.tb-inline-body{line-height:1.75}.tb-inline-body p,.tb-inline-body li,.tb-inline-body dd{font-size:.84rem;line-height:1.75}.tb-inline-body h3,.tb-inline-body h4{color:var(--accent);margin:16px 0 6px}.tb-inline-body ul{padding-left:1.25rem}.tb-inline-empty{padding:12px;color:var(--muted);background:var(--soft);border-radius:10px}.tb-inline-close{width:100%;margin-top:12px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--accent);font-weight:900}@media(max-width:650px){.tb-inline-reader{padding:13px}.tb-inline-head h2{font-size:1.05rem}}`;
   document.head.appendChild(st);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(install,160));else setTimeout(install,160);
