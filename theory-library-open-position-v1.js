@@ -1,87 +1,93 @@
 (()=>{
 'use strict';
 
-function getRoot(){return document.getElementById('textbookLibrary');}
-function getHome(){return getRoot()?.querySelector('#tbHome');}
+function root(){return document.getElementById('textbookLibrary');}
+function home(){return root()?.querySelector('#tbHome');}
 function isChapterCard(btn){
-  const home=getHome();
-  if(!home||home.hidden||!btn||!home.contains(btn))return false;
+  const h=home();
+  if(!h||h.hidden||!btn||!h.contains(btn))return false;
   if(btn.matches('.tb-cat,.tb-catx'))return true;
-  return /第\s*\d+編/.test((btn.textContent||''));
+  if(['tbMelodyCard','tbArrangementCard','tbSoundCard','tbTuningCard','tbStyleHistoryCard'].includes(btn.id))return true;
+  return /第\s*\d+編/.test(btn.textContent||'');
 }
 
-let active=false;
-let restoreTimer=0;
-let realScrollTo=null;
-let realScroll=null;
-let realScrollBy=null;
-let realScrollIntoView=null;
+const chapterIds=[
+  'tbChapter','tbMelodyChapter','tbArrangementChapter','tbSoundChapter','tbTuningChapter','tbStyleHistoryChapter'
+];
+
+function visibleChapter(){
+  const r=root();
+  if(!r)return null;
+  for(const id of chapterIds){
+    const el=r.querySelector('#'+id);
+    if(!el||el.hidden||el.closest('[hidden]'))continue;
+    const box=el.getBoundingClientRect();
+    if(box.width>0&&box.height>0)return el;
+  }
+  return null;
+}
 
 function visibleContentsBack(){
-  const root=getRoot();
-  if(!root)return null;
-  const buttons=[...root.querySelectorAll('.tb-back')];
+  const ch=visibleChapter();
+  if(!ch)return null;
+  const buttons=[...ch.querySelectorAll('.tb-back,button,a')];
   return buttons.find(btn=>{
-    const text=(btn.textContent||'').replace(/\s+/g,'');
-    if(!(text.includes('目次へ')||text.includes('目次に戻る')))return false;
+    const t=(btn.textContent||'').replace(/\s+/g,'');
+    if(!(t.includes('目次へ')||t.includes('目次に戻る')))return false;
     const box=btn.getBoundingClientRect();
-    const parentHidden=btn.closest('[hidden]');
-    return !parentHidden && box.width>0 && box.height>0;
+    return box.width>0&&box.height>0&&!btn.closest('[hidden]');
   })||null;
 }
 
-function scrollToContentsBack(){
-  if(!active||!realScrollTo)return;
+let active=false;
+let timer=0;
+let real={};
+
+function rawScrollTo(y){
+  const fn=real.scrollTo||window.scrollTo;
+  const sc=document.scrollingElement||document.documentElement;
+  const max=Math.max(0,(sc?.scrollHeight||0)-window.innerHeight);
+  const target=Math.max(0,Math.min(y,max));
+  try{fn.call(window,{top:target,behavior:'auto'});}catch(_){try{fn.call(window,0,target);}catch(__){}}
+}
+
+function align(){
+  if(!active)return;
   const back=visibleContentsBack();
   if(!back)return;
   const box=back.getBoundingClientRect();
-  // スクショの見え方に合わせ、目次ボタンを画面上部から約100pxに置く。
-  const target=Math.max(0,window.scrollY+box.top-100);
-  try{realScrollTo.call(window,{top:target,behavior:'auto'});}catch(_){
-    try{realScrollTo.call(window,0,target);}catch(__){ }
-  }
+  // スクショと同じく「目次に戻る」の上端を画面上から約100pxに合わせる。
+  rawScrollTo(window.scrollY+box.top-100);
 }
 
 function unlock(){
-  clearTimeout(restoreTimer);
-  scrollToContentsBack();
-  try{if(realScrollTo)window.scrollTo=realScrollTo;}catch(_){ }
-  try{if(realScroll)window.scroll=realScroll;}catch(_){ }
-  try{if(realScrollBy)window.scrollBy=realScrollBy;}catch(_){ }
-  try{if(realScrollIntoView)Element.prototype.scrollIntoView=realScrollIntoView;}catch(_){ }
-  active=false;
-  realScrollTo=realScroll=realScrollBy=realScrollIntoView=null;
+  clearTimeout(timer);
+  align();
+  try{if(real.scrollTo)window.scrollTo=real.scrollTo;}catch(_){ }
+  try{if(real.scroll)window.scroll=real.scroll;}catch(_){ }
+  try{if(real.scrollBy)window.scrollBy=real.scrollBy;}catch(_){ }
+  try{if(real.scrollIntoView)Element.prototype.scrollIntoView=real.scrollIntoView;}catch(_){ }
+  real={};active=false;
 }
 
-function openAtChapterTop(){
+function lockAndAlign(){
   if(active)unlock();
   active=true;
-
-  realScrollTo=window.scrollTo;
-  realScroll=window.scroll;
-  realScrollBy=window.scrollBy;
-  realScrollIntoView=Element.prototype.scrollIntoView;
-
-  // 既存の各章処理に残る scrollTo(0) は、このクリック中だけ無効化する。
+  real={scrollTo:window.scrollTo,scroll:window.scroll,scrollBy:window.scrollBy,scrollIntoView:Element.prototype.scrollIntoView};
+  // 第1〜21編それぞれに残っているトップスクロールを章切替中だけ止める。
   try{window.scrollTo=()=>{};}catch(_){ }
   try{window.scroll=()=>{};}catch(_){ }
   try{window.scrollBy=()=>{};}catch(_){ }
   try{Element.prototype.scrollIntoView=function(){};}catch(_){ }
-
-  // DOM切替後に「目次へ」ボタンを基準に位置合わせする。
-  requestAnimationFrame(scrollToContentsBack);
-  requestAnimationFrame(()=>requestAnimationFrame(scrollToContentsBack));
-  setTimeout(scrollToContentsBack,40);
-  setTimeout(scrollToContentsBack,90);
-  setTimeout(scrollToContentsBack,160);
-  setTimeout(scrollToContentsBack,260);
-  restoreTimer=setTimeout(unlock,360);
+  [0,16,40,80,140,220,320,460].forEach(ms=>setTimeout(align,ms));
+  requestAnimationFrame(align);
+  requestAnimationFrame(()=>requestAnimationFrame(align));
+  timer=setTimeout(unlock,560);
 }
 
 document.addEventListener('click',e=>{
   const btn=e.target.closest('button');
   if(!isChapterCard(btn))return;
-  openAtChapterTop();
+  lockAndAlign();
 },true);
-
 })();
