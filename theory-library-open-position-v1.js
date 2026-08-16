@@ -51,13 +51,22 @@ function rawScrollTo(y){
   try{fn.call(window,{top:target,behavior:'auto'});}catch(_){try{fn.call(window,0,target);}catch(__){}}
 }
 
+function defaultBackTop(back){
+  const style=getComputedStyle(back);
+  const top=parseFloat(style.top);
+  // sticky/fixed の top が、この「目次に戻る」UI本来の停止位置。
+  if((style.position==='sticky'||style.position==='fixed')&&Number.isFinite(top))return top;
+  // sticky指定がない環境では、余計な固定値を足さずページ上端を基準にする。
+  return 0;
+}
+
 function align(){
   if(!active)return;
   const back=visibleContentsBack();
   if(!back)return;
   const box=back.getBoundingClientRect();
-  // スクショと同じく「目次に戻る」の上端を画面上から約100pxに合わせる。
-  rawScrollTo(window.scrollY+box.top-100);
+  const wantedTop=defaultBackTop(back);
+  rawScrollTo(window.scrollY+box.top-wantedTop);
 }
 
 function unlock(){
