@@ -10,80 +10,78 @@ function isChapterCard(btn){
   return /第\s*\d+編/.test((btn.textContent||''));
 }
 
-let lock=false;
-let savedY=0;
-let savedTop=0;
-let savedCard=null;
+let active=false;
 let restoreTimer=0;
+let realScrollTo=null;
+let realScroll=null;
+let realScrollBy=null;
+let realScrollIntoView=null;
 
-function safeScrollTo(y){
-  const scroller=document.scrollingElement||document.documentElement;
-  const max=Math.max(0,(scroller?.scrollHeight||0)-window.innerHeight);
-  const target=Math.max(0,Math.min(y,max));
-  try{window.__neetRealScrollTo?.call(window,{top:target,behavior:'auto'});}catch(_){
-    try{window.__neetRealScrollTo?.call(window,0,target);}catch(__){ }
-  }
+function visibleContentsBack(){
+  const root=getRoot();
+  if(!root)return null;
+  const buttons=[...root.querySelectorAll('.tb-back')];
+  return buttons.find(btn=>{
+    const text=(btn.textContent||'').replace(/\s+/g,'');
+    if(!(text.includes('目次へ')||text.includes('目次に戻る')))return false;
+    const box=btn.getBoundingClientRect();
+    const parentHidden=btn.closest('[hidden]');
+    return !parentHidden && box.width>0 && box.height>0;
+  })||null;
 }
 
-function restorePosition(){
-  if(!lock)return;
-  let targetY=savedY;
-  if(savedCard&&document.contains(savedCard)){
-    const nowTop=savedCard.getBoundingClientRect().top;
-    if(Number.isFinite(nowTop)&&Number.isFinite(savedTop)){
-      targetY=window.scrollY+nowTop-savedTop;
-    }
+function scrollToContentsBack(){
+  if(!active||!realScrollTo)return;
+  const back=visibleContentsBack();
+  if(!back)return;
+  const box=back.getBoundingClientRect();
+  // スクショの見え方に合わせ、目次ボタンを画面上部から約100pxに置く。
+  const target=Math.max(0,window.scrollY+box.top-100);
+  try{realScrollTo.call(window,{top:target,behavior:'auto'});}catch(_){
+    try{realScrollTo.call(window,0,target);}catch(__){ }
   }
-  safeScrollTo(targetY);
 }
 
 function unlock(){
   clearTimeout(restoreTimer);
-  restorePosition();
-  if(window.__neetRealScrollTo)window.scrollTo=window.__neetRealScrollTo;
-  if(window.__neetRealScroll)window.scroll=window.__neetRealScroll;
-  if(window.__neetRealScrollBy)window.scrollBy=window.__neetRealScrollBy;
-  if(Element.prototype.__neetRealScrollIntoView)Element.prototype.scrollIntoView=Element.prototype.__neetRealScrollIntoView;
-  delete window.__neetRealScrollTo;
-  delete window.__neetRealScroll;
-  delete window.__neetRealScrollBy;
-  delete Element.prototype.__neetRealScrollIntoView;
-  lock=false;
+  scrollToContentsBack();
+  try{if(realScrollTo)window.scrollTo=realScrollTo;}catch(_){ }
+  try{if(realScroll)window.scroll=realScroll;}catch(_){ }
+  try{if(realScrollBy)window.scrollBy=realScrollBy;}catch(_){ }
+  try{if(realScrollIntoView)Element.prototype.scrollIntoView=realScrollIntoView;}catch(_){ }
+  active=false;
+  realScrollTo=realScroll=realScrollBy=realScrollIntoView=null;
 }
 
-function lockScroll(card){
-  if(lock)unlock();
-  savedCard=card;
-  savedY=window.scrollY;
-  savedTop=card.getBoundingClientRect().top;
-  lock=true;
+function openAtChapterTop(){
+  if(active)unlock();
+  active=true;
 
-  window.__neetRealScrollTo=window.scrollTo;
-  window.__neetRealScroll=window.scroll;
-  window.__neetRealScrollBy=window.scrollBy;
-  Element.prototype.__neetRealScrollIntoView=Element.prototype.scrollIntoView;
+  realScrollTo=window.scrollTo;
+  realScroll=window.scroll;
+  realScrollBy=window.scrollBy;
+  realScrollIntoView=Element.prototype.scrollIntoView;
 
-  // 各編の showChapter() に残る scrollTo(0) / scrollIntoView を、この章選択中だけ止める。
+  // 既存の各章処理に残る scrollTo(0) は、このクリック中だけ無効化する。
   try{window.scrollTo=()=>{};}catch(_){ }
   try{window.scroll=()=>{};}catch(_){ }
   try{window.scrollBy=()=>{};}catch(_){ }
   try{Element.prototype.scrollIntoView=function(){};}catch(_){ }
 
-  // DOM切替後も、章を押した時のスクロール位置を維持する。
-  requestAnimationFrame(restorePosition);
-  requestAnimationFrame(()=>requestAnimationFrame(restorePosition));
-  setTimeout(restorePosition,40);
-  setTimeout(restorePosition,100);
-  setTimeout(restorePosition,180);
-  setTimeout(restorePosition,300);
-  restoreTimer=setTimeout(unlock,420);
+  // DOM切替後に「目次へ」ボタンを基準に位置合わせする。
+  requestAnimationFrame(scrollToContentsBack);
+  requestAnimationFrame(()=>requestAnimationFrame(scrollToContentsBack));
+  setTimeout(scrollToContentsBack,40);
+  setTimeout(scrollToContentsBack,90);
+  setTimeout(scrollToContentsBack,160);
+  setTimeout(scrollToContentsBack,260);
+  restoreTimer=setTimeout(unlock,360);
 }
 
-// captureで先にロックし、その後は既存の章表示ハンドラをそのまま動かす。
 document.addEventListener('click',e=>{
   const btn=e.target.closest('button');
   if(!isChapterCard(btn))return;
-  lockScroll(btn);
+  openAtChapterTop();
 },true);
 
 })();
