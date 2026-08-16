@@ -4,18 +4,36 @@ function clean(){
   const root=document.getElementById('textbookLibrary');
   if(!root)return;
 
-  // 学習画面には出典・実装由来の説明を出さない。
-  root.querySelectorAll('.pdf-force-panel,.gm-source,.gm-refs,.tb-source-badge').forEach(el=>el.remove());
+  // 学習画面にはPDF/出典確認用の重複UIを一切出さない。
+  root.querySelectorAll('.pdf-force-panel,.tb-pdf-upgrade,.tb-pdf-note,.gm-source,.gm-refs,.tb-source-badge').forEach(el=>el.remove());
 
-  const sourceWords=['一般音楽論','PDF章立て','PDF 151','資料本文を要約','公開理論教材を要約','公開教材を要約','音響・公開教材','音律・音響資料','OPEN THEORY SOURCE','GENERAL MUSIC SOURCE'];
-  root.querySelectorAll('.tb-row small,.tb-result small,.tb-ch-title small').forEach(el=>{
+  const sourceWords=[
+    '一般音楽論','PDF章立て','PDF 151','PDF本文','PDF参照','PDF STRUCTURE',
+    '資料本文を要約','公開理論教材を要約','公開教材を要約',
+    '音響・公開教材','音律・音響資料','OPEN THEORY SOURCE','GENERAL MUSIC SOURCE',
+    '本文確認済み','PDF範囲外','書籍 p'
+  ];
+
+  // 行・検索結果・章見出しに残る出典ラベルも削除。
+  root.querySelectorAll('.tb-row small,.tb-result small,.tb-ch-title small,.tb-inline-reader small').forEach(el=>{
     const t=(el.textContent||'').trim();
     if(sourceWords.some(w=>t.includes(w)))el.remove();
   });
+
+  // 「p248–250」のようなページ番号だけの補助表示も削除。
+  root.querySelectorAll('.tb-pdf-upgrade span,.gm-refs span,.tb-inline-reader .source-page,.tb-inline-reader [data-page]').forEach(el=>el.remove());
 }
 
 const style=document.createElement('style');
 style.textContent=`
+/* PDF/出典確認用UIは描画段階から隠し、ちらつきも防ぐ */
+#textbookLibrary .pdf-force-panel,
+#textbookLibrary .tb-pdf-upgrade,
+#textbookLibrary .tb-pdf-note,
+#textbookLibrary .gm-source,
+#textbookLibrary .gm-refs,
+#textbookLibrary .tb-source-badge{display:none!important}
+
 /* 読むことを最優先したスマホUI */
 #textbookLibrary .tb-row{
   min-height:66px;
@@ -130,7 +148,8 @@ function install(){
   clean();
   const target=document.getElementById('textbookLibrary')||document.documentElement;
   new MutationObserver(clean).observe(target,{childList:true,subtree:true});
-  setTimeout(clean,200);
+  setTimeout(clean,100);
+  setTimeout(clean,300);
   setTimeout(clean,800);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
