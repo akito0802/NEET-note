@@ -1,27 +1,23 @@
 (()=>{
 'use strict';
-function reverseCard(){
+function reorderCard(){
  const layer=document.getElementById('tbGlossaryLayer');
  if(!layer||!layer.classList.contains('is-open'))return;
  const meaning=document.getElementById('tbGlossaryMeaning');
  const detail=document.getElementById('tbGlossaryDetail');
  if(!meaning||!detail)return;
- const p=detail.querySelector('p');
+ const meaningSec=meaning.closest('.tb-glossary-sec');
+ if(!meaningSec)return;
+ // 内容はそのまま。表示順だけ「もう少しくわしく」→「やさしく説明すると」にする。
+ if(detail.nextElementSibling!==meaningSec) meaningSec.before(detail);
  const summary=detail.querySelector('summary');
- if(!p||!summary)return;
- const easy=meaning.textContent.trim();
- const detailed=p.textContent.trim();
- if(!easy||!detailed)return;
- meaning.textContent=detailed;
+ if(summary) summary.textContent='もう少しくわしく';
  const label=meaning.previousElementSibling;
- if(label)label.textContent='もう少しくわしく';
- p.textContent=easy;
- summary.textContent='やさしく説明すると';
+ if(label&&label.textContent.trim()==='もう少しくわしく') label.textContent='やさしく説明すると';
  detail.open=false;
 }
 function schedule(){
- setTimeout(reverseCard,8);
- setTimeout(reverseCard,24);
+ [0,8,24,60].forEach(ms=>setTimeout(reorderCard,ms));
 }
 function run(){
  document.addEventListener('click',e=>{if(e.target.closest?.('.tb-glossary-term'))schedule()},true);
