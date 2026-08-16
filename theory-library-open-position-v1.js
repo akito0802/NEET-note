@@ -47,6 +47,7 @@ let active=false;
 let activeNo=0;
 let timer=0;
 let real={};
+let contentsDocTop=0;
 
 function rawScrollTo(y){
   const fn=real.scrollTo||window.scrollTo;
@@ -63,20 +64,25 @@ function defaultBackTop(back){
   return 0;
 }
 
+function captureContentsPosition(){
+  const h=home();
+  if(!h)return;
+  contentsDocTop=Math.max(0,window.scrollY+h.getBoundingClientRect().top);
+}
+
 function align(){
   if(!active)return;
-  const r=root();
-  if(!r)return;
 
-  // 第13〜21編は、ライブラリ本体の先頭を画面上端に戻す。
-  // これにより検索→主要領域→目次に戻る、というDOM本来の配置で止まる。
+  // 第13〜21編は、章を開く直前に「目次」が始まっていた位置へ戻す。
+  // ライブラリ全体の先頭ではなく #tbHome の位置を基準にする。
   if(activeNo>=13){
-    const rootDocTop=window.scrollY+r.getBoundingClientRect().top;
-    rawScrollTo(rootDocTop);
+    const ch=visibleChapter();
+    if(!ch)return;
+    rawScrollTo(contentsDocTop);
     return;
   }
 
-  // 第1〜12編は、現在うまく動いている既存位置を維持。
+  // 第1〜12編は既存位置を維持。
   const back=visibleContentsBack();
   if(!back)return;
   const box=back.getBoundingClientRect();
@@ -108,9 +114,18 @@ function lockAndAlign(no){
   timer=setTimeout(unlock,560);
 }
 
+// clickより前に、目次が実際にあった文書上の位置を保存する。
+document.addEventListener('pointerdown',e=>{
+  const btn=e.target.closest('button');
+  if(!isChapterCard(btn))return;
+  captureContentsPosition();
+},true);
+
 document.addEventListener('click',e=>{
   const btn=e.target.closest('button');
   if(!isChapterCard(btn))return;
+  // キーボード操作などpointerdownが無い場合にも対応。
+  if(!contentsDocTop)captureContentsPosition();
   lockAndAlign(chapterNo(btn));
 },true);
 })();
