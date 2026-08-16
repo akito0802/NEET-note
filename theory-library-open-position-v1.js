@@ -3,6 +3,10 @@
 
 function root(){return document.getElementById('textbookLibrary');}
 function home(){return root()?.querySelector('#tbHome');}
+function chapterNo(btn){
+  const n=(btn?.querySelector?.('.tb-no')?.textContent||btn?.textContent||'').match(/第\s*(\d+)\s*編/);
+  return n?Number(n[1]):0;
+}
 function isChapterCard(btn){
   const h=home();
   if(!h||h.hidden||!btn||!h.contains(btn))return false;
@@ -40,6 +44,7 @@ function visibleContentsBack(){
 }
 
 let active=false;
+let activeNo=0;
 let timer=0;
 let real={};
 
@@ -54,19 +59,28 @@ function rawScrollTo(y){
 function defaultBackTop(back){
   const style=getComputedStyle(back);
   const top=parseFloat(style.top);
-  // sticky/fixed の top が、この「目次に戻る」UI本来の停止位置。
   if((style.position==='sticky'||style.position==='fixed')&&Number.isFinite(top))return top;
-  // sticky指定がない環境では、余計な固定値を足さずページ上端を基準にする。
   return 0;
 }
 
 function align(){
   if(!active)return;
+  const r=root();
+  if(!r)return;
+
+  // 第13〜21編は、ライブラリ本体の先頭を画面上端に戻す。
+  // これにより検索→主要領域→目次に戻る、というDOM本来の配置で止まる。
+  if(activeNo>=13){
+    const rootDocTop=window.scrollY+r.getBoundingClientRect().top;
+    rawScrollTo(rootDocTop);
+    return;
+  }
+
+  // 第1〜12編は、現在うまく動いている既存位置を維持。
   const back=visibleContentsBack();
   if(!back)return;
   const box=back.getBoundingClientRect();
-  const wantedTop=defaultBackTop(back);
-  rawScrollTo(window.scrollY+box.top-wantedTop);
+  rawScrollTo(window.scrollY+box.top-defaultBackTop(back));
 }
 
 function unlock(){
@@ -76,14 +90,14 @@ function unlock(){
   try{if(real.scroll)window.scroll=real.scroll;}catch(_){ }
   try{if(real.scrollBy)window.scrollBy=real.scrollBy;}catch(_){ }
   try{if(real.scrollIntoView)Element.prototype.scrollIntoView=real.scrollIntoView;}catch(_){ }
-  real={};active=false;
+  real={};active=false;activeNo=0;
 }
 
-function lockAndAlign(){
+function lockAndAlign(no){
   if(active)unlock();
   active=true;
+  activeNo=no;
   real={scrollTo:window.scrollTo,scroll:window.scroll,scrollBy:window.scrollBy,scrollIntoView:Element.prototype.scrollIntoView};
-  // 第1〜21編それぞれに残っているトップスクロールを章切替中だけ止める。
   try{window.scrollTo=()=>{};}catch(_){ }
   try{window.scroll=()=>{};}catch(_){ }
   try{window.scrollBy=()=>{};}catch(_){ }
@@ -97,6 +111,6 @@ function lockAndAlign(){
 document.addEventListener('click',e=>{
   const btn=e.target.closest('button');
   if(!isChapterCard(btn))return;
-  lockAndAlign();
+  lockAndAlign(chapterNo(btn));
 },true);
 })();
