@@ -12,7 +12,7 @@ fix.onload=()=>{
   menu.defer=true;
   menu.onload=()=>{
     const collapse=document.createElement('script');
-    collapse.src=ROOT+'global-menu-collapse.js?v=20260817-1';
+    collapse.src=ROOT+'global-menu-collapse.js?v=20260817-2';
     collapse.defer=true;
     collapse.onload=()=>{
       if(document.querySelector('script[data-neet-menu-dedupe]'))return;
