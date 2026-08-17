@@ -1,3 +1,5 @@
+@import url("home-v2-desktop.css?v=20260817-2");
+
 /* NEET NOTE desktop layout — mobile/tablet styles remain untouched */
 @media (min-width:1000px){
   :root{
