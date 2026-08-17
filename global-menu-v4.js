@@ -15,12 +15,18 @@ fix.onload=()=>{
     collapse.src=ROOT+'global-menu-collapse.js?v=20260817-2';
     collapse.defer=true;
     collapse.onload=()=>{
-      if(document.querySelector('script[data-neet-menu-dedupe]'))return;
-      const dedupe=document.createElement('script');
-      dedupe.src=ROOT+'menu-dedupe.js?v=20260817-1';
-      dedupe.defer=true;
-      dedupe.dataset.neetMenuDedupe='1';
-      document.head.appendChild(dedupe);
+      const compact=document.createElement('script');
+      compact.src=ROOT+'global-menu-compact-width.js?v=20260817-1';
+      compact.defer=true;
+      compact.onload=()=>{
+        if(document.querySelector('script[data-neet-menu-dedupe]'))return;
+        const dedupe=document.createElement('script');
+        dedupe.src=ROOT+'menu-dedupe.js?v=20260817-1';
+        dedupe.defer=true;
+        dedupe.dataset.neetMenuDedupe='1';
+        document.head.appendChild(dedupe);
+      };
+      document.head.appendChild(compact);
     };
     document.head.appendChild(collapse);
   };
