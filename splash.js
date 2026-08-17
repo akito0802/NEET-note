@@ -15,7 +15,7 @@
   const loadHome = () => {
     if (document.querySelector('script[data-neet-home-v2]')) return;
     const script = document.createElement('script');
-    script.src = 'home-v2.js?v=20260813-4';
+    script.src = 'home-v2.js?v=20260817-5';
     script.dataset.neetHomeV2 = '1';
     document.body.appendChild(script);
   };
@@ -34,7 +34,6 @@
 
   if (!directTopVisit) return;
 
-  // index.html側のタイトル演出が既に出ている場合は、演出が完全に消えてからトップを表示
   if (document.getElementById('neetIntro')) {
     sessionStorage.setItem('neet-note-intro-seen', '1');
     loadHomeAfterExistingIntro();
