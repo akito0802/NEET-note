@@ -16,7 +16,7 @@ fix.onload=()=>{
     compact.defer=true;
     compact.onload=()=>{
       const corner=document.createElement('script');
-      corner.src=ROOT+'global-menu-left-top.js?v=20260817-3';
+      corner.src=ROOT+'global-menu-left-top.js?v=20260818-1';
       corner.defer=true;
       corner.onload=()=>{
         if(document.querySelector('script[data-neet-menu-dedupe]'))return;
