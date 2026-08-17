@@ -16,21 +16,15 @@ fix.onload=()=>{
     compact.defer=true;
     compact.onload=()=>{
       const leftTop=document.createElement('script');
-      leftTop.src=ROOT+'global-menu-left-top.js?v=20260817-1';
+      leftTop.src=ROOT+'global-menu-left-top.js?v=20260817-2';
       leftTop.defer=true;
       leftTop.onload=()=>{
-        const safe=document.createElement('script');
-        safe.src=ROOT+'global-menu-safe-area.js?v=20260817-1';
-        safe.defer=true;
-        safe.onload=()=>{
-          if(document.querySelector('script[data-neet-menu-dedupe]'))return;
-          const dedupe=document.createElement('script');
-          dedupe.src=ROOT+'menu-dedupe.js?v=20260817-1';
-          dedupe.defer=true;
-          dedupe.dataset.neetMenuDedupe='1';
-          document.head.appendChild(dedupe);
-        };
-        document.head.appendChild(safe);
+        if(document.querySelector('script[data-neet-menu-dedupe]'))return;
+        const dedupe=document.createElement('script');
+        dedupe.src=ROOT+'menu-dedupe.js?v=20260817-1';
+        dedupe.defer=true;
+        dedupe.dataset.neetMenuDedupe='1';
+        document.head.appendChild(dedupe);
       };
       document.head.appendChild(leftTop);
     };
