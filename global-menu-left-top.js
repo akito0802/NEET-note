@@ -3,7 +3,7 @@
 if(window.__NEET_GLOBAL_MENU_LEFT_TOP__)return;
 window.__NEET_GLOBAL_MENU_LEFT_TOP__=true;
 
-// Legacy filename kept for compatibility. The shared hamburger now lives at the top-right.
+// Shared hamburger is pinned to the top-left across NEETNOTE and linked dictionaries.
 const install=()=>{
   if(document.getElementById('ngm-left-top-style'))return;
   const style=document.createElement('style');
@@ -12,8 +12,8 @@ const install=()=>{
     .ngm-btn{
       position:fixed!important;
       top:max(12px,env(safe-area-inset-top))!important;
-      right:max(12px,env(safe-area-inset-right))!important;
-      left:auto!important;
+      left:max(12px,env(safe-area-inset-left))!important;
+      right:auto!important;
       bottom:auto!important;
       width:48px!important;
       height:48px!important;
@@ -25,8 +25,8 @@ const install=()=>{
     @media(max-width:600px){
       .ngm-btn{
         top:max(10px,env(safe-area-inset-top))!important;
-        right:max(10px,env(safe-area-inset-right))!important;
-        left:auto!important;
+        left:max(10px,env(safe-area-inset-left))!important;
+        right:auto!important;
         width:44px!important;
         height:44px!important;
       }
