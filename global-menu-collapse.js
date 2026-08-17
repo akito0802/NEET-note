@@ -25,7 +25,11 @@ const install=()=>{
       .ngm-section>.ngm-card-list[hidden]{display:none!important}
       html[data-theme="dark"] .ngm-section-toggle{background:rgba(48,42,35,.94)}
       html[data-theme="dark"] .ngm-section-toggle:hover{background:#3a3027}
-      @media(max-width:600px){.ngm-section-toggle{min-height:48px;padding:10px 11px}.ngm-section-toggle-label{font-size:.79rem}}
+      @media(max-width:600px){
+        .ngm-menu{width:min(88vw,340px)!important;max-width:340px!important;border-radius:0 22px 22px 0!important;padding-left:12px!important;padding-right:12px!important}
+        .ngm-section-toggle{min-height:48px;padding:10px 11px}
+        .ngm-section-toggle-label{font-size:.79rem}
+      }
     `;
     document.head.appendChild(style);
   }
