@@ -15,10 +15,10 @@ fix.onload=()=>{
     compact.src=ROOT+'global-menu-compact-width.js?v=20260817-1';
     compact.defer=true;
     compact.onload=()=>{
-      const leftTop=document.createElement('script');
-      leftTop.src=ROOT+'global-menu-left-top.js?v=20260817-2';
-      leftTop.defer=true;
-      leftTop.onload=()=>{
+      const corner=document.createElement('script');
+      corner.src=ROOT+'global-menu-left-top.js?v=20260817-3';
+      corner.defer=true;
+      corner.onload=()=>{
         if(document.querySelector('script[data-neet-menu-dedupe]'))return;
         const dedupe=document.createElement('script');
         dedupe.src=ROOT+'menu-dedupe.js?v=20260817-1';
@@ -26,7 +26,7 @@ fix.onload=()=>{
         dedupe.dataset.neetMenuDedupe='1';
         document.head.appendChild(dedupe);
       };
-      document.head.appendChild(leftTop);
+      document.head.appendChild(corner);
     };
     document.head.appendChild(compact);
   };
