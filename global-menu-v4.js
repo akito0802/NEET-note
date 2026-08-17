@@ -19,12 +19,18 @@ fix.onload=()=>{
       leftTop.src=ROOT+'global-menu-left-top.js?v=20260817-1';
       leftTop.defer=true;
       leftTop.onload=()=>{
-        if(document.querySelector('script[data-neet-menu-dedupe]'))return;
-        const dedupe=document.createElement('script');
-        dedupe.src=ROOT+'menu-dedupe.js?v=20260817-1';
-        dedupe.defer=true;
-        dedupe.dataset.neetMenuDedupe='1';
-        document.head.appendChild(dedupe);
+        const safe=document.createElement('script');
+        safe.src=ROOT+'global-menu-safe-area.js?v=20260817-1';
+        safe.defer=true;
+        safe.onload=()=>{
+          if(document.querySelector('script[data-neet-menu-dedupe]'))return;
+          const dedupe=document.createElement('script');
+          dedupe.src=ROOT+'menu-dedupe.js?v=20260817-1';
+          dedupe.defer=true;
+          dedupe.dataset.neetMenuDedupe='1';
+          document.head.appendChild(dedupe);
+        };
+        document.head.appendChild(safe);
       };
       document.head.appendChild(leftTop);
     };
