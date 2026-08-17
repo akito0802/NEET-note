@@ -7,6 +7,7 @@ on:
       - 'global-menu.js'
       - 'global-menu-compact-width.js'
       - 'global-menu-left-top.js'
+      - 'global-menu-safe-area.js'
       - 'menu-dedupe.js'
       - 'home-route-fix.js'
       - 'home.html'
@@ -43,7 +44,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re
-          tag='<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260817-2"></script>'
+          tag='<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260817-4"></script>'
           changed=[]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts: continue
