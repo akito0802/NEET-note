@@ -5,11 +5,17 @@ window.__NEET_HOME_ROUTE_FIX__=true;
 
 const ROOT='https://akito0802.github.io/NEET-note/';
 const TOP_URL=ROOT+'home.html';
+const NEETON_HOME=ROOT+'neeton-home.html';
 const INDEX_PATH_RE=/\/NEET-note\/(?:index\.html)?$/;
 
 const labelOf=el=>[el?.textContent,el?.getAttribute?.('aria-label'),el?.getAttribute?.('title')].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
-const isHomeControl=el=>{
+const isNeetonHome=el=>{
   if(!(el instanceof Element))return false;
+  const href=el.tagName==='A'?(el.getAttribute('href')||''):'';
+  return /neeton-home\.html(?:[?#]|$)/i.test(href)||/ニートンのお(?:うち|家)/.test(labelOf(el));
+};
+const isHomeControl=el=>{
+  if(!(el instanceof Element)||isNeetonHome(el))return false;
   if(el.matches('.ngm-top-return,.neet-top-return,.note-home-link,[data-neet-home-control="current"],[data-home-link="current"]'))return true;
   const label=labelOf(el);
   if(/トップへ戻る|トップに戻る|←\s*ホーム|ホームへ戻る|ホームに戻る/.test(label))return true;
@@ -20,6 +26,11 @@ const isHomeControl=el=>{
 
 const normalizeHomeControls=()=>{
   document.querySelectorAll('a,button').forEach(el=>{
+    if(isNeetonHome(el)){
+      if(el.tagName==='A')el.setAttribute('href',NEETON_HOME);
+      delete el.dataset.neetHomeControl;
+      return;
+    }
     if(!isHomeControl(el))return;
     const label=labelOf(el);
     if(/ノート/.test(label)&&!/ホーム|トップ/.test(label))return;
@@ -38,7 +49,7 @@ const routeLegacyHome=()=>{
 
 document.addEventListener('click',e=>{
   const el=e.target instanceof Element?e.target.closest('a,button'):null;
-  if(!el||!isHomeControl(el))return;
+  if(!el||isNeetonHome(el)||!isHomeControl(el))return;
   const label=labelOf(el);
   if(/ノート/.test(label)&&!/ホーム|トップ/.test(label))return;
   e.preventDefault();
