@@ -1,13 +1,15 @@
 (()=>{
 'use strict';
-if(window.__NEET_GLOBAL_MENU_LEFT_TOP__)return;
-window.__NEET_GLOBAL_MENU_LEFT_TOP__=true;
+// V2 guard intentionally differs from the legacy guard so an older cached
+// right-positioning script cannot prevent this corrective pass from running.
+if(window.__NEET_GLOBAL_MENU_LEFT_TOP_V2__)return;
+window.__NEET_GLOBAL_MENU_LEFT_TOP_V2__=true;
 
-// Shared hamburger is pinned to the top-left across NEETNOTE and linked dictionaries.
-const install=()=>{
-  if(document.getElementById('ngm-left-top-style'))return;
+const styleId='ngm-left-top-style-v2';
+const installStyle=()=>{
+  if(document.getElementById(styleId))return;
   const style=document.createElement('style');
-  style.id='ngm-left-top-style';
+  style.id=styleId;
   style.textContent=`
     .ngm-btn{
       position:fixed!important;
@@ -34,6 +36,23 @@ const install=()=>{
   `;
   document.head.appendChild(style);
 };
-install();
-new MutationObserver(install).observe(document.documentElement,{childList:true,subtree:true});
+
+const pinLeft=()=>{
+  const mobile=window.innerWidth<=600;
+  document.querySelectorAll('.ngm-btn').forEach(btn=>{
+    btn.style.setProperty('position','fixed','important');
+    btn.style.setProperty('top',mobile?'max(10px,env(safe-area-inset-top))':'max(12px,env(safe-area-inset-top))','important');
+    btn.style.setProperty('left',mobile?'max(10px,env(safe-area-inset-left))':'max(12px,env(safe-area-inset-left))','important');
+    btn.style.setProperty('right','auto','important');
+    btn.style.setProperty('bottom','auto','important');
+  });
+};
+
+const apply=()=>{installStyle();pinLeft();};
+apply();
+new MutationObserver(apply).observe(document.documentElement,{childList:true,subtree:true});
+window.addEventListener('resize',pinLeft,{passive:true});
+setTimeout(apply,0);
+setTimeout(apply,250);
+setTimeout(apply,1000);
 })();
