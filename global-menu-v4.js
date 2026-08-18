@@ -21,7 +21,7 @@ fix.onload=()=>{
       corner.onload=()=>{
         if(document.querySelector('script[data-neet-menu-dedupe]'))return;
         const dedupe=document.createElement('script');
-        dedupe.src=ROOT+'menu-dedupe.js?v=20260817-1';
+        dedupe.src=ROOT+'menu-dedupe.js?v=20260818-3';
         dedupe.defer=true;
         dedupe.dataset.neetMenuDedupe='1';
         document.head.appendChild(dedupe);
