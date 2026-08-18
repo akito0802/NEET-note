@@ -70,6 +70,7 @@ keys.forEach((k,i)=>{const b=document.createElement('button');b.className='key';
 select.onchange=()=>{selected=Number(select.value);renderKey()};$('presets').onclick=e=>{const b=e.target.closest('.preset');if(!b)return;style=b.dataset.style;document.querySelectorAll('.preset').forEach(x=>x.classList.toggle('active',x===b));convert()};$('convert').onclick=convert;$('sample').onclick=()=>{$('progression').value=current().id==='C'?'C / G / Am / F':`${chord(current().major[0],'')} / ${chord(current().major[4],'')} / ${chord(current().major[5],'m')} / ${chord(current().major[3],'')}`;convert()};$('progression').value='C / G / Am / F';renderKey();
 })();
 </script>
+
 <script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260819-2"></script>
 </body>
 </html>
