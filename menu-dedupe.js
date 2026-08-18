@@ -5,6 +5,7 @@ window.__NEET_MENU_DEDUPE__=true;
 
 const ROOT='https://akito0802.github.io/NEET-note/';
 const TOP_URL=ROOT+'home.html';
+const NEETON_HOME=ROOT+'neeton-home.html';
 const style=document.createElement('style');
 style.id='neet-menu-dedupe-style';
 style.textContent=`
@@ -29,19 +30,31 @@ const hideLegacy=()=>{
   keepOne('.ngm-btn');keepOne('.ngm-menu');keepOne('.ngm-overlay');
 };
 
-const isHomeControl=el=>{
+const labelOf=el=>[el?.textContent,el?.getAttribute?.('aria-label'),el?.getAttribute?.('title')].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
+const isNeetonHome=el=>{
   if(!(el instanceof Element))return false;
+  const href=el.tagName==='A'?(el.getAttribute('href')||''):'';
+  return /neeton-home\.html(?:[?#]|$)/i.test(href)||/ニートンのお(?:うち|家)/.test(labelOf(el));
+};
+const isHomeControl=el=>{
+  if(!(el instanceof Element)||isNeetonHome(el))return false;
   if(el.matches('.neet-top-return,.ngm-top-return,.note-home-link,[data-neet-home-control="current"]'))return true;
-  const label=[el.textContent,el.getAttribute('aria-label'),el.getAttribute('title')].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
-  if(/ホーム|トップへ戻る|トップに戻る|トップへ|⌂|🏠/.test(label))return true;
+  const label=labelOf(el);
+  if(/ホーム|トップへ戻る|トップに戻る|トップへ/.test(label))return true;
+  if(/^(?:⌂|🏠)\s*$/.test(label))return true;
   if(/^(home|top)$/i.test(label))return true;
   const idClass=`${el.id||''} ${typeof el.className==='string'?el.className:''}`;
   return /(?:^|[-_\s])(home|top)(?:[-_\s]|$)/i.test(idClass)&&!/dashboard|neeton/i.test(idClass);
 };
 const normalizeHomeControls=()=>{
   document.querySelectorAll('a,button').forEach(el=>{
+    if(isNeetonHome(el)){
+      if(el.tagName==='A')el.setAttribute('href',NEETON_HOME);
+      delete el.dataset.neetHomeControl;
+      return;
+    }
     if(!isHomeControl(el))return;
-    const label=[el.textContent,el.getAttribute('aria-label'),el.getAttribute('title')].filter(Boolean).join(' ');
+    const label=labelOf(el);
     if(/ノート/.test(label)&&!/ホーム|トップ/.test(label))return;
     if(el.tagName==='A')el.setAttribute('href',TOP_URL);
     el.dataset.neetHomeControl='current';
@@ -50,8 +63,8 @@ const normalizeHomeControls=()=>{
 
 document.addEventListener('click',e=>{
   const el=e.target instanceof Element?e.target.closest('a,button'):null;
-  if(!el||!isHomeControl(el))return;
-  const label=[el.textContent,el.getAttribute('aria-label'),el.getAttribute('title')].filter(Boolean).join(' ');
+  if(!el||isNeetonHome(el)||!isHomeControl(el))return;
+  const label=labelOf(el);
   if(/ノート/.test(label)&&!/ホーム|トップ/.test(label))return;
   e.preventDefault();e.stopImmediatePropagation();window.location.assign(TOP_URL);
 },true);
