@@ -4,7 +4,7 @@ if(window.__NEET_MENU_V4_LOADER__)return;
 window.__NEET_MENU_V4_LOADER__=true;
 const ROOT='https://akito0802.github.io/NEET-note/';
 const fix=document.createElement('script');
-fix.src=ROOT+'home-route-fix.js?v=20260817-1';
+fix.src=ROOT+'home-route-fix.js?v=20260818-2';
 fix.defer=true;
 fix.onload=()=>{
   const menu=document.createElement('script');
