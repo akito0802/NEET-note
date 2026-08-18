@@ -12,7 +12,7 @@ fix.onload=()=>{
   menu.defer=true;
   menu.onload=()=>{
     const fifths=document.createElement('script');
-    fifths.src=ROOT+'circle-of-fifths-integration.js?v=20260819-1';
+    fifths.src=ROOT+'circle-of-fifths-integration.js?v=20260819-2';
     fifths.defer=true;
     document.head.appendChild(fifths);
     const compact=document.createElement('script');
