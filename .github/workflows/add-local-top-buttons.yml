@@ -1,0 +1,53 @@
+name: Add local top buttons to new theory tools
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/add-local-top-buttons.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add page-local top buttons
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          files = [Path('circle-of-fifths.html'), Path('major-to-minor-lab.html')]
+          css = '''
+.local-top-return{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(14px,env(safe-area-inset-bottom));z-index:38000;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 14px;border:1px solid rgba(154,117,73,.28);border-radius:999px;background:rgba(255,250,242,.96);color:#704a25;box-shadow:0 8px 24px rgba(89,62,31,.16);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);text-decoration:none;font-size:.78rem;font-weight:900;line-height:1}
+.local-top-return:active{transform:scale(.97)}
+html[data-theme="dark"] .local-top-return{background:rgba(48,42,35,.96);border-color:#795b3a;color:#e0b77f}
+@media(max-width:600px){.local-top-return{min-height:46px;padding:0 13px}}
+'''.strip()
+          button = '<a class="local-top-return" href="https://akito0802.github.io/NEET-note/home.html" aria-label="NEETNOTEのトップに戻る"><span aria-hidden="true">⌂</span><span>トップ</span></a>'
+
+          changed=[]
+          for p in files:
+              s=p.read_text(encoding='utf-8')
+              original=s
+              if '.local-top-return{' not in s:
+                  s=s.replace('</style>', css+'\n</style>', 1)
+              if 'class="local-top-return"' not in s:
+                  s=s.replace('<body>', '<body>\n'+button, 1)
+              if s != original:
+                  p.write_text(s, encoding='utf-8')
+                  changed.append(str(p))
+          print('updated:', ', '.join(changed))
+          PY
+      - name: Commit buttons
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add circle-of-fifths.html major-to-minor-lab.html
+          git commit -m "Add top return buttons to new theory tools"
+          git pull --rebase origin main
+          git push
