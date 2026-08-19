@@ -1,0 +1,73 @@
+name: Install advanced theory tool links
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/install-advanced-theory-links.yml'
+permissions:
+  contents: write
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch static tool links and cache versions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          home=Path('home-dashboard.js')
+          s=home.read_text(encoding='utf-8')
+          if "voice-leading.html" not in s:
+              needle=" [ROOT+'major-to-minor-lab.html','⇄','長調→短調','コードとメロディを同主短調へ変換']"
+              add=""" [ROOT+'major-to-minor-lab.html','⇄','長調→短調','コードとメロディを同主短調へ変換'],
+ [ROOT+'voice-leading.html','↔','ボイスリーディング','声部を最短距離で滑らかにつなぐ'],
+ [ROOT+'modulation-route.html','◎','転調ルート','共通コードやV7から転調経路を作る'],
+ [ROOT+'reharmonize.html','◇','代理コード','役割を保つ置換候補を調べる'],
+ [ROOT+'nondiatonic-analyzer.html','△','ノンダイアトニック','キー外コードの役割を分析'],
+ [ROOT+'tension-checker.html','＋','テンション','9th・11th・13thの適合を確認'],
+ [ROOT+'slash-chord-lab.html','／','オンコード','転回形とベースラインを設計']"""
+              s=s.replace(needle,add,1)
+          s=s.replace('14 TOOLS','20 TOOLS').replace('<small>6 tools</small>','<small>12 tools</small>')
+          home.write_text(s,encoding='utf-8')
+
+          menu=Path('global-menu.js')
+          s=menu.read_text(encoding='utf-8')
+          if "voice-leading.html" not in s:
+              needle="    [ROOT+'major-to-minor-lab.html','⇄','長調→短調 変換ラボ']"
+              add="""    [ROOT+'major-to-minor-lab.html','⇄','長調→短調 変換ラボ'],
+    [ROOT+'voice-leading.html','↔','ボイスリーディング・ナビ'],
+    [ROOT+'modulation-route.html','◎','転調ルートメーカー'],
+    [ROOT+'reharmonize.html','◇','代理コード・リハーモナイズ'],
+    [ROOT+'nondiatonic-analyzer.html','△','ノンダイアトニック判定'],
+    [ROOT+'tension-checker.html','＋','テンション適合チェッカー'],
+    [ROOT+'slash-chord-lab.html','／','オンコード設計ラボ']"""
+              s=s.replace(needle,add,1)
+          menu.write_text(s,encoding='utf-8')
+
+          loader=Path('global-menu-v4.js')
+          s=loader.read_text(encoding='utf-8')
+          s=re.sub(r"global-menu\.js\?v=[^']+",'global-menu.js?v=20260819-tools1',s)
+          loader.write_text(s,encoding='utf-8')
+
+          h=Path('home.html')
+          s=h.read_text(encoding='utf-8')
+          s=re.sub(r'home-dashboard\.js\?v=[^"\']+','home-dashboard.js?v=20260819-tools1',s)
+          h.write_text(s,encoding='utf-8')
+
+          wf=Path('.github/workflows/apply-global-menu-all-pages.yml')
+          s=wf.read_text(encoding='utf-8')
+          s=re.sub(r'global-menu-v4\.js\?v=[^"\']+','global-menu-v4.js?v=20260819-safe4',s)
+          s=s.replace('Apply menu safe3 with unified top-button UI','Apply menu safe4 with advanced theory tools')
+          wf.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit static integration
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add home-dashboard.js global-menu.js global-menu-v4.js home.html .github/workflows/apply-global-menu-all-pages.yml
+          git commit -m "Integrate six advanced theory tools safely"
+          git pull --rebase origin main
+          git push
