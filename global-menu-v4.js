@@ -11,10 +11,6 @@ fix.onload=()=>{
   menu.src=ROOT+'global-menu.js?v=20260817-1';
   menu.defer=true;
   menu.onload=()=>{
-    const fifths=document.createElement('script');
-    fifths.src=ROOT+'circle-of-fifths-integration.js?v=20260819-2';
-    fifths.defer=true;
-    document.head.appendChild(fifths);
     const compact=document.createElement('script');
     compact.src=ROOT+'global-menu-compact-width.js?v=20260817-1';
     compact.defer=true;
