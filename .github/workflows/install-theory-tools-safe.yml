@@ -1,0 +1,79 @@
+name: Install theory tools safely
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/install-theory-tools-safe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add theory tools directly to existing arrays
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          changed=[]
+
+          # 1) Home dashboard: direct static entries only. No observers, no runtime injection.
+          p=Path('home-dashboard.js')
+          s=p.read_text(encoding='utf-8')
+          old=s
+          anchor=" ['https://akito0802.github.io/-h/','♯','指板','指板上の音を視覚的に確認']\n];"
+          replacement=" ['https://akito0802.github.io/-h/','♯','指板','指板上の音を視覚的に確認'],\n [ROOT+'circle-of-fifths.html','◉','五度圏','調・近親調・ダイアトニックを可視化'],\n [ROOT+'major-to-minor-lab.html','⇄','長調→短調','コードとメロディを同主短調へ変換']\n];"
+          if 'major-to-minor-lab.html' not in s:
+              if anchor not in s: raise SystemExit('home-dashboard anchor not found')
+              s=s.replace(anchor,replacement,1)
+          s=s.replace('<span>12 TOOLS</span>','<span>14 TOOLS</span>',1)
+          s=s.replace('<small>4 tools</small>','<small>6 tools</small>',1)
+          if s!=old:
+              p.write_text(s,encoding='utf-8'); changed.append(str(p))
+
+          # 2) Shared menu: direct static entries in the existing library group.
+          p=Path('global-menu.js')
+          s=p.read_text(encoding='utf-8')
+          old=s
+          anchor="    ['https://akito0802.github.io/-h/','🎵','指板']\n  ]},"
+          replacement="    ['https://akito0802.github.io/-h/','🎵','指板'],\n    [ROOT+'circle-of-fifths.html','◉','インタラクティブ五度圏'],\n    [ROOT+'major-to-minor-lab.html','⇄','長調→短調 変換ラボ']\n  ]},"
+          if 'major-to-minor-lab.html' not in s:
+              if anchor not in s: raise SystemExit('global-menu anchor not found')
+              s=s.replace(anchor,replacement,1)
+          if s!=old:
+              p.write_text(s,encoding='utf-8'); changed.append(str(p))
+
+          # 3) Refresh only the shared menu source cache inside the stable loader.
+          p=Path('global-menu-v4.js')
+          s=p.read_text(encoding='utf-8')
+          old=s
+          import re
+          s=re.sub(r"global-menu\.js\?v=[^']+",'global-menu.js?v=20260819-safe1',s,count=1)
+          # Never load the previous runtime integration script.
+          s=re.sub(r"\s*const fifths=document\.createElement\('script'\);.*?document\.head\.appendChild\(fifths\);","",s,flags=re.S)
+          if s!=old:
+              p.write_text(s,encoding='utf-8'); changed.append(str(p))
+
+          # 4) Refresh the dashboard source on the dedicated home only.
+          p=Path('home.html')
+          s=p.read_text(encoding='utf-8')
+          old=s
+          s=re.sub(r'home-dashboard\.js\?v=[^"\']+','home-dashboard.js?v=20260819-safe1',s,count=1)
+          if s!=old:
+              p.write_text(s,encoding='utf-8'); changed.append(str(p))
+
+          print('changed:', ', '.join(changed))
+          PY
+      - name: Commit safe direct integration
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add home-dashboard.js global-menu.js global-menu-v4.js home.html
+          git commit -m "Add theory tools without runtime DOM injection"
+          git pull --rebase origin main
+          git push
