@@ -20,7 +20,9 @@ const groups=[
     [ROOT+'theory-library.html','📖','統合理論ライブラリ'],
     ['https://akito0802.github.io/Cordhyo-/index.html','🎸','コード辞典'],
     ['https://akito0802.github.io/scale/','🎼','スケール辞典'],
-    ['https://akito0802.github.io/-h/','🎵','指板']
+    ['https://akito0802.github.io/-h/','🎵','指板'],
+    [ROOT+'circle-of-fifths.html','◉','インタラクティブ五度圏'],
+    [ROOT+'major-to-minor-lab.html','⇄','長調→短調 変換ラボ']
   ]},
   {label:'その他',items:[
     [ROOT+'neeton-home.html','🏠','ニートンのおうち'],

@@ -18,7 +18,9 @@ const theoryItems=[
  [ROOT+'theory-library.html','▥','統合理論ライブラリ','音楽理論を体系的に学ぶ'],
  ['https://akito0802.github.io/Cordhyo-/','♮','コード辞典','コードの構成とフォームを確認'],
  ['https://akito0802.github.io/scale/','♯','スケール辞典','スケールの構成音を調べる'],
- ['https://akito0802.github.io/-h/','♯','指板','指板上の音を視覚的に確認']
+ ['https://akito0802.github.io/-h/','♯','指板','指板上の音を視覚的に確認'],
+ [ROOT+'circle-of-fifths.html','◉','五度圏','調・近親調・ダイアトニックを可視化'],
+ [ROOT+'major-to-minor-lab.html','⇄','長調→短調','コードとメロディを同主短調へ変換']
 ];
 const tiles=items=>items.map(([href,icon,label,desc])=>`<a href="${href}" class="nh-tile"><span class="nh-icon">${icon}</span><span class="nh-tile-copy"><b>${label}</b><small>${desc}</small></span></a>`).join('');
 
@@ -39,9 +41,9 @@ function install(){
   <section class="nh-account"><div class="nh-avatar"><img src="${NEETON}" alt="ニートン"><i></i></div><div class="nh-account-copy"><b id="nhName">ニートン</b><span id="nhMail">未ログイン</span><small id="nhState">この端末に保存中</small></div><span class="nh-chevron">›</span></section>
   <button class="nh-sync" id="nhSync" type="button"><span>♧</span> ログイン・同期</button>
   <main class="nh-workspace">
-   <div class="nh-pc-intro"><div><span class="nh-kicker">WORKSPACE</span><h1>音楽制作ホーム</h1><p>作る・残す・学ぶを、ここから。</p></div><div class="nh-status"><span>12 TOOLS</span><span id="nhPcState">LOCAL</span></div></div>
+   <div class="nh-pc-intro"><div><span class="nh-kicker">WORKSPACE</span><h1>音楽制作ホーム</h1><p>作る・残す・学ぶを、ここから。</p></div><div class="nh-status"><span>14 TOOLS</span><span id="nhPcState">LOCAL</span></div></div>
    <section class="nh-tool-group"><div class="nh-group-head"><div><span>CREATE</span><h2>制作・記録</h2></div><small>8 tools</small></div><nav class="nh-grid nh-grid-create">${tiles(productionItems)}</nav></section>
-   <section class="nh-tool-group nh-tool-group-theory"><div class="nh-group-head"><div><span>LEARN</span><h2>理論・学習</h2></div><small>4 tools</small></div><nav class="nh-grid nh-grid-theory">${tiles(theoryItems)}</nav></section>
+   <section class="nh-tool-group nh-tool-group-theory"><div class="nh-group-head"><div><span>LEARN</span><h2>理論・学習</h2></div><small>6 tools</small></div><nav class="nh-grid nh-grid-theory">${tiles(theoryItems)}</nav></section>
   </main>
   <a class="nh-wide nh-home" href="${ROOT}neeton-home.html"><span class="nh-house">⌂</span><b>ニートンのおうち</b></a>
   <button class="nh-wide nh-theme" id="nhTheme" type="button"><span>☾</span><b>ダークモード</b><i></i></button>
