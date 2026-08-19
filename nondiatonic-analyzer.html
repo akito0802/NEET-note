@@ -5,5 +5,6 @@
 function run(){const k=T.keyFromId($('key').value),tokens=T.tokenizeProgression($('prog').value),arr=tokens.map(T.parseChord),valid=arr.filter(Boolean);let outside=0;const html=arr.map((ch,i)=>{if(!ch)return `<article class="tt-analysis-card other"><header><b>${tokens[i]}</b><span class="tt-chip warn">解析不可</span></header><p>コード名を読み取れませんでした。</p></article>`;const r=classify(ch,i,arr,k);if(r.type!=='diatonic')outside++;return `<article class="tt-analysis-card ${r.type}"><header><b class="tt-code">${ch.raw}</b><span class="tt-chip ${r.type==='diatonic'?'good':r.type==='borrowed'?'strong':'warn'}">${r.tag}</span></header><strong style="display:block;margin-top:6px;font-size:.78rem">${r.title}</strong><p>${r.text}</p></article>`}).join('');$('results').innerHTML=html;$('summary').textContent=`${valid.length}コード中 ${outside}コードがダイアトニック外。外側コードは「間違い」ではなく、色付けや一時的な調性感を作る重要な材料です。`}
 $('run').onclick=run;$('key').onchange=run;document.querySelectorAll('.sample').forEach(b=>b.onclick=()=>{$('prog').value=b.dataset.v;run()});run()})();
 </script>
+
 <script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260819-safe5"></script>
 </body></html>
