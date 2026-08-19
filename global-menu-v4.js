@@ -32,6 +32,17 @@ html[data-theme="dark"] .local-top-return{background:rgba(48,42,35,.94);color:#e
   else document.addEventListener('DOMContentLoaded',addLocalTop,{once:true});
 }
 
+function installAdvancedMenu(){
+  if(window.NEETAdvancedTheoryLinks){window.NEETAdvancedTheoryLinks.installMenu();return}
+  if(document.querySelector('script[data-neet-advanced-theory]'))return;
+  const advanced=document.createElement('script');
+  advanced.src=ROOT+'advanced-theory-links.js?v=20260819-1';
+  advanced.defer=true;
+  advanced.dataset.neetAdvancedTheory='1';
+  advanced.onload=()=>window.NEETAdvancedTheoryLinks?.installMenu();
+  document.head.appendChild(advanced);
+}
+
 const fix=document.createElement('script');
 fix.src=ROOT+'home-route-fix.js?v=20260818-2';
 fix.defer=true;
@@ -40,6 +51,7 @@ fix.onload=()=>{
   menu.src=ROOT+'global-menu.js?v=20260819-safe1';
   menu.defer=true;
   menu.onload=()=>{
+    installAdvancedMenu();
     const compact=document.createElement('script');
     compact.src=ROOT+'global-menu-compact-width.js?v=20260817-1';
     compact.defer=true;
