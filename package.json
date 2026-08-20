@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "build:native": "node scripts/build-native.mjs",
+    "build:theory-static": "node scripts/build-theory-static.mjs",
+    "test:theory": "node scripts/test-theory-os.mjs",
     "cap:sync": "npm run build:native && cap sync",
     "ios": "npm run cap:sync && cap open ios",
     "android": "npm run cap:sync && cap open android"

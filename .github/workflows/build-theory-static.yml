@@ -1,0 +1,42 @@
+name: Build Theory Static Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'theory-*.js'
+      - 'theory-library*.js'
+      - 'theory-guide.js'
+      - 'scripts/build-theory-static.mjs'
+      - 'package.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Theory OS
+        run: npm run test:theory
+      - name: Generate static theory pages
+        run: npm run build:theory-static
+      - name: Commit generated pages
+        shell: bash
+        run: |
+          if git diff --quiet -- theory theory-sitemap.xml; then
+            echo 'No generated changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add theory theory-sitemap.xml
+          git commit -m 'Build static theory lesson pages [skip ci]'
+          git push
