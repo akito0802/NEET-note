@@ -4,77 +4,156 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f3eadc">
-<title>転調ルートメーカー | NEETNOTE</title>
+<title>転調ルートメーカー & 理論ライブラリ | NEETNOTE</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
 <link rel="stylesheet" href="theory-tools.css?v=20260819-1">
-<style>.mod-hero-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.mod-hero-links a{text-decoration:none}.mod-route-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.mod-route-actions a{text-decoration:none}.mod-learn{background:#fff7eb!important;color:#6f4827!important;border-color:#d9c4a8!important}</style>
+<link rel="stylesheet" href="modulation-library.css?v=20260820-1">
+<style>
+.mod-hub{width:min(1180px,calc(100% - 24px));margin:auto;padding:76px 0 96px}.mod-hub-hero{padding:25px 4px 18px}.mod-hub-hero .eyebrow{font-size:.68rem;letter-spacing:.14em;font-weight:900;color:#95683f}.mod-hub-hero h1{font-size:clamp(2rem,7vw,4rem);margin:5px 0 9px;line-height:1}.mod-hub-hero>p{max-width:850px;color:#756553;line-height:1.8;margin:0}.mod-hero-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.mod-hero-links a{text-decoration:none}.mod-hub-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 14px}.mod-hub-tab{appearance:none;border:1px solid #dfd1bd;background:rgba(255,253,248,.9);color:#6f4827;border-radius:15px;min-height:58px;font-size:.95rem;font-weight:900;cursor:pointer}.mod-hub-tab.active{background:#8d6239;color:#fff;border-color:#8d6239;box-shadow:0 8px 24px rgba(91,62,31,.18)}.mod-hub-tab small{display:block;font-size:.64rem;font-weight:700;opacity:.8;margin-top:2px}.mod-view[hidden]{display:none!important}.mod-route-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.mod-route-actions a{text-decoration:none}.mod-learn{background:#fff7eb!important;color:#6f4827!important;border-color:#d9c4a8!important}.mod-library-intro{margin-bottom:12px}.mod-library-intro h2{margin:0 0 5px}.mod-library-intro p{margin:0;color:#756553;font-size:.8rem;line-height:1.65}html[data-theme="dark"] .mod-hub-hero>p{color:#bdae9d}html[data-theme="dark"] .mod-hub-tab{background:#302a23;color:#e0b77f;border-color:#514438}html[data-theme="dark"] .mod-hub-tab.active{background:#a87948;color:#fff}@media(max-width:620px){.mod-hub{width:min(100% - 16px,620px);padding-top:64px}.mod-hub-tabs{position:sticky;top:54px;z-index:9;background:#f3eadc;padding:5px 0}.mod-hub-tab{min-height:52px;font-size:.85rem}html[data-theme="dark"] .mod-hub-tabs{background:#211e1a}}
+</style>
 </head>
 <body>
-<main class="tt-page">
-  <section class="tt-hero">
-    <p class="tt-eyebrow">COMPOSITION / MODULATION</p>
+<main class="mod-hub">
+  <section class="mod-hub-hero">
+    <p class="eyebrow">COMPOSITION / MODULATION</p>
     <h1>転調ルートメーカー</h1>
-    <p>開始調と到着調を選ぶと、五度圏距離・共通コード・ドミナント・同主調を使った複数の転調ルートをルールベースで作ります。</p>
+    <p>転調ルートを作る機能と、転調理論を学ぶライブラリを1つに統合しました。ルートを作った直後に、その仕組みを同じ画面で学べます。</p>
     <div class="mod-hero-links">
-      <a class="tt-btn primary" href="modulation-library.html">📚 転調理論ライブラリ</a>
       <a class="tt-btn" href="circle-of-fifths.html">◯ 五度圏で見る</a>
       <a class="tt-btn" href="voice-leading.html">↔ ボイスリーディング</a>
     </div>
   </section>
-  <div class="tt-layout">
-    <section class="tt-panel">
-      <div class="tt-grid2">
-        <div class="tt-field"><label>開始調</label><select id="fromKey" class="tt-select"></select></div>
-        <div class="tt-field"><label>到着調</label><select id="toKey" class="tt-select"></select></div>
+
+  <nav class="mod-hub-tabs" aria-label="転調ツール切り替え">
+    <button id="makerTab" class="mod-hub-tab active" type="button" data-view="maker">◎ ルートメーカー<small>転調ルートを作る・聴く</small></button>
+    <button id="libraryTab" class="mod-hub-tab" type="button" data-view="library">📚 理論ライブラリ<small>仕組みを学ぶ・クイズで確認</small></button>
+  </nav>
+
+  <section id="makerView" class="mod-view">
+    <div class="tt-layout">
+      <section class="tt-panel">
+        <div class="tt-grid2">
+          <div class="tt-field"><label>開始調</label><select id="fromKey" class="tt-select"></select></div>
+          <div class="tt-field"><label>到着調</label><select id="toKey" class="tt-select"></select></div>
+        </div>
+        <button id="make" class="tt-btn primary" style="width:100%;margin-top:12px">転調ルートを作る</button>
+        <div class="tt-divider"></div>
+        <div id="distance" class="tt-status"></div>
+        <div class="tt-card-grid">
+          <div class="tt-card"><small>PIVOT</small><strong>共通コード経由</strong><p>両方の調に存在するコードを「橋」として使います。</p></div>
+          <div class="tt-card"><small>DOMINANT</small><strong>V7で到着</strong><p>新しい主音のV7を置き、到着調を強く確定させます。</p></div>
+          <div class="tt-card"><small>CIRCLE</small><strong>五度圏経由</strong><p>近い調を順に通って段階的に移動します。</p></div>
+          <div class="tt-card"><small>PARALLEL</small><strong>同主調経由</strong><p>同じ主音の長短を入れ替えて色を変えてから進みます。</p></div>
+        </div>
+      </section>
+      <section class="tt-panel">
+        <div class="tt-section-title"><h2>候補ルート</h2><span>AIなし / RULE BASED</span></div>
+        <div id="routes" class="tt-route"></div>
+      </section>
+    </div>
+  </section>
+
+  <section id="libraryView" class="mod-view" hidden>
+    <section class="ml-panel mod-library-intro">
+      <div class="ml-section-head"><div><span>THEORY LIBRARY</span><h2>転調を「学ぶ → 鳴らす → 試す」</h2></div><small>20 lessons</small></div>
+      <p>転調・トニック化・ピボット・V7から、dim7、aug、異名同音、ラスサビ転調まで段階的に学べます。</p>
+    </section>
+
+    <section class="ml-overview" aria-label="学習レベル">
+      <article class="ml-level"><span>LEVEL 1</span><b>転調の基礎</b><p>転調・トニック化・V7・近親調を理解する。</p></article>
+      <article class="ml-level"><span>LEVEL 2</span><b>基本の転調法</b><p>ピボット、同主調、直接転調、V/xを使う。</p></article>
+      <article class="ml-level"><span>LEVEL 3</span><b>応用テクニック</b><p>共通音、dim、aug、借用、映画的転調へ。</p></article>
+      <article class="ml-level"><span>LEVEL 4</span><b>曲作りで使う</b><p>ラスサビ、明暗変化、自然なサビ転調を逆引き。</p></article>
+    </section>
+
+    <section class="ml-toolbar">
+      <div class="ml-search">
+        <input id="search" type="search" placeholder="転調法・目的・キーワードで検索  例：ラスサビ / dim / ピボット">
+        <button id="clearSearch" class="ml-btn" type="button">検索をクリア</button>
       </div>
-      <button id="make" class="tt-btn primary" style="width:100%;margin-top:12px">転調ルートを作る</button>
-      <div class="tt-divider"></div>
-      <div id="distance" class="tt-status"></div>
-      <div class="tt-card-grid">
-        <div class="tt-card"><small>PIVOT</small><strong>共通コード経由</strong><p>両方の調に存在するコードを「橋」として使います。</p></div>
-        <div class="tt-card"><small>DOMINANT</small><strong>V7で到着</strong><p>新しい主音のV7を置き、到着調を強く確定させます。</p></div>
-        <div class="tt-card"><small>CIRCLE</small><strong>五度圏経由</strong><p>近い調を順に通って段階的に移動します。</p></div>
-        <div class="tt-card"><small>PARALLEL</small><strong>同主調経由</strong><p>同じ主音の長短を入れ替えて色を変えてから進みます。</p></div>
+      <div class="ml-tabs" aria-label="レベル絞り込み">
+        <button class="ml-tab active" type="button" data-level="all">すべて</button>
+        <button class="ml-tab" type="button" data-level="1">LEVEL 1 基礎</button>
+        <button class="ml-tab" type="button" data-level="2">LEVEL 2 基本技法</button>
+        <button class="ml-tab" type="button" data-level="3">LEVEL 3 応用</button>
+        <button class="ml-tab" type="button" data-level="4">LEVEL 4 実践</button>
       </div>
     </section>
-    <section class="tt-panel">
-      <div class="tt-section-title"><h2>候補ルート</h2><span>AIなし / RULE BASED</span></div>
-      <div id="routes" class="tt-route"></div>
+
+    <section class="ml-panel">
+      <div class="ml-section-head"><div><span>REVERSE LOOKUP</span><h2>目的から探す</h2></div><small>何をしたい？</small></div>
+      <div class="ml-purpose">
+        <button type="button" class="active" data-purpose="all"><b>すべて見る</b><small>技法・基礎・実践を全部表示</small></button>
+        <button type="button" data-purpose="自然"><b>自然に転調したい</b><small>ピボット・近親調・ii-V-Iなど</small></button>
+        <button type="button" data-purpose="ラスサビ"><b>ラスサビを上げたい</b><small>半音上・全音上の定番</small></button>
+        <button type="button" data-purpose="映画的"><b>映画っぽくしたい</b><small>クロマティック・メディアント</small></button>
+        <button type="button" data-purpose="属機能"><b>V7を理解したい</b><small>ドミナントとトニック化</small></button>
+        <button type="button" data-purpose="異名同音"><b>上級技法を学びたい</b><small>dim7・異名同音の読み替え</small></button>
+      </div>
     </section>
-  </div>
+
+    <div class="ml-layout">
+      <section class="ml-panel">
+        <div class="ml-section-head"><div><span>LESSONS</span><h2>転調技法ライブラリ</h2></div><small id="count" class="ml-count"></small></div>
+        <div id="lessonGrid" class="ml-grid"></div>
+      </section>
+      <aside id="detail" class="ml-panel ml-detail">
+        <div class="ml-detail-empty">左のカードから「詳しく学ぶ」を選ぶと、ここに解説・コード例・試聴・ルートメーカーへのリンクが表示されます。</div>
+      </aside>
+    </div>
+
+    <section class="ml-panel" id="quizSection">
+      <div class="ml-section-head"><div><span>MINI QUIZ</span><h2>5問で確認</h2></div><small>読むだけで終わらせない</small></div>
+      <div id="quiz" class="ml-grid"></div>
+    </section>
+  </section>
 </main>
+
 <script src="theory-tools-core.js?v=20260819-1"></script>
 <script>
 (()=>{
 const T=NEETTheory,$=id=>document.getElementById(id);
 T.populateKeySelect($('fromKey'));T.populateKeySelect($('toKey'));
-const q=new URLSearchParams(location.search);
-$('fromKey').value=T.keyFromId(q.get('from')||'C').id;
-$('toKey').value=T.keyFromId(q.get('to')||'E').id;
+const initial=new URLSearchParams(location.search);
+$('fromKey').value=T.keyFromId(initial.get('from')||'C').id;
+$('toKey').value=T.keyFromId(initial.get('to')||'E').id;
 const tonic=k=>T.chordLabel(T.keyRoot(k),T.keyMode(k)==='minor'?'m':'');
 const rating=n=>n<=1?'S':n<=2?'A':n<=4?'B':'C';
 function circleChain(a,b){const A=T.relativeMajor(a),B=T.relativeMajor(b),order=[0,7,2,9,4,11,6,1,8,3,10,5],ia=T.circleIndex(T.pc(T.keyRoot(A))),ib=T.circleIndex(T.pc(T.keyRoot(B)));if(ia<0||ib<0)return[];let cw=(ib-ia+12)%12,ccw=(ia-ib+12)%12,step=cw<=ccw?1:-1,len=Math.min(cw,ccw),out=[];for(let n=1;n<=Math.min(len,4);n++){const idx=(ia+step*n+12)%12,rootPc=order[idx],k=T.majorKeys.find(x=>T.pc(T.keyRoot(x))===rootPc);if(k)out.push(k)}return out}
 function playRoute(chords){chords.forEach((c,i)=>{const ch=T.parseChord(c);if(ch)T.playChord(ch,i*.72)})}
+function lessonHref(lesson){const p=new URLSearchParams(location.search);p.set('view','library');p.set('lesson',lesson);p.set('from',$('fromKey').value);p.set('to',$('toKey').value);return `modulation-route.html?${p.toString()}`}
 function card(name,chords,desc,grade,meta='',lesson='what-is-modulation'){
- return `<article class="tt-route-card"><div class="tt-route-head"><b>${name}</b><span class="tt-chip ${grade==='S'?'good':grade==='A'?'strong':'warn'}">滑らかさ ${grade}</span></div><div class="tt-route-chords tt-code">${chords.join(' → ')}</div><p>${desc}${meta?`<br>${meta}`:''}</p><div class="mod-route-actions"><button class="tt-btn play" data-chords="${chords.join('|')}">このルートを鳴らす</button><a class="tt-btn mod-learn" href="modulation-library.html?lesson=${lesson}">📚 この転調の理論を見る</a></div></article>`
+ return `<article class="tt-route-card"><div class="tt-route-head"><b>${name}</b><span class="tt-chip ${grade==='S'?'good':grade==='A'?'strong':'warn'}">滑らかさ ${grade}</span></div><div class="tt-route-chords tt-code">${chords.join(' → ')}</div><p>${desc}${meta?`<br>${meta}`:''}</p><div class="mod-route-actions"><button class="tt-btn play" data-chords="${chords.join('|')}">このルートを鳴らす</button><a class="tt-btn mod-learn" href="${lessonHref(lesson)}">📚 この転調の理論を見る</a></div></article>`
 }
 function make(){
  const a=T.keyFromId($('fromKey').value),b=T.keyFromId($('toKey').value),d=T.circleDistance(T.relativeMajor(a),T.relativeMajor(b)),common=T.commonDiatonic(a,b);
- history.replaceState(null,'',`?from=${encodeURIComponent(a.id)}&to=${encodeURIComponent(b.id)}`);
+ const p=new URLSearchParams(location.search);p.set('from',a.id);p.set('to',b.id);history.replaceState(null,'',`${location.pathname}?${p.toString()}`);
  $('distance').textContent=`五度圏距離: ${d} / 共通ダイアトニックコード: ${common.length}個。距離が小さいほど自然な転調を作りやすい傾向があります。`;
  const targetV=T.targetDominant(b),toT=tonic(b),fromT=tonic(a),routes=[];
  routes.push(card('ドミナント直行',[fromT,targetV,toT],'到着調のV7を先に鳴らして、新しい主音を強く確定する最短ルート。',rating(d+1),'','dominant'));
- if(common.length){const p=common.find(x=>x.functionA!==x.functionB)||common[0];routes.push(card('共通コード（ピボット）',[fromT,p.label,targetV,toT],`${p.label} は開始調では ${p.aRoman}、到着調では ${p.bRoman} として読めます。1つのコードを両方の調で共有して橋にします。`,d<=3?'S':'A',`機能: ${p.functionA} → ${p.functionB}`,'pivot'))}
+ if(common.length){const pvt=common.find(x=>x.functionA!==x.functionB)||common[0];routes.push(card('共通コード（ピボット）',[fromT,pvt.label,targetV,toT],`${pvt.label} は開始調では ${pvt.aRoman}、到着調では ${pvt.bRoman} として読めます。1つのコードを両方の調で共有して橋にします。`,d<=3?'S':'A',`機能: ${pvt.functionA} → ${pvt.functionB}`,'pivot'))}
  else routes.push(card('共通コード（ピボット）',[fromT,targetV,toT],'直接共有できる三和音が少ない組み合わせ。セカンダリードミナントを使う方が明確です。','B','','secondary-dominant'));
  const chain=circleChain(a,b);if(chain.length){const chords=[fromT];chain.forEach((k,i)=>{const last=i===chain.length-1;if(last&&T.pc(T.keyRoot(k))===T.pc(T.keyRoot(T.relativeMajor(b))))return;chords.push(T.targetDominant(k),tonic(k))});if(chords[chords.length-1]!==targetV)chords.push(targetV);chords.push(toT);routes.push(card('五度圏ステップ',chords,'五度圏上で近い調を順に通るルート。長い場合は途中を省いて使ってもOK。',d<=2?'S':d<=4?'A':'B','','related-keys'))}
  const par=T.parallelKey(a),parT=tonic(par);routes.push(card('同主調を経由',[fromT,parT,targetV,toT],`${T.keyLabel(a)} と ${T.keyLabel(par)} は主音が同じ。長短の色変化を一度作ってから到着調へ向かいます。`,T.pc(T.keyRoot(a))===T.pc(T.keyRoot(b))?'S':'B','','parallel'));
- $('routes').innerHTML=routes.join('');document.querySelectorAll('.play').forEach(btn=>btn.onclick=()=>playRoute(btn.dataset.chords.split('|')))
+ $('routes').innerHTML=routes.join('');document.querySelectorAll('#makerView .play').forEach(btn=>btn.onclick=()=>playRoute(btn.dataset.chords.split('|')))
 }
 $('make').onclick=make;$('fromKey').onchange=make;$('toKey').onchange=make;make();
 })();
 </script>
-
-
+<script>
+(()=>{
+const $=id=>document.getElementById(id);let libraryLoaded=false;
+function loadLibrary(){if(libraryLoaded)return;libraryLoaded=true;const s=document.createElement('script');s.src='modulation-library.js?v=20260820-1';s.defer=true;document.body.appendChild(s)}
+function setView(view,update=true){
+ const lib=view==='library';$('makerView').hidden=lib;$('libraryView').hidden=!lib;
+ document.querySelectorAll('.mod-hub-tab').forEach(b=>{const on=b.dataset.view===view;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on))});
+ if(update){const p=new URLSearchParams(location.search);if(lib)p.set('view','library');else{p.delete('view');p.delete('lesson')}history.replaceState(null,'',`${location.pathname}${p.toString()?`?${p.toString()}`:''}`)}
+ if(lib)loadLibrary();window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.mod-hub-tab').forEach(b=>b.onclick=()=>setView(b.dataset.view));
+const q=new URLSearchParams(location.search);setView((q.get('view')==='library'||q.get('lesson'))?'library':'maker',false);
+})();
+</script>
 <script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260819-safe5"></script>
 </body>
 </html>
