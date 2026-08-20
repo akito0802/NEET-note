@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f3eadc">
+<title>GUITAR PRO | NEETNOTE</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+<link rel="stylesheet" href="guitar-pro.css?v=20260820-1">
+</head>
+<body>
+<main class="gp-page">
+  <section class="gp-hero">
+    <p class="gp-eyebrow">NEETNOTE / GUITAR PRO</p>
+    <h1>GUITAR PRO</h1>
+    <p>コード進行を「ギターでどう弾くか」に特化して考える実験室。まずはコード辞典との安全な往復連携と、音側のボイスリーディング解析から始めます。</p>
+    <div class="gp-phase"><span>PHASE 1</span><b>コード辞典リンク連携 開始</b></div>
+  </section>
+
+  <section class="gp-shell">
+    <div class="gp-tabs" role="tablist" aria-label="GUITAR PRO モード">
+      <button id="tabBeginner" class="gp-tab active" type="button" role="tab" aria-selected="true" data-mode="beginner">🎸 コードチェンジ支援</button>
+      <button id="tabVoicing" class="gp-tab" type="button" role="tab" aria-selected="false" data-mode="voicing">♫ ボイシング設計</button>
+    </div>
+
+    <section class="gp-panel gp-input-panel">
+      <div class="gp-section-head">
+        <div><span>PROGRESSION</span><h2>コード進行</h2></div>
+        <small id="modeCaption">初心者向け</small>
+      </div>
+      <label class="gp-field">
+        <span>コード進行を入力</span>
+        <textarea id="progression" rows="3" spellcheck="false">C / G / Am / F</textarea>
+      </label>
+      <div class="gp-presets">
+        <button type="button" data-progression="C / G / Am / F">C-G-Am-F</button>
+        <button type="button" data-progression="Cmaj7 / Am7 / Dm7 / G7">Jazz / City</button>
+        <button type="button" data-progression="Em / C / G / D">Em-C-G-D</button>
+      </div>
+      <div class="gp-grid2">
+        <label class="gp-field"><span>演奏レベル</span><select id="level"><option value="easy">かんたん</option><option value="normal" selected>普通</option><option value="free">自由</option></select></label>
+        <label class="gp-field"><span>チューニング</span><select id="tuning"><option value="standard">Standard EADGBE</option><option value="dropd" disabled>Drop D（次フェーズ）</option><option value="dadgad" disabled>DADGAD（次フェーズ）</option></select></label>
+      </div>
+      <button id="analyze" class="gp-primary" type="button">進行を解析</button>
+      <div id="error" class="gp-message error" hidden></div>
+    </section>
+
+    <section id="result" class="gp-results" aria-live="polite"></section>
+
+    <section class="gp-panel gp-roadmap">
+      <div class="gp-section-head"><div><span>DICTIONARY LINK</span><h2>コード辞典との役割分担</h2></div></div>
+      <div class="gp-role-grid">
+        <article><b>GUITAR PRO</b><p>前後のコードとのつながり、進行全体、練習や運指を扱う。</p></article>
+        <article><b>コード辞典</b><p>単体コードの構成音・フォーム・CAGED・別ポジションを詳しく見る。</p></article>
+      </div>
+      <p class="gp-note">このPhase 1ではコード辞典のデータをコピーせず、各コードから該当ページへ直接移動できるようにしています。フォーム共有は次の段階で追加します。</p>
+    </section>
+  </section>
+</main>
+
+<script src="theory-tools-core.js?v=20260819-1"></script>
+<script src="guitar-pro.js?v=20260820-1"></script>
+<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260819-safe5"></script>
+</body>
+</html>
