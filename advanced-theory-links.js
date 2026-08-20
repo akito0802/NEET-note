@@ -5,8 +5,7 @@ const ROOT='https://akito0802.github.io/NEET-note/';
 const tools=[
  {href:ROOT+'voice-leading.html',icon:'↔',home:'ボイスリーディング',menu:'ボイスリーディング・ナビ',desc:'声部を最短距離で滑らかにつなぐ',key:'voice-leading'},
  {href:ROOT+'guitar-pro.html',icon:'🎸',home:'GUITAR PRO',menu:'GUITAR PRO',desc:'ギターのコードチェンジとボイシングを設計',key:'guitar-pro'},
- {href:ROOT+'modulation-route.html',icon:'◎',home:'転調ルート',menu:'転調ルートメーカー',desc:'共通コードやV7から転調経路を作る',key:'modulation-route'},
- {href:ROOT+'modulation-library.html',icon:'📚',home:'転調理論',menu:'転調理論ライブラリ',desc:'転調を学ぶ・鳴らす・ルートで試す',key:'modulation-library'},
+ {href:ROOT+'modulation-route.html',icon:'◎',home:'転調メーカー',menu:'転調ルートメーカー',desc:'転調ルートを作る・理論を学ぶ',key:'modulation-route'},
  {href:ROOT+'reharmonize.html',icon:'◇',home:'代理コード',menu:'代理コード・リハーモナイズ',desc:'役割を保つ置換候補を調べる',key:'reharmonize'},
  {href:ROOT+'nondiatonic-analyzer.html',icon:'△',home:'ノンダイアトニック',menu:'ノンダイアトニック判定',desc:'キー外コードの役割を分析',key:'nondiatonic'},
  {href:ROOT+'tension-checker.html',icon:'＋',home:'テンション',menu:'テンション適合チェッカー',desc:'9th・11th・13thの適合を確認',key:'tension'},
