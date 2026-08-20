@@ -32,6 +32,48 @@ html[data-theme="dark"] .local-top-return{background:rgba(48,42,35,.94);color:#e
   else document.addEventListener('DOMContentLoaded',addLocalTop,{once:true});
 }
 
+// 転調メーカーの右下↑は、古いページ本体がキャッシュされていても
+// この always-fresh ローダー側から必ず作り直す。
+if(location.pathname==='/NEET-note/modulation-route.html'){
+  const installModulationScrollButton=()=>{
+    document.querySelectorAll('#modScrollTop,#modScrollTopFresh').forEach(el=>el.remove());
+    if(!document.getElementById('modulation-scroll-fresh-style')){
+      const style=document.createElement('style');
+      style.id='modulation-scroll-fresh-style';
+      style.textContent=`
+#modScrollTopFresh{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(18px,calc(env(safe-area-inset-bottom) + 18px));z-index:39020;display:none;align-items:center;justify-content:center;gap:7px;min-height:46px;padding:0 15px;border:1px solid rgba(154,117,73,.28);border-radius:999px;background:rgba(255,250,242,.97);color:#704a25;box-shadow:0 9px 26px rgba(89,62,31,.18);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font:inherit;font-size:.78rem;font-weight:900;cursor:pointer}
+#modScrollTopFresh.show{display:inline-flex}
+html[data-theme="dark"] #modScrollTopFresh{background:rgba(48,42,35,.96);color:#e0b77f;border-color:#514438}
+@media(max-width:600px){#modScrollTopFresh{right:max(14px,env(safe-area-inset-right));bottom:max(82px,calc(env(safe-area-inset-bottom) + 82px));min-height:46px;padding:0 13px;font-size:.72rem}}
+`;
+      document.head.appendChild(style);
+    }
+    const btn=document.createElement('button');
+    btn.id='modScrollTopFresh';
+    btn.type='button';
+    btn.setAttribute('aria-label','理論ライブラリの検索欄へ戻る');
+    btn.innerHTML='<span aria-hidden="true">↑</span><span>検索へ</span>';
+    const sync=()=>btn.classList.toggle('show',window.scrollY>420);
+    btn.addEventListener('click',e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      const library=document.getElementById('libraryView');
+      const inLibrary=library && !library.hidden;
+      const target=inLibrary
+        ? (document.getElementById('librarySearchTop') || document.querySelector('#libraryView .ml-toolbar'))
+        : document.getElementById('makerView');
+      if(!target)return;
+      const y=target.getBoundingClientRect().top+window.scrollY-8;
+      window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+    });
+    document.body.appendChild(btn);
+    window.addEventListener('scroll',sync,{passive:true});
+    sync();
+  };
+  if(document.body)installModulationScrollButton();
+  else document.addEventListener('DOMContentLoaded',installModulationScrollButton,{once:true});
+}
+
 function installAdvancedMenu(){
   if(window.NEETAdvancedTheoryLinks){window.NEETAdvancedTheoryLinks.installMenu();return}
   if(document.querySelector('script[data-neet-advanced-theory]'))return;
