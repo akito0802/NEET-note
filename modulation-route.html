@@ -1,11 +1,78 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f3eadc"><title>転調ルートメーカー | NEETNOTE</title><link rel="icon" type="image/svg+xml" href="favicon.svg?v=1"><link rel="stylesheet" href="theory-tools.css?v=20260819-1"></head><body>
-<main class="tt-page"><section class="tt-hero"><p class="tt-eyebrow">COMPOSITION / MODULATION</p><h1>転調ルートメーカー</h1><p>開始調と到着調を選ぶと、五度圏距離・共通コード・ドミナント・同主調を使った複数の転調ルートをルールベースで作ります。</p></section><div class="tt-layout"><section class="tt-panel"><div class="tt-grid2"><div class="tt-field"><label>開始調</label><select id="fromKey" class="tt-select"></select></div><div class="tt-field"><label>到着調</label><select id="toKey" class="tt-select"></select></div></div><button id="make" class="tt-btn primary" style="width:100%;margin-top:12px">転調ルートを作る</button><div class="tt-divider"></div><div id="distance" class="tt-status"></div><div class="tt-card-grid"><div class="tt-card"><small>PIVOT</small><strong>共通コード経由</strong><p>両方の調に存在するコードを「橋」として使います。</p></div><div class="tt-card"><small>DOMINANT</small><strong>V7で到着</strong><p>新しい主音のV7を置き、到着調を強く確定させます。</p></div><div class="tt-card"><small>CIRCLE</small><strong>五度圏経由</strong><p>近い調を順に通って段階的に移動します。</p></div><div class="tt-card"><small>PARALLEL</small><strong>同主調経由</strong><p>同じ主音の長短を入れ替えて色を変えてから進みます。</p></div></div></section><section class="tt-panel"><div class="tt-section-title"><h2>候補ルート</h2><span>AIなし / RULE BASED</span></div><div id="routes" class="tt-route"></div></section></div></main>
-<script src="theory-tools-core.js?v=20260819-1"></script><script>
-(()=>{const T=NEETTheory,$=id=>document.getElementById(id);T.populateKeySelect($('fromKey'));T.populateKeySelect($('toKey'));$('fromKey').value='C';$('toKey').value='E';const tonic=k=>T.chordLabel(T.keyRoot(k),T.keyMode(k)==='minor'?'m':'');const rating=n=>n<=1?'S':n<=2?'A':n<=4?'B':'C';function circleChain(a,b){const A=T.relativeMajor(a),B=T.relativeMajor(b),order=[0,7,2,9,4,11,6,1,8,3,10,5],ia=T.circleIndex(T.pc(T.keyRoot(A))),ib=T.circleIndex(T.pc(T.keyRoot(B)));if(ia<0||ib<0)return[];let cw=(ib-ia+12)%12,ccw=(ia-ib+12)%12,step=cw<=ccw?1:-1,len=Math.min(cw,ccw),out=[];for(let n=1;n<=Math.min(len,4);n++){const idx=(ia+step*n+12)%12,rootPc=order[idx],k=T.majorKeys.find(x=>T.pc(T.keyRoot(x))===rootPc);if(k)out.push(k)}return out}
-function playRoute(chords){chords.forEach((c,i)=>{const ch=T.parseChord(c);if(ch)T.playChord(ch,i*.72)})}function card(name,chords,desc,grade,meta=''){return `<article class="tt-route-card"><div class="tt-route-head"><b>${name}</b><span class="tt-chip ${grade==='S'?'good':grade==='A'?'strong':'warn'}">滑らかさ ${grade}</span></div><div class="tt-route-chords tt-code">${chords.join(' → ')}</div><p>${desc}${meta?`<br>${meta}`:''}</p><button class="tt-btn play" data-chords="${chords.join('|')}" style="margin-top:9px">このルートを鳴らす</button></article>`}
-function make(){const a=T.keyFromId($('fromKey').value),b=T.keyFromId($('toKey').value),d=T.circleDistance(T.relativeMajor(a),T.relativeMajor(b)),common=T.commonDiatonic(a,b);$('distance').textContent=`五度圏距離: ${d} / 共通ダイアトニックコード: ${common.length}個。距離が小さいほど自然な転調を作りやすい傾向があります。`;const targetV=T.targetDominant(b),toT=tonic(b),fromT=tonic(a),routes=[];routes.push(card('ドミナント直行',[fromT,targetV,toT],'到着調のV7を先に鳴らして、新しい主音を強く確定する最短ルート。',rating(d+1)));if(common.length){const p=common.find(x=>x.functionA!==x.functionB)||common[0];routes.push(card('共通コード（ピボット）',[fromT,p.label,targetV,toT],`${p.label} は開始調では ${p.aRoman}、到着調では ${p.bRoman} として読めます。1つのコードを両方の調で共有して橋にします。`,d<=3?'S':'A',`機能: ${p.functionA} → ${p.functionB}`))}else routes.push(card('共通コード（ピボット）',[fromT,targetV,toT],'直接共有できる三和音が少ない組み合わせ。セカンダリードミナントを使う方が明確です。','B'));const chain=circleChain(a,b);if(chain.length){const chords=[fromT];chain.forEach((k,i)=>{const last=i===chain.length-1;if(last&&T.pc(T.keyRoot(k))===T.pc(T.keyRoot(T.relativeMajor(b))))return;chords.push(T.targetDominant(k),tonic(k))});if(chords[chords.length-1]!==targetV)chords.push(targetV);chords.push(toT);routes.push(card('五度圏ステップ',chords,'五度圏上で近い調を順に通るルート。長い場合は途中を省いて使ってもOK。',d<=2?'S':d<=4?'A':'B'))}const par=T.parallelKey(a),parT=tonic(par);routes.push(card('同主調を経由',[fromT,parT,targetV,toT],`${T.keyLabel(a)} と ${T.keyLabel(par)} は主音が同じ。長短の色変化を一度作ってから到着調へ向かいます。`,T.pc(T.keyRoot(a))===T.pc(T.keyRoot(b))?'S':'B'));$('routes').innerHTML=routes.join('');document.querySelectorAll('.play').forEach(btn=>btn.onclick=()=>playRoute(btn.dataset.chords.split('|')))}$('make').onclick=make;$('fromKey').onchange=make;$('toKey').onchange=make;make()})();
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f3eadc">
+<title>転調ルートメーカー | NEETNOTE</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+<link rel="stylesheet" href="theory-tools.css?v=20260819-1">
+<style>.mod-hero-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.mod-hero-links a{text-decoration:none}.mod-route-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.mod-route-actions a{text-decoration:none}.mod-learn{background:#fff7eb!important;color:#6f4827!important;border-color:#d9c4a8!important}</style>
+</head>
+<body>
+<main class="tt-page">
+  <section class="tt-hero">
+    <p class="tt-eyebrow">COMPOSITION / MODULATION</p>
+    <h1>転調ルートメーカー</h1>
+    <p>開始調と到着調を選ぶと、五度圏距離・共通コード・ドミナント・同主調を使った複数の転調ルートをルールベースで作ります。</p>
+    <div class="mod-hero-links">
+      <a class="tt-btn primary" href="modulation-library.html">📚 転調理論ライブラリ</a>
+      <a class="tt-btn" href="circle-of-fifths.html">◯ 五度圏で見る</a>
+      <a class="tt-btn" href="voice-leading.html">↔ ボイスリーディング</a>
+    </div>
+  </section>
+  <div class="tt-layout">
+    <section class="tt-panel">
+      <div class="tt-grid2">
+        <div class="tt-field"><label>開始調</label><select id="fromKey" class="tt-select"></select></div>
+        <div class="tt-field"><label>到着調</label><select id="toKey" class="tt-select"></select></div>
+      </div>
+      <button id="make" class="tt-btn primary" style="width:100%;margin-top:12px">転調ルートを作る</button>
+      <div class="tt-divider"></div>
+      <div id="distance" class="tt-status"></div>
+      <div class="tt-card-grid">
+        <div class="tt-card"><small>PIVOT</small><strong>共通コード経由</strong><p>両方の調に存在するコードを「橋」として使います。</p></div>
+        <div class="tt-card"><small>DOMINANT</small><strong>V7で到着</strong><p>新しい主音のV7を置き、到着調を強く確定させます。</p></div>
+        <div class="tt-card"><small>CIRCLE</small><strong>五度圏経由</strong><p>近い調を順に通って段階的に移動します。</p></div>
+        <div class="tt-card"><small>PARALLEL</small><strong>同主調経由</strong><p>同じ主音の長短を入れ替えて色を変えてから進みます。</p></div>
+      </div>
+    </section>
+    <section class="tt-panel">
+      <div class="tt-section-title"><h2>候補ルート</h2><span>AIなし / RULE BASED</span></div>
+      <div id="routes" class="tt-route"></div>
+    </section>
+  </div>
+</main>
+<script src="theory-tools-core.js?v=20260819-1"></script>
+<script>
+(()=>{
+const T=NEETTheory,$=id=>document.getElementById(id);
+T.populateKeySelect($('fromKey'));T.populateKeySelect($('toKey'));
+const q=new URLSearchParams(location.search);
+$('fromKey').value=T.keyFromId(q.get('from')||'C').id;
+$('toKey').value=T.keyFromId(q.get('to')||'E').id;
+const tonic=k=>T.chordLabel(T.keyRoot(k),T.keyMode(k)==='minor'?'m':'');
+const rating=n=>n<=1?'S':n<=2?'A':n<=4?'B':'C';
+function circleChain(a,b){const A=T.relativeMajor(a),B=T.relativeMajor(b),order=[0,7,2,9,4,11,6,1,8,3,10,5],ia=T.circleIndex(T.pc(T.keyRoot(A))),ib=T.circleIndex(T.pc(T.keyRoot(B)));if(ia<0||ib<0)return[];let cw=(ib-ia+12)%12,ccw=(ia-ib+12)%12,step=cw<=ccw?1:-1,len=Math.min(cw,ccw),out=[];for(let n=1;n<=Math.min(len,4);n++){const idx=(ia+step*n+12)%12,rootPc=order[idx],k=T.majorKeys.find(x=>T.pc(T.keyRoot(x))===rootPc);if(k)out.push(k)}return out}
+function playRoute(chords){chords.forEach((c,i)=>{const ch=T.parseChord(c);if(ch)T.playChord(ch,i*.72)})}
+function card(name,chords,desc,grade,meta='',lesson='what-is-modulation'){
+ return `<article class="tt-route-card"><div class="tt-route-head"><b>${name}</b><span class="tt-chip ${grade==='S'?'good':grade==='A'?'strong':'warn'}">滑らかさ ${grade}</span></div><div class="tt-route-chords tt-code">${chords.join(' → ')}</div><p>${desc}${meta?`<br>${meta}`:''}</p><div class="mod-route-actions"><button class="tt-btn play" data-chords="${chords.join('|')}">このルートを鳴らす</button><a class="tt-btn mod-learn" href="modulation-library.html?lesson=${lesson}">📚 この転調の理論を見る</a></div></article>`
+}
+function make(){
+ const a=T.keyFromId($('fromKey').value),b=T.keyFromId($('toKey').value),d=T.circleDistance(T.relativeMajor(a),T.relativeMajor(b)),common=T.commonDiatonic(a,b);
+ history.replaceState(null,'',`?from=${encodeURIComponent(a.id)}&to=${encodeURIComponent(b.id)}`);
+ $('distance').textContent=`五度圏距離: ${d} / 共通ダイアトニックコード: ${common.length}個。距離が小さいほど自然な転調を作りやすい傾向があります。`;
+ const targetV=T.targetDominant(b),toT=tonic(b),fromT=tonic(a),routes=[];
+ routes.push(card('ドミナント直行',[fromT,targetV,toT],'到着調のV7を先に鳴らして、新しい主音を強く確定する最短ルート。',rating(d+1),'','dominant'));
+ if(common.length){const p=common.find(x=>x.functionA!==x.functionB)||common[0];routes.push(card('共通コード（ピボット）',[fromT,p.label,targetV,toT],`${p.label} は開始調では ${p.aRoman}、到着調では ${p.bRoman} として読めます。1つのコードを両方の調で共有して橋にします。`,d<=3?'S':'A',`機能: ${p.functionA} → ${p.functionB}`,'pivot'))}
+ else routes.push(card('共通コード（ピボット）',[fromT,targetV,toT],'直接共有できる三和音が少ない組み合わせ。セカンダリードミナントを使う方が明確です。','B','','secondary-dominant'));
+ const chain=circleChain(a,b);if(chain.length){const chords=[fromT];chain.forEach((k,i)=>{const last=i===chain.length-1;if(last&&T.pc(T.keyRoot(k))===T.pc(T.keyRoot(T.relativeMajor(b))))return;chords.push(T.targetDominant(k),tonic(k))});if(chords[chords.length-1]!==targetV)chords.push(targetV);chords.push(toT);routes.push(card('五度圏ステップ',chords,'五度圏上で近い調を順に通るルート。長い場合は途中を省いて使ってもOK。',d<=2?'S':d<=4?'A':'B','','related-keys'))}
+ const par=T.parallelKey(a),parT=tonic(par);routes.push(card('同主調を経由',[fromT,parT,targetV,toT],`${T.keyLabel(a)} と ${T.keyLabel(par)} は主音が同じ。長短の色変化を一度作ってから到着調へ向かいます。`,T.pc(T.keyRoot(a))===T.pc(T.keyRoot(b))?'S':'B','','parallel'));
+ $('routes').innerHTML=routes.join('');document.querySelectorAll('.play').forEach(btn=>btn.onclick=()=>playRoute(btn.dataset.chords.split('|')))
+}
+$('make').onclick=make;$('fromKey').onchange=make;$('toKey').onchange=make;make();
+})();
 </script>
-
-
 <script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260819-safe5"></script>
-</body></html>
+</body>
+</html>
