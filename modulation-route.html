@@ -36,6 +36,7 @@
 (()=>{const btn=document.getElementById('modScrollTop');if(!btn)return;const sync=()=>btn.classList.toggle('show',window.scrollY>520);window.addEventListener('scroll',sync,{passive:true});btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const library=document.getElementById('libraryView');const target=library&&!library.hidden?document.getElementById('librarySearchTop'):document.getElementById('makerView');if(!target)return;target.scrollIntoView({behavior:'smooth',block:'start'})});sync()})();
 </script>
 
-<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260819-safe5"></script>
+
+<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260821-safe6"></script>
 </body>
 </html>
