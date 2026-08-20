@@ -1,0 +1,67 @@
+name: Fix modulation search return
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-modulation-search-return.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch global menu with robust modulation search return
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('global-menu.js')
+          s=p.read_text(encoding='utf-8')
+          marker="document.body.append(overlay,menu,btn);"
+          if 'ngm-mod-search-return' not in s:
+              patch=r'''
+// 転調理論ライブラリ専用：右下ボタンは必ず検索欄へ戻す。
+if(location.pathname==='/NEET-note/modulation-route.html'){
+  const oldScroll=document.querySelector('#modScrollTop,#modScrollTopFresh,.mod-scroll-top');
+  if(oldScroll)oldScroll.remove();
+  const toolbar=document.querySelector('#libraryView .ml-toolbar');
+  if(toolbar&&!toolbar.id)toolbar.id='librarySearchTop';
+  const ms=document.createElement('style');
+  ms.id='ngm-mod-search-return-style';
+  ms.textContent=`
+#ngm-mod-search-return{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(82px,calc(env(safe-area-inset-bottom) + 82px));z-index:39030;display:none;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 14px;border:1px solid rgba(154,117,73,.28);border-radius:999px;background:rgba(255,250,242,.98);color:#704a25;box-shadow:0 9px 26px rgba(89,62,31,.18);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);text-decoration:none;font-size:.74rem;font-weight:900}
+#ngm-mod-search-return.show{display:inline-flex}
+html[data-theme="dark"] #ngm-mod-search-return{background:rgba(48,42,35,.97);color:#e0b77f;border-color:#514438}
+`;
+  document.head.appendChild(ms);
+  const searchReturn=document.createElement('a');
+  searchReturn.id='ngm-mod-search-return';
+  searchReturn.href='#librarySearchTop';
+  searchReturn.setAttribute('aria-label','理論ライブラリの検索欄へ戻る');
+  searchReturn.innerHTML='<span aria-hidden="true">↑</span><span>検索へ</span>';
+  searchReturn.addEventListener('click',e=>{
+    const lib=document.getElementById('libraryView');
+    if(lib&&lib.hidden){e.preventDefault();document.getElementById('makerView')?.scrollIntoView({behavior:'smooth',block:'start'});return}
+    const target=document.getElementById('librarySearchTop')||document.querySelector('#libraryView .ml-toolbar');
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+  const syncSearchReturn=()=>searchReturn.classList.toggle('show',window.scrollY>420);
+  window.addEventListener('scroll',syncSearchReturn,{passive:true});
+  document.body.appendChild(searchReturn);
+  syncSearchReturn();
+}
+'''
+              if marker not in s: raise SystemExit('marker missing')
+              s=s.replace(marker,patch+'\n'+marker,1)
+              p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add global-menu.js
+          git commit -m "Fix modulation library search return button"
+          git pull --rebase origin main
+          git push
