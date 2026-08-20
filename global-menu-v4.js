@@ -36,7 +36,7 @@ function installAdvancedMenu(){
   if(window.NEETAdvancedTheoryLinks){window.NEETAdvancedTheoryLinks.installMenu();return}
   if(document.querySelector('script[data-neet-advanced-theory]'))return;
   const advanced=document.createElement('script');
-  advanced.src=ROOT+'advanced-theory-links.js?v=20260819-1';
+  advanced.src=ROOT+'advanced-theory-links.js?v=20260820-modlib1';
   advanced.defer=true;
   advanced.dataset.neetAdvancedTheory='1';
   advanced.onload=()=>window.NEETAdvancedTheoryLinks?.installMenu();
