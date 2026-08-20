@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f3eadc">
+<title>転調理論ライブラリ | NEETNOTE</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+<link rel="stylesheet" href="modulation-library.css?v=20260820-1">
+</head>
+<body>
+<main class="ml-page">
+  <section class="ml-hero">
+    <p class="ml-eyebrow">MODULATION THEORY LIBRARY</p>
+    <h1>転調理論ライブラリ</h1>
+    <p>転調を「読むだけ」で終わらせず、仕組みを理解して、実際に鳴らして、転調ルートメーカーで試せる学習ライブラリです。</p>
+    <div class="ml-actions">
+      <a class="ml-btn primary" href="modulation-route.html">◎ 転調ルートメーカー</a>
+      <a class="ml-btn" href="circle-of-fifths.html">◯ 五度圏で見る</a>
+      <a class="ml-btn" href="voice-leading.html">↔ ボイスリーディング</a>
+    </div>
+  </section>
+
+  <section class="ml-overview" aria-label="学習レベル">
+    <article class="ml-level"><span>LEVEL 1</span><b>転調の基礎</b><p>転調・トニック化・V7・近親調を理解する。</p></article>
+    <article class="ml-level"><span>LEVEL 2</span><b>基本の転調法</b><p>ピボット、同主調、直接転調、V/xを使う。</p></article>
+    <article class="ml-level"><span>LEVEL 3</span><b>応用テクニック</b><p>共通音、dim、aug、借用、映画的転調へ。</p></article>
+    <article class="ml-level"><span>LEVEL 4</span><b>曲作りで使う</b><p>ラスサビ、明暗変化、自然なサビ転調を逆引き。</p></article>
+  </section>
+
+  <section class="ml-toolbar">
+    <div class="ml-search">
+      <input id="search" type="search" placeholder="転調法・目的・キーワードで検索  例：ラスサビ / dim / ピボット">
+      <button id="clearSearch" class="ml-btn" type="button">検索をクリア</button>
+    </div>
+    <div class="ml-tabs" aria-label="レベル絞り込み">
+      <button class="ml-tab active" type="button" data-level="all">すべて</button>
+      <button class="ml-tab" type="button" data-level="1">LEVEL 1 基礎</button>
+      <button class="ml-tab" type="button" data-level="2">LEVEL 2 基本技法</button>
+      <button class="ml-tab" type="button" data-level="3">LEVEL 3 応用</button>
+      <button class="ml-tab" type="button" data-level="4">LEVEL 4 実践</button>
+    </div>
+  </section>
+
+  <section class="ml-panel">
+    <div class="ml-section-head"><div><span>REVERSE LOOKUP</span><h2>目的から探す</h2></div><small>何をしたい？</small></div>
+    <div class="ml-purpose">
+      <button type="button" class="active" data-purpose="all"><b>すべて見る</b><small>技法・基礎・実践を全部表示</small></button>
+      <button type="button" data-purpose="自然"><b>自然に転調したい</b><small>ピボット・近親調・ii-V-Iなど</small></button>
+      <button type="button" data-purpose="ラスサビ"><b>ラスサビを上げたい</b><small>半音上・全音上の定番</small></button>
+      <button type="button" data-purpose="映画的"><b>映画っぽくしたい</b><small>クロマティック・メディアント</small></button>
+      <button type="button" data-purpose="属機能"><b>V7を理解したい</b><small>ドミナントとトニック化</small></button>
+      <button type="button" data-purpose="異名同音"><b>上級技法を学びたい</b><small>dim7・異名同音の読み替え</small></button>
+    </div>
+  </section>
+
+  <div class="ml-layout">
+    <section class="ml-panel">
+      <div class="ml-section-head"><div><span>LESSONS</span><h2>転調技法ライブラリ</h2></div><small id="count" class="ml-count"></small></div>
+      <div id="lessonGrid" class="ml-grid"></div>
+    </section>
+
+    <aside id="detail" class="ml-panel ml-detail">
+      <div class="ml-detail-empty">左のカードから「詳しく学ぶ」を選ぶと、ここに解説・コード例・試聴・ルートメーカーへのリンクが表示されます。</div>
+    </aside>
+  </div>
+
+  <section class="ml-panel" id="quizSection">
+    <div class="ml-section-head"><div><span>MINI QUIZ</span><h2>5問で確認</h2></div><small>読むだけで終わらせない</small></div>
+    <div id="quiz" class="ml-grid"></div>
+  </section>
+</main>
+
+<script src="theory-tools-core.js?v=20260819-1"></script>
+<script src="modulation-library.js?v=20260820-1"></script>
+<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260819-safe5"></script>
+</body>
+</html>
