@@ -1,13 +1,54 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f3eadc"><title>ボイスリーディング・ナビ | NEETNOTE</title><link rel="icon" type="image/svg+xml" href="favicon.svg?v=1"><link rel="stylesheet" href="theory-tools.css?v=20260819-1"></head><body>
-<main class="tt-page"><section class="tt-hero"><p class="tt-eyebrow">HARMONY / ARRANGE TOOL</p><h1>ボイスリーディング・ナビ</h1><p>2つのコードを入力すると、共通音を残しながら各声部をできるだけ近くへ動かす候補を表示します。ピアノ伴奏・コーラス・ストリングスの配置を考えるときに使えます。</p></section>
-<section class="tt-panel" style="margin-bottom:12px"><div class="tt-section-title"><h2>ギターで使うなら</h2><span>GUITAR PRO</span></div><p class="tt-sub">ギター専用では、コード進行全体とコード辞典をつなぎながら、コードチェンジ支援とボイシング設計を強化していきます。</p><a class="tt-btn primary" href="guitar-pro.html" style="display:flex;align-items:center;justify-content:center;width:100%;margin-top:12px;text-decoration:none">🎸 GUITAR PROを開く</a></section>
-<div class="tt-layout"><section class="tt-panel"><div class="tt-section-title"><h2>コードを入力</h2><span>VOICE LEADING</span></div><div class="tt-field"><label>FROM</label><input id="fromChord" class="tt-input" value="Cmaj7" placeholder="Cmaj7"></div><div class="tt-field" style="margin-top:10px"><label>TO</label><input id="toChord" class="tt-input" value="Am7" placeholder="Am7"></div><div class="tt-divider"></div><div class="tt-pillbar"><button class="tt-btn preset" data-a="Cmaj7" data-b="Am7">Cmaj7 → Am7</button><button class="tt-btn preset" data-a="Dm7" data-b="G7">Dm7 → G7</button><button class="tt-btn preset" data-a="G7" data-b="Cmaj7">G7 → Cmaj7</button><button class="tt-btn preset" data-a="F" data-b="Fm">F → Fm</button></div><div class="tt-divider"></div><label class="tt-row"><input id="commonFixed" type="checkbox" checked> <span class="tt-label">共通音は同じ高さで固定</span></label><label class="tt-row" style="margin-top:8px"><input id="topFixed" type="checkbox"> <span class="tt-label">トップノートを固定（可能な場合）</span></label><button id="analyze" class="tt-btn primary" style="width:100%;margin-top:14px">最小移動を計算</button><div id="error" class="tt-status" style="display:none;margin-top:10px"></div></section>
-<section class="tt-stack"><section class="tt-panel"><div class="tt-section-title"><h2>4声の動き</h2><span id="score">TOTAL 0</span></div><div id="summary" class="tt-status"></div><div id="voices" class="tt-voices"></div><div class="tt-audio"><button id="playFrom" class="tt-btn">FROMを鳴らす</button><button id="playTo" class="tt-btn">TOを鳴らす</button><button id="playBoth" class="tt-btn primary">つなげて聴く</button></div></section><section class="tt-panel"><h2>見方</h2><div class="tt-card-grid"><div class="tt-card"><small>0 semitone</small><strong>共通音</strong><p>音を動かさず残せる場所。滑らかなコード接続の中心です。</p></div><div class="tt-card"><small>1-2 semitones</small><strong>非常に滑らか</strong><p>半音・全音の動き。内声で使うと自然に聞こえやすいです。</p></div><div class="tt-card"><small>3-4 semitones</small><strong>少し大きい移動</strong><p>悪いわけではありませんが、別の転回形を試す余地があります。</p></div><div class="tt-card"><small>OPTION</small><strong>トップ固定</strong><p>メロディ音を保ったまま伴奏コードだけ変えたいときに便利です。</p></div></div></section></section></div></main>
-<script src="theory-tools-core.js?v=20260819-1"></script><script>
-(()=>{const T=NEETTheory,$=id=>document.getElementById(id);let state=null;function analyze(){const a=T.parseChord($('fromChord').value),b=T.parseChord($('toChord').value),err=$('error');if(!a||!b){err.style.display='block';err.textContent='コード名を読み取れません。例: C, Cm, C7, Cmaj7, Cm7, Cm7b5';return}err.style.display='none';state={a,b,...T.voiceLead(a,b,{commonFixed:$('commonFixed').checked,topFixed:$('topFixed').checked})};const total=state.moves.reduce((s,x)=>s+Math.abs(x),0);$('score').textContent=`TOTAL ${total} semitones`;$('summary').textContent=total<=4?'かなり滑らかな接続です。共通音と半音・全音移動が中心。':total<=8?'実用的な接続です。必要なら転回形を変えてさらに短くできます。':'移動量がやや大きめです。トップ固定を外す、または別の転回形を検討すると滑らかになります。';const names=['Bass','Tenor','Alto','Soprano'];$('voices').innerHTML=state.from.map((m,i)=>{const d=state.moves[i],label=d===0?'共通音':`${d>0?'+':''}${d} 半音`;return `<div class="tt-voice"><span class="tt-label">${names[i]}</span><span class="from">${T.midiName(m)}</span><span class="move">${label}</span><span class="to">${T.midiName(state.to[i])}</span></div>`}).join('')}
-$('analyze').onclick=analyze;$('commonFixed').onchange=analyze;$('topFixed').onchange=analyze;document.querySelectorAll('.preset').forEach(b=>b.onclick=()=>{$('fromChord').value=b.dataset.a;$('toChord').value=b.dataset.b;analyze()});$('playFrom').onclick=()=>state&&T.playMidis(state.from);$('playTo').onclick=()=>state&&T.playMidis(state.to);$('playBoth').onclick=()=>{if(!state)return;T.playMidis(state.from,.65,0);T.playMidis(state.to,.75,.72)};analyze()})();
-</script>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f3eadc">
+<title>ボイスリーディング・ナビ PRO | NEETNOTE</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+<link rel="stylesheet" href="voice-leading-pro.css?v=20260820-1">
+</head>
+<body>
+<main class="vl-page">
+  <section class="vl-hero">
+    <span>HARMONY / ARRANGE TOOL</span>
+    <h1>ボイスリーディング・ナビ</h1>
+    <p>2コードだけでなく、コード進行全体を4声でつなぎます。「曲で使う」と「理論を学ぶ」を分け、複数候補を聴き比べられるようにしました。</p>
+    <div class="vl-hero-actions"><a class="vl-link primary" href="guitar-pro.html">🎸 GUITAR PRO</a><a class="vl-link" href="https://akito0802.github.io/Cordhyo-/index.html">コード辞典</a></div>
+  </section>
 
+  <div class="vl-tabs" role="tablist" aria-label="ボイスリーディングのモード">
+    <button class="vl-tab active" type="button" role="tab" aria-selected="true" data-mode="arrange">🎧 実用アレンジ</button>
+    <button class="vl-tab" type="button" role="tab" aria-selected="false" data-mode="harmony">📚 和声学</button>
+  </div>
+  <div id="modeHelp" class="vl-mode-help"></div>
 
+  <div class="vl-layout">
+    <aside class="vl-panel vl-input">
+      <div class="vl-section-head"><div><span>INPUT</span><h2>進行を入力</h2></div><small>4 voices</small></div>
+      <label class="vl-field"><span>コード進行</span><textarea id="progression" spellcheck="false">Cmaj7 / Am7 / Dm7 / G7 / Cmaj7</textarea></label>
+      <div class="vl-presets">
+        <button type="button" data-progression="C / G / Am / F">C-G-Am-F</button>
+        <button type="button" data-progression="Cmaj7 / Am7 / Dm7 / G7 / Cmaj7">City / Jazz</button>
+        <button type="button" data-progression="F / Fm / C / G7 / C">借用和音</button>
+      </div>
+      <label class="vl-field"><span>トップノート / メロディ（任意）</span><textarea id="melody" rows="2" spellcheck="false" placeholder="例：E / E / F / F / E"></textarea></label>
+      <label class="vl-field"><span>分析キー（和声学用）</span><select id="analysisKey"></select></label>
+      <div class="vl-options">
+        <label class="vl-check"><input id="commonFixed" type="checkbox" checked>共通音を同じ高さで残す</label>
+        <label class="vl-check"><input id="rootBass" type="checkbox">ルート / 指定ベースを最低音に固定</label>
+        <label class="vl-check"><input id="avoidParallels" type="checkbox">平行5度・8度を避ける</label>
+      </div>
+      <button id="analyze" class="vl-primary" type="button">進行全体を最適化</button>
+      <div id="error" class="vl-message error" hidden></div>
+      <div class="vl-side-note"><b>A/B/Cは「正解順位」ではありません。</b><br>最小移動・トップ優先・広がり重視の3つを比べて、最後は耳で選ぶ設計です。</div>
+    </aside>
+
+    <section id="results"></section>
+  </div>
+</main>
+<script src="theory-tools-core.js?v=20260819-1"></script>
+<script src="voice-leading-pro.js?v=20260820-1"></script>
 <script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260819-safe5"></script>
-</body></html>
+</body>
+</html>
