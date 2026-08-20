@@ -1,0 +1,3086 @@
+{
+  "generatedAt": "2026-08-20T17:08:31.867Z",
+  "reviewed": "2026-08-21",
+  "chapters": [
+    {
+      "no": 0,
+      "id": "intro",
+      "name": "はじめる前に",
+      "en": "Before You Begin",
+      "level": 1,
+      "minutes": 12,
+      "goal": "音楽理論を「正解集」ではなく、耳・分析・制作を助ける地図として扱えるようになる。",
+      "prereq": [],
+      "next": [
+        1
+      ],
+      "rule": "editorial"
+    },
+    {
+      "no": 1,
+      "id": "foundation",
+      "name": "音楽理論の基礎",
+      "en": "Foundations",
+      "level": 1,
+      "minutes": 35,
+      "goal": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "prereq": [
+        0
+      ],
+      "next": [
+        2,
+        13,
+        17
+      ],
+      "rule": "standard"
+    },
+    {
+      "no": 2,
+      "id": "major",
+      "name": "長調の和声",
+      "en": "Major-key Harmony",
+      "level": 2,
+      "minutes": 40,
+      "goal": "T/SD/D、終止、導音と7thの解決を「耳と声部」で説明できる。",
+      "prereq": [
+        1
+      ],
+      "next": [
+        3,
+        5
+      ],
+      "rule": "standard"
+    },
+    {
+      "no": 3,
+      "id": "minor",
+      "name": "短調の和声",
+      "en": "Minor-key Harmony",
+      "level": 2,
+      "minutes": 40,
+      "goal": "自然・和声・旋律的短音階の違いと、短調のドミナントを説明できる。",
+      "prereq": [
+        1,
+        2
+      ],
+      "next": [
+        6,
+        9
+      ],
+      "rule": "standard"
+    },
+    {
+      "no": 4,
+      "id": "tension",
+      "name": "テンションを含む和音",
+      "en": "Chord Tensions",
+      "level": 3,
+      "minutes": 50,
+      "goal": "9th/11th/13th、アヴェイラブル/アヴォイドを響きと配置から判断する。",
+      "prereq": [
+        1,
+        2
+      ],
+      "next": [
+        10,
+        12
+      ],
+      "rule": "school"
+    },
+    {
+      "no": 5,
+      "id": "secondary",
+      "name": "セカンダリードミナント",
+      "en": "Secondary Dominants",
+      "level": 3,
+      "minutes": 45,
+      "goal": "目的コードから逆算してV/xを作り、転調との違いを説明できる。",
+      "prereq": [
+        1,
+        2
+      ],
+      "next": [
+        7,
+        9
+      ],
+      "rule": "standard"
+    },
+    {
+      "no": 6,
+      "id": "modal",
+      "name": "モーダルインターチェンジ",
+      "en": "Modal Interchange",
+      "level": 4,
+      "minutes": 55,
+      "goal": "同主調・モードから借りた和音を、主音中心を保ったまま分析できる。",
+      "prereq": [
+        1,
+        2,
+        3
+      ],
+      "next": [
+        10,
+        11
+      ],
+      "rule": "school"
+    },
+    {
+      "no": 7,
+      "id": "dominant",
+      "name": "ドミナントコードの応用と発展",
+      "en": "Advanced Dominants",
+      "level": 4,
+      "minutes": 55,
+      "goal": "subV7、トライトーン、連続ドミナントを解決方向から扱える。",
+      "prereq": [
+        2,
+        5
+      ],
+      "next": [
+        8,
+        9,
+        10
+      ],
+      "rule": "school"
+    },
+    {
+      "no": 8,
+      "id": "diminished",
+      "name": "ディミニッシュコード",
+      "en": "Diminished Harmony",
+      "level": 4,
+      "minutes": 45,
+      "goal": "dim7の対称性とアプローチ機能を、声部進行とセットで使える。",
+      "prereq": [
+        2,
+        7
+      ],
+      "next": [
+        10,
+        11
+      ],
+      "rule": "school"
+    },
+    {
+      "no": 9,
+      "id": "modulation",
+      "name": "転調",
+      "en": "Modulation",
+      "level": 4,
+      "minutes": 60,
+      "goal": "ダイレクト、ピボット、ドミナント型の転調を見分け、作曲で選べる。",
+      "prereq": [
+        2,
+        3,
+        5
+      ],
+      "next": [
+        11,
+        18
+      ],
+      "rule": "standard"
+    },
+    {
+      "no": 10,
+      "id": "chordscale",
+      "name": "コードスケール",
+      "en": "Chord-scale Theory",
+      "level": 5,
+      "minutes": 70,
+      "goal": "コードとスケールを1対1の暗記ではなく、機能・旋律・ボイシングから選べる。",
+      "prereq": [
+        3,
+        4,
+        6,
+        7
+      ],
+      "next": [
+        12,
+        17
+      ],
+      "rule": "school"
+    },
+    {
+      "no": 11,
+      "id": "otherharmony",
+      "name": "その他の和声技法",
+      "en": "Other Harmonic Techniques",
+      "level": 5,
+      "minutes": 60,
+      "goal": "ペダル、コンスタントストラクチャー、マルチトニック等を効果で選べる。",
+      "prereq": [
+        2,
+        6,
+        7,
+        9
+      ],
+      "next": [
+        18
+      ],
+      "rule": "practice"
+    },
+    {
+      "no": 12,
+      "id": "compound",
+      "name": "コンパウンドコード",
+      "en": "Compound Chords",
+      "level": 5,
+      "minutes": 55,
+      "goal": "ハイブリッド、ポリコード、アッパーストラクチャーを音域と役割で整理する。",
+      "prereq": [
+        4,
+        10
+      ],
+      "next": [
+        18
+      ],
+      "rule": "school"
+    },
+    {
+      "no": 13,
+      "id": "rhythm",
+      "name": "拍とリズム",
+      "en": "Pulse and Rhythm",
+      "level": 1,
+      "minutes": 35,
+      "goal": "パルス・拍・拍子・音価・BPMを分けて聴き取り、身体で拍を保てる。",
+      "prereq": [
+        0
+      ],
+      "next": [
+        14,
+        18
+      ],
+      "rule": "standard"
+    },
+    {
+      "no": 14,
+      "id": "meter",
+      "name": "拍子の拡張",
+      "en": "Advanced Meter",
+      "level": 3,
+      "minutes": 50,
+      "goal": "複合拍子・混合拍子・ヘミオラ・ポリリズムをグルーピングで理解する。",
+      "prereq": [
+        13
+      ],
+      "next": [
+        18
+      ],
+      "rule": "standard"
+    },
+    {
+      "no": 15,
+      "id": "texture",
+      "name": "音楽のテクスチュア",
+      "en": "Musical Texture",
+      "level": 2,
+      "minutes": 30,
+      "goal": "モノ/ホモ/ポリフォニー等を、声部の関係として聴き分ける。",
+      "prereq": [
+        0
+      ],
+      "next": [
+        18,
+        19
+      ],
+      "rule": "standard"
+    },
+    {
+      "no": 16,
+      "id": "form",
+      "name": "楽曲形式・曲の構造",
+      "en": "Form and Structure",
+      "level": 2,
+      "minutes": 45,
+      "goal": "フレーズ・セクション・反復/対比を捉え、曲の地図を作れる。",
+      "prereq": [
+        0,
+        13
+      ],
+      "next": [
+        18
+      ],
+      "rule": "standard"
+    },
+    {
+      "no": 17,
+      "id": "melody",
+      "name": "メロディ理論",
+      "en": "Melody Theory",
+      "level": 2,
+      "minutes": 70,
+      "goal": "スケール、コードトーン、非和声音、輪郭、反復を使って旋律を分析・制作する。",
+      "prereq": [
+        1
+      ],
+      "next": [
+        18
+      ],
+      "rule": "practice"
+    },
+    {
+      "no": 18,
+      "id": "arrangement",
+      "name": "アレンジ・構成",
+      "en": "Arrangement",
+      "level": 3,
+      "minutes": 75,
+      "goal": "和声・旋律・リズム・音域・密度を組み合わせ、セクション差を設計する。",
+      "prereq": [
+        2,
+        13,
+        16,
+        17
+      ],
+      "next": [
+        19
+      ],
+      "rule": "practice"
+    },
+    {
+      "no": 19,
+      "id": "sound",
+      "name": "サウンド・音色",
+      "en": "Sound and Timbre",
+      "level": 2,
+      "minutes": 55,
+      "goal": "倍音・エンベロープ・音域・レイヤーを、編曲とミックスの両面から扱う。",
+      "prereq": [
+        0
+      ],
+      "next": [
+        20
+      ],
+      "rule": "practice"
+    },
+    {
+      "no": 20,
+      "id": "tuning",
+      "name": "チューニング・音律",
+      "en": "Tuning and Temperament",
+      "level": 4,
+      "minutes": 60,
+      "goal": "平均律・純正律・倍音関係を、理論上の比と聴感差の両方で理解する。",
+      "prereq": [
+        1,
+        19
+      ],
+      "next": [
+        21
+      ],
+      "rule": "school"
+    },
+    {
+      "no": 21,
+      "id": "stylehistory",
+      "name": "スタイル・理論史",
+      "en": "Style and Theory History",
+      "level": 2,
+      "minutes": 60,
+      "goal": "理論を歴史・ジャンル・流派の文脈に置き、「絶対の禁則」と誤解しない。",
+      "prereq": [
+        0
+      ],
+      "next": [],
+      "rule": "editorial"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "c1-z0qltk",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "『一般音楽論』本文確認範囲から再構成",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-organizer-v2.js"
+    },
+    {
+      "id": "c1-1jmzriz",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "♭9は解決先の5度へ半音で落ちやすい",
+      "summary": "セカンダリーD上ではオルタードテンションの中でも♭9が頻繁に使われる。目的コードの5度へ半音解決しやすいから。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c1-ow4s29",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "♯11は調性感から大きく外れるので声部進行が重要",
+      "summary": "セカンダリーDの♯11は強い色を持つため、単独で置くだけでは唐突に聞こえることがある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c1-zl3uep",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${esc(c[1])}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c1-12zlixb",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${esc(d.title)}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf-force-visible.js"
+    },
+    {
+      "id": "c1-9x6ugl",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${esc(h.x.title)}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-organizer-v2.js"
+    },
+    {
+      "id": "c1-dg544v",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${esc(t)}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf-151-300.js"
+    },
+    {
+      "id": "c1-10szip1",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${esc(title)}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf-151-300.js"
+    },
+    {
+      "id": "c1-130your",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${esc(x.title)}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-1tp6w8n",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${esc(x[0])}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf-force-visible.js"
+    },
+    {
+      "id": "c1-23ppem",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${esc(x[1])}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c1-1gv6399",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${g.name}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-organizer-v2.js"
+    },
+    {
+      "id": "c1-1l62zrt",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${h.x.title}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-organizer.js"
+    },
+    {
+      "id": "c1-j9rogu",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${LESSONS.length}講座",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-ffdqje",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${MORE.length}講座",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c1-1q62is0",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${source}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-organizer-v3.js"
+    },
+    {
+      "id": "c1-ln7t6f",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${x.label}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-c-ui.js"
+    },
+    {
+      "id": "c1-1w04uvn",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${x.title}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-organizer.js"
+    },
+    {
+      "id": "c1-zniuoq",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "sus・add・omit",
+      "summary": "susは置換、addは追加、omitは省略。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-1hb8ru2",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "エクステンデッドドミナント",
+      "summary": "ドミナントを連続させ、各コードが次のコードのVになるよう鎖状につなぐ技法。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-g67kpf",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "エクステンデッドドミナントの開始位置で聞こえ方が変わる",
+      "summary": "連鎖がフレーズ冒頭から始まるか、途中から始まるかで最初のドミナントの役割が変わる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c1-1rf7brx",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "エクステンデッドドミナントは「ドミナントを連鎖させる」",
+      "summary": "解決先のコード自体が次のコードへのドミナントとして働き、ドミナントモーションが連続する進行。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c1-1g77au7",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "オルタードスケール",
+      "summary": "V7を強く不安定にして解決を濃くするドミナント用スケール。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-hwvty9",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "オンコード・転回形",
+      "summary": "同じコードでも最低音を変えると、進行の流れが大きく変わる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-dg1aj4",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "ガイドトーンとシェルボイシング",
+      "summary": "少ない音数でコードの性格を伝えるための中心音。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-1ivqf87",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "かんたんな意味",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-glossary.js"
+    },
+    {
+      "id": "c1-ixqonv",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "キー・音階・調号・五度圏",
+      "summary": "曲の中心音と、そこで使われやすい音の集合。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-12ajiiu",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "コード・和声理論",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-organizer-v2.js"
+    },
+    {
+      "id": "c1-vhhqlb",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "コードアナライズの実際の順序",
+      "summary": "PDFの分析例は、まず調を決め、次に各コードをローマ数字化し、ドミナントモーションや終止を見つける流れで進む。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-1hflhay",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "この章の一覧に戻る",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-nav-enhance.js"
+    },
+    {
+      "id": "c1-1yn3xzc",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "チャーチモード7種類を同じ主音で比較する",
+      "summary": "モードは同じ音列の開始位置を変える考え方だけでなく、同じ主音で比較すると特徴音が見えやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c1-5857ji",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "チャーチモードは「同じ音列でも中心音が違う」",
+      "summary": "モードは単にメジャースケールを別の音から弾くことではなく、どの音を中心として聞かせるかが本質。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c1-1tdxihd",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "ツーファイブを連続させる",
+      "summary": "II-7→V7の単位を次々につなぎ、各解決先が次のII-7になるように進める技法。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c1-197iir7",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "ドミナントモーション",
+      "summary": "ルートが完全5度下へ進む、強い解決方向。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-19qbl0w",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "ドミナントモーションとガイドトーン解決",
+      "summary": "V→Iの強さはルート進行だけでなく、V7内部の3rdと7thが半音で解決することにある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-cvb19u",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "ベースライン設計",
+      "summary": "ルートだけでなく転回形や経過音を使って低音を旋律としてつなぐ。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-g4383a",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "ボイシング・Drop2・Drop3",
+      "summary": "同じ構成音でも並べ方で密度・広がり・弾きやすさが変わる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-zxpmjy",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "ボイスリーディング（声部進行）",
+      "summary": "各構成音をできるだけ小さく動かしてコードをつなぐ。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-1025lab",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "モードは「開始音違い」だけではない",
+      "summary": "チャーチモードは同じ音集合でも、どの音を中心として聞かせるかで別の調性感を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-1escq2a",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "モチーフ展開とフック",
+      "summary": "短い音型を反復し、小さく変化させて曲全体の統一感を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-11g8e68",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "リハーモナイズ",
+      "summary": "メロディを保ちながら、コードだけを別の解釈へ付け替える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-1c8dbvt",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "ローマ数字でキーから切り離して考える",
+      "summary": "コード名ではなくスケール上の位置をローマ数字で表し、進行の構造を共通化する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c1-1sq5s00",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "音階と調号をセットで理解する",
+      "summary": "音階を構成する音と調号は別々の暗記事項ではなく、キーを示す二つの見方。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c1-hqp73h",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "音楽理論の基礎",
+      "summary": "音程／音階と調号／調性内三和音／調性内四和音／和音分析／ローマ数字／転回／その他の三和音・四和音",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c1-vfwduz",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "音程",
+      "summary": "2つの音の距離。コードとスケールの一番小さい材料。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-wu1v8b",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "音程の転回",
+      "summary": "2音の上下を入れ替えると、元の音程と合計して9度になる関係が生まれる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-1trqkts",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "音程を「度数＋半音数」で読む",
+      "summary": "音程は2音の高さの距離。まず何度かを数え、そのうえで半音数から長・短・完全・増・減を判断する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-1q6t7r8",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "関連語",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-glossary.js"
+    },
+    {
+      "id": "c1-q6nnbp",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "教会旋法7種類（モード）",
+      "summary": "同じ音材料でも中心音と特徴音を変えると、別の色になる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-1vbmlr0",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "具体例",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c1-1bu0own",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "検索結果",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-organizer-v2.js"
+    },
+    {
+      "id": "c1-1iwk1py",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "作曲・分析で使う",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c1-mm6vmy",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "三和音と7thコード",
+      "summary": "1・3・5を基本に、7度を加えるとコードの性格がより明確になる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-g96umc",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "主要な理論領域",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-c-ui.js"
+    },
+    {
+      "id": "c1-hcgr2j",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "総合音楽理論 EXPANSION",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-organizer-v2.js"
+    },
+    {
+      "id": "c1-1t1a2xj",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "調性内三和音の作り方",
+      "summary": "スケールの各音を根音にして1音おきに3音を積むと、そのキーの基本三和音ができる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c1-oouro5",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "調性内四和音の作り方",
+      "summary": "三和音へさらに3度上の音を重ねると7thコードになり、機能や響きがより明確になる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c1-1pzqolv",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "調性内和音とローマ数字",
+      "summary": "キーの音だけを使い、各音をルートにして3度ずつ重ねると調性内三和音・四和音が得られる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-19870g2",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "長音階7音には「進みたがる方向」がある",
+      "summary": "スケール音は均等な存在ではなく、安定度や解決傾向が違う。和声機能はこの傾向の組合せから見えてくる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-embhn",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "度数とローマ数字",
+      "summary": "音やコードを「キーの何番目か」で読む共通言語。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-1i93ade",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "非和声音",
+      "summary": "コード外音も「どこから来てどこへ解決するか」で自然に使える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-1ks07hb",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "目次に戻る",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-nav-enhance.js"
+    },
+    {
+      "id": "c1-lpf111",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "理論アシスト × コード辞典を統合したよ",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c2-1t0fz9u",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "II–V–Iは機能和声を圧縮した形",
+      "summary": "II-7→V7→IはSD→D→Tを最も分かりやすく並べた進行で、ジャズでは中心的な語彙になる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c2-ft2nhh",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "V7の7thは下行して解決する",
+      "summary": "ドミナント7thの7th音は、一般に半音または全音下へ進んでトニック側の構成音へ解決する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c2-rebsyr",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "トニック・ドミナント・サブドミナント",
+      "summary": "長調の調性内和音は、安定・緊張・展開という3つの大きな機能で整理できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c2-9hjtpi",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "完全正格終止と不完全正格終止",
+      "summary": "V→Iでも外声や転回形の条件によって終止の強さが変わる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c2-10q4bpi",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "機能和声 T / SD / D",
+      "summary": "コードを安定・展開・緊張の役割で読む。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c2-1bicytx",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "終止（カデンツ）",
+      "summary": "フレーズに句読点を作る着地パターン。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c2-1loa3fg",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "終止を5種類で使い分ける",
+      "summary": "終止はコード進行の句読点。どこで終わった感じを出すか、どこで続きを期待させるかを設計する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c2-1uw4wrf",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "長調の和声",
+      "summary": "長音階構成音／各音の特色／トニック・ドミナント・サブドミナント機能／終止／コードアナライズ／機能別分析／和音の置換",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c2-1rty7l2",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "導音がトニックへ向かう理由",
+      "summary": "長音階第7音は主音の半音下にあり、主音へ進む強い方向性を持つ。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c2-swpn16",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "半終止と偽終止",
+      "summary": "Vで止まれば未解決感が残り、VからI以外へ進めば期待を外してフレーズを継続できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c3-evi4jr",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "メジャーモードとマイナーモードの分け方",
+      "summary": "主音と第3音の関係で大きく分類するとモードを整理しやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c3-1d3vgqc",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "メジャー解決とマイナー解決で最後のV7の色が変わる",
+      "summary": "同じドミナント連鎖でも、最終解決が長調か短調かで使いやすいテンションが変わる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c3-1157kil",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "メロディックマイナー派生モード",
+      "summary": "メロディックマイナーも各音を主音として読み替えると7種類の派生モードを作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c3-noxcl5",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "自然短音階の和声",
+      "summary": "自然短音階だけで作る和音は短調の基本色を示すが、強いV7→iを作りにくい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c3-u56tx9",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "旋律的短音階と和声の拡張",
+      "summary": "第6・7音を上げた形から、自然短音階とは異なる調性内和音やコードスケールが生まれる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c3-9cknn6",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "短調の3種類",
+      "summary": "短調は3種類を使い分けて、導音・旋律・テンションを作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c3-22zfbp",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "短調の和声",
+      "summary": "自然短音階／和声的短音階／旋律的短音階／各短音階の調性内和音／短調の楽曲分析",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c3-qso4j9",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "短調は1種類ではなく3種類を行き来する",
+      "summary": "短調ではナチュラル、ハーモニック、メロディックの3つを場面ごとに使い分ける。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c3-18g3gzx",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "和声的短音階がV7を作る",
+      "summary": "自然短音階の第7音を半音上げて導音を作ることで、短調でも強いドミナントを得る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c4-1cdedrl",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "Alteredはメロディックマイナー第7モード",
+      "summary": "Alteredはルート以外の音がドミナントテンションとして変化して見えるスケール。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c4-1kuh8u8",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "アヴォイドとスケールトーンの扱い",
+      "summary": "スケール内の音でも、コード機能を大きく損ねる音は長く保持しない方がよい場合がある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c4-1prumea",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "エクステンデッドドミナントのテンション",
+      "summary": "基本は各コードをV7/V型として扱い、9th・13thを中心にテンションを選ぶ。オルタードも使える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c4-20qwxy",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "オルタードテンションはドミナントの特例",
+      "summary": "PDFではドミナント機能を持つコードに、♭9・♯9・♯11・♭13などのオルタードテンションを加える例外を示している。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c4-179cb5c",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "テンションの組み合わせを考える",
+      "summary": "単独で使用可能なテンションでも、複数を同時に鳴らすと音程関係によって濁り方が変化する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c4-dxlvfe",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "テンションは「コード外音」ではなく機能を壊さない色",
+      "summary": "テンションは非和音構成音だが、コード機能や旋律を妨げない範囲で響きを拡張する音として扱う。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c4-1ofvqa8",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "テンションはコードトーンの上の拡張音",
+      "summary": "9th・11th・13thは7thコードのさらに上へ3度堆積したものとして整理できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c4-1ucn8bj",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "テンションを含む和音",
+      "summary": "非和音構成音／テンションの基礎／使用可能なテンション／オルタードテンション／短調・旋律的短音階でのアヴェイラブルテンション",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c4-7xhpjv",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "ドミナント上のナチュラルテンションとオルタードテンション",
+      "summary": "V7ではナチュラル9・13だけでなく♭9・♯9・♯11・♭13なども使えるが、同時使用には制限がある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c4-hpbk7h",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "借用コードはテンションまで借用元を確認する",
+      "summary": "モーダルインターチェンジコードにテンションを足す時は、現在のメジャーキーだけで判断せず借用元スケールとの関係を見る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c4-ir7xro",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "短調のアヴェイラブルテンションは「どの短音階由来か」で変わる",
+      "summary": "マイナーキーではナチュラル・ハーモニック・メロディックのどの短音階を使っているかで、同じコードでも使えるテンションが変わる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c4-1o7efld",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "非和音構成音とテンションを区別する",
+      "summary": "コード外音すべてがテンションではなく、経過音や刺繍音など旋律上の非和声音もある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c5-15qh3pk",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "セカンダリーDと転調の違い",
+      "summary": "一時的にキー外のV7が出ても、目的コードを経て元の調性へ戻るなら局所的な機能として読める。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c5-1ghvb3r",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "セカンダリードミナント",
+      "summary": "ダイアトニック内のコードを一時的な主役にして、そのV7を置く。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c5-ap2iig",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "セカンダリードミナントとして成立しないケース",
+      "summary": "「目的コードの5度上に7thを置けば何でもセカンダリーD」ではなく、目的コードやルートが調性内でどう位置づくかを見る必要がある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c5-8up2od",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "セカンダリードミナントのテンション選択",
+      "summary": "セカンダリーDも基本はドミナントなのでテンションを使えるが、キー内音・目的コード・同音程制限の3点を同時に見る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c5-7rjojx",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "セカンダリードミナントの基本",
+      "summary": "ドミナントモーションの解決先はトニックだけとは限らない。調性内の別コードを一時的な到着点にして、そのV7を置ける。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c5-1vo96cl",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "セカンダリードミナントの目的コード",
+      "summary": "主調のI以外のコードを一時的なトニックのように見立て、その完全5度上にV7を置く。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c5-5bh6la",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "セカンダリードミナントは「一時的なトニック化」",
+      "summary": "トニック以外のダイアトニックコードへ向けて、そのコードを一時的な主役として扱うV7を置く。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c5-ha4p6m",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "セカンダリードミナントは「目的地込み」で読む",
+      "summary": "A7やD7というコード名だけを見ても役割は決まらない。何へ解決するかを見てV/ii、V/Vのように読む。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c5-1pdp266",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "ナチュラルマイナーでのセカンダリードミナント",
+      "summary": "短調でもセカンダリーDは使えるが、長調との対応関係を意識すると整理しやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c5-myoj1q",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "ハーモニックマイナーで成立するセカンダリーD",
+      "summary": "和声的短音階では第7音が上がるため、ナチュラルマイナーとは成立するセカンダリーDが変化する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c5-zvtajr",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "メロディックマイナーでのセカンダリーD",
+      "summary": "旋律的短音階では第6・7音が上がるため、和声的短音階とも異なるセカンダリーD候補が生まれる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c5-1nmps9k",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "リレイティッドII-7でII–V化する",
+      "summary": "セカンダリードミナントの前に対応するII-7を置くことで、目的コードへ向かう局所的なII–Vを作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c5-5rjchj",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "リレイティッドII-7でセカンダリーDをII–V化する",
+      "summary": "セカンダリードミナントの直前へ、そのV7に対するII-7を置くと局所的なII–Vが作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c5-hcx68o",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "リレイティッドII-7のデュアルファンクション",
+      "summary": "リレイティッドII-7が元キーのダイアトニックコードでもある場合、二つの機能を同時に持つ。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c5-1v7edvj",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "リレイティッドII-7のテンションは一時的なキーで判定する",
+      "summary": "II-7のテンションは元キーではなく、セカンダリーDが向かう一時的なトニックを基準に見る場合がある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c5-1c4kfdm",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "リレイティッドII-7を挿入すると遅延解決になる",
+      "summary": "ドミナントの直前へ同じ解決先を持つII-7を挿入すると、解決が1段遅れてより滑らかになる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c5-gxsuvq",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "連続ドミナントの解決方向",
+      "summary": "各7thが次の7thへドミナントモーションし、最終的に主調のV7→Iへ着地する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c6-mr35js",
+      "chapterNo": 6,
+      "chapterId": "modal",
+      "chapter": "モーダルインターチェンジ",
+      "chapterEn": "Modal Interchange",
+      "title": "メロディックマイナー派生モードの位置づけ",
+      "summary": "メロディックマイナー各音を中心として読み替えることで、ドミナントや借用に使える派生モードが得られる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c6-16419c3",
+      "chapterNo": 6,
+      "chapterId": "modal",
+      "chapter": "モーダルインターチェンジ",
+      "chapterEn": "Modal Interchange",
+      "title": "モーダルインターチェンジ",
+      "summary": "チャーチモード／メロディックマイナー派生モード／コード借用／代表的借用コード／セカンダリードミナントとの併用",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c6-1lmeo9m",
+      "chapterNo": 6,
+      "chapterId": "modal",
+      "chapter": "モーダルインターチェンジ",
+      "chapterEn": "Modal Interchange",
+      "title": "モーダルインターチェンジ（借用和音）",
+      "summary": "同じ主音を持つ別の調・モードからコードを借りる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c6-4fcfmh",
+      "chapterNo": 6,
+      "chapterId": "modal",
+      "chapter": "モーダルインターチェンジ",
+      "chapterEn": "Modal Interchange",
+      "title": "モーダルインターチェンジは「同主音の別モードから借りる」",
+      "summary": "同じトニックを共有する別モードの和音を、一時的に現在のキーへ借用する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c6-mb2ys3",
+      "chapterNo": 6,
+      "chapterId": "modal",
+      "chapter": "モーダルインターチェンジ",
+      "chapterEn": "Modal Interchange",
+      "title": "モーダルインターチェンジはコードを借りても主音は変えない",
+      "summary": "同じ主音を持つ別モードからコードを借りることで、キー中心を保ったまま一瞬だけ色彩を変える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c6-1rwp4pi",
+      "chapterNo": 6,
+      "chapterId": "modal",
+      "chapter": "モーダルインターチェンジ",
+      "chapterEn": "Modal Interchange",
+      "title": "モーダルインターチェンジはトーナリティを保ったままコードを借りる",
+      "summary": "曲の主音は変えず、同じ主音を持つ別モードからコードだけ借用する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c6-1u6smeb",
+      "chapterNo": 6,
+      "chapterId": "modal",
+      "chapter": "モーダルインターチェンジ",
+      "chapterEn": "Modal Interchange",
+      "title": "モードは特徴音で覚える",
+      "summary": "7種類を音列だけで暗記せず、Ionianとの差分となる音を中心に整理する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c6-m7olo1",
+      "chapterNo": 6,
+      "chapterId": "modal",
+      "chapter": "モーダルインターチェンジ",
+      "chapterEn": "Modal Interchange",
+      "title": "借用和音と転調を区別する",
+      "summary": "同主音モードから一時的に和音を借りても、主音の中心が維持されるならモーダルインターチェンジとして扱える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c7-1qppr8b",
+      "chapterNo": 7,
+      "chapterId": "dominant",
+      "chapter": "ドミナントコードの応用と発展",
+      "chapterEn": "Advanced Dominants",
+      "title": "サブスティテュートドミナント（subV）",
+      "summary": "V7を、同じトライトーンを持つ別の7thへ置き換える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c7-hvxjsj",
+      "chapterNo": 7,
+      "chapterId": "dominant",
+      "chapter": "ドミナントコードの応用と発展",
+      "chapterEn": "Advanced Dominants",
+      "title": "ドミナントコードの応用と発展",
+      "summary": "サブスティテュートドミナント／トライトーン／subV7／マイナーキーのsubV7／ツーファイブ／エクステンデッドsubV／ドミナント機能を持たないドミナント7th",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c8-vb7wto",
+      "chapterNo": 8,
+      "chapterId": "diminished",
+      "chapter": "ディミニッシュコード",
+      "chapterEn": "Diminished Harmony",
+      "title": "ディミニッシュコード",
+      "summary": "dim7の基礎／上行・下行・オグジュアリーアプローチ／転回／テンション／オクタトニックスケール／ブルース進行での使用",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c8-fflj65",
+      "chapterNo": 8,
+      "chapterId": "diminished",
+      "chapter": "ディミニッシュコード",
+      "chapterEn": "Diminished Harmony",
+      "title": "ディミニッシュと経過和音",
+      "summary": "対称構造を使って、コード同士を半音でつなぐ。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c9-1g3mcdq",
+      "chapterNo": 9,
+      "chapterId": "modulation",
+      "chapter": "転調",
+      "chapterEn": "Modulation",
+      "title": "転調",
+      "summary": "曲の中心となるキーそのものを別のキーへ移す。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c10-1ejgwki",
+      "chapterNo": 10,
+      "chapterId": "chordscale",
+      "chapter": "コードスケール",
+      "chapterEn": "Chord-scale Theory",
+      "title": "コードスケール",
+      "summary": "そのコード上で使える音を、コードトーン・テンション・注意音に分けて考える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c11-1y7pfzl",
+      "chapterNo": 11,
+      "chapterId": "otherharmony",
+      "chapter": "その他の和声技法",
+      "chapterEn": "Other Harmonic Techniques",
+      "title": "その他の和声技法",
+      "summary": "ペダルポイント／トニック・ドミナント・サブドミナント・インテリア・ソプラノペダル／コンスタントストラクチャー／マルチトニックシステム／コンティギュアスモーション",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c11-qmjqfa",
+      "chapterNo": 11,
+      "chapterId": "otherharmony",
+      "chapter": "その他の和声技法",
+      "chapterEn": "Other Harmonic Techniques",
+      "title": "ペダルポイント",
+      "summary": "1音を保ったまま上のコードを変える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c12-1h3sjs2",
+      "chapterNo": 12,
+      "chapterId": "compound",
+      "chapter": "コンパウンドコード",
+      "chapterEn": "Compound Chords",
+      "title": "アッパーストラクチャー",
+      "summary": "土台のコード上に別の三和音を重ね、テンションを整理する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c12-99ryrm",
+      "chapterNo": 12,
+      "chapterId": "compound",
+      "chapter": "コンパウンドコード",
+      "chapterEn": "Compound Chords",
+      "title": "コンパウンドコード",
+      "summary": "ハイブリッドコード／ハイブリッドコードの置換と導出／ポリコード／ポリコードの条件と導出",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-pdf.js"
+    },
+    {
+      "id": "c13-xnhcif",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "2/2と4/4は何が違う？",
+      "summary": "1小節の総音価が同じでも、二分音符を一拍とする2/2と四分音符を一拍とする4/4では拍の捉え方が異なる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1p3enqo",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "5拍子はグループ分けで感じる",
+      "summary": "5拍子は均等な5つとしてだけでなく、2拍子と3拍子の組合せとして感じられる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-d7jsl2",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "6/8：二拍を三分割する",
+      "summary": "6/8は八分音符3つ分を一拍とする、大きな二拍子として捉えられる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-2xa3pk",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "7/8・奇数拍子のグルーピング",
+      "summary": "7/8は2拍と3拍を組み合わせ、複数の内部パターンを作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1biffdk",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "9/8：三拍を三分割する",
+      "summary": "9/8は八分音符3つを一拍として、その拍が3つ並ぶ複合三拍子。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1it75e5",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "BPMだけでは速度感は決まらない",
+      "summary": "数値が大きいほど必ず速く聞こえるとは限らず、使われる音価や音符密度も速度感を左右する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-44jnh4",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "BPMとメトロノーム",
+      "summary": "BPMは1分間に刻む基準拍の数を数値化したもの。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-half5a",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "イミテーション（模倣）",
+      "summary": "ある旋律を別パートが時間をずらして繰り返し、同じ素材から複数の独立した線を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-ouioxi",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "テクスチュアとは",
+      "summary": "音楽における旋律と音の構造の関わり方を、音の「重なり方」として捉える概念。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-vaz79x",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "テクスチュアを曲中で変化させる",
+      "summary": "1曲の中でモノフォニー・ホモフォニー・ポリフォニーを切り替えると、音数を変えずに展開を作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1urkqvs",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "ハーモニックリズムが連続ドミナントの聞こえ方を左右する",
+      "summary": "コードが変わる時間間隔そのものも和声表現の一部。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-advanced.js"
+    },
+    {
+      "id": "c13-gkwsoq",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "パルス・拍・拍子の関係",
+      "summary": "一定周期のパルスを音楽上の拍として捉え、拍をまとまりにしたものが拍子になる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1miira5",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "ヘミオラ",
+      "summary": "速度や拍子記号を変えず、アクセント位置をずらして別の拍子感を一時的に作る技法。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-17onyo0",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "ホモフォニック・テクスチュア",
+      "summary": "独立した主旋律と、その旋律を支える和声的な伴奏で構成する形。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-m7elgq",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "ポリフォニック・テクスチュア",
+      "summary": "2つ以上の異なる旋律が同時に進み、それぞれを独立した線として聴き分けられる形。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-147g99z",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "ポリリズム：奇数分割と偶数分割",
+      "summary": "同じ時間の中で異なる分割数のリズムを同時に鳴らすと、単一の拍では得にくい複雑なリズムが生まれる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1cqsmqt",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "モノフォニック・テクスチュア",
+      "summary": "単一の旋律だけで音楽を作る、または複数人でも全員が同じ旋律を演奏する形。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-w4ebo",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "ラテンアメリカのリズムと重なり",
+      "summary": "ラテン系音楽では複数の打楽器パターンが重なり、単一パートでは出しにくいリズム感を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-6xk4q8",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "音価と休符",
+      "summary": "音符と休符は相対的な長さを表し、全音符を基準に2分・4分・8分へ細分化される。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1o924h6",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "可変拍子でフレーズを伸縮する",
+      "summary": "小節ごとに拍子記号を変えることで、フレーズの長さを縮めたり伸ばしたりできる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1qy925o",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "強拍・弱拍・中強拍",
+      "summary": "拍子は拍数だけでなく、ストレスの強弱によって体感が決まる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-yggkcn",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "速度記号とテンポ",
+      "summary": "AllegroやAndanteなどの速度記号は、曲の大まかな速度感を言葉で示す。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1yqqqji",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "単純拍子と複合拍子",
+      "summary": "一拍を2等分する拍子を単純拍子、3等分する拍子を複合拍子として整理できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-17t1ikc",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "同じリズムでもホモフォニーになる",
+      "summary": "複数声部が別々の音を演奏していても、同じリズムで和音を形成する場合はホモフォニックとして捉えられる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-4wd4a0",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "二拍子と四拍子の選び方",
+      "summary": "二拍子と四拍子は総音価だけでは区別できず、ストレスの周期とリズムパターンから判断する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-7ucc7z",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "拍子を身体で感じる",
+      "summary": "正しい拍子感は、強拍の位置を身体で追うと理解しやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-16hb7he",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "伴奏・旋律・歌詞から拍子を読む",
+      "summary": "拍子は旋律だけでなく伴奏型や言葉のまとまりからも判断できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1dlzxqg",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "舞曲とリズムパターン",
+      "summary": "ヨーロッパの舞曲では拍子とリズムパターンがジャンルの性格を強く決めてきた。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-o3p3f6",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "複数の拍子を同時進行させる",
+      "summary": "異なるパートが別々の拍子感を同時に進めることで、より大きな周期のポリリズムを作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c13-1ek6fby",
+      "chapterNo": 13,
+      "chapterId": "rhythm",
+      "chapter": "拍とリズム",
+      "chapterEn": "Pulse and Rhythm",
+      "title": "連続する拍子変化",
+      "summary": "拍子が一定周期でなく連続して変わると、旋律や伴奏のリズムそのものが拍子を導く。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-general-music.js"
+    },
+    {
+      "id": "c16-17ppw5e",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "12小節ブルースを「形式」として見る",
+      "summary": "12小節ブルースは、3つの4小節フレーズからなる反復可能なフォームとして捉えられる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-1aczjfe",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "Verse–Chorus形式",
+      "summary": "Verse–Chorus形式は、VerseとChorusという二つの中核セクションを繰り返す現代ポップスの代表的構造。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-8g8d4n",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "ストローフィック形式とAABA（32小節形式）",
+      "summary": "同じ基本セクションを繰り返すストローフィック形式と、AABAで対照部を挟む32小節形式は、古いポップスやスタンダードで重要。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-17o0p72",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "センテンスとピリオド",
+      "summary": "フレーズレベルでは、センテンスとピリオドが代表的なまとまり方として扱われる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-oh6q64",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "ソナタ形式",
+      "summary": "ソナタ形式は、提示部・展開部・再現部を中心に、大きな調性の出発と帰還を作る形式。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-b7rgnd",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "ポップスのセクションを機能で分ける",
+      "summary": "ポップ/ロックでは、曲全体をVerse・Chorus・Prechorus・Bridgeなどの機能で区切ると把握しやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-1crvmcd",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "ポップス内部の2・3・4フレーズ構造",
+      "summary": "VerseやChorusの内部にも、2〜4個程度のフレーズがまとまる小さな形式がある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-1fopvwj",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "ロンド形式",
+      "summary": "ロンドは主部A（リフレイン）が、対照的なエピソードを挟みながら何度も戻る形式。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-7d160h",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "形式を読むための階層：モチーフ・アイデア・フレーズ",
+      "summary": "楽曲形式は、短い音型からフレーズ、セクション、曲全体へと階層的に捉えると整理しやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-e11j3p",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "三部形式（Ternary Form）",
+      "summary": "三部形式は、Aのあとに対照的なBが置かれ、最後にAが戻るABA型の大きな構造。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-1p241d1",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "耳で曲構成を判定する手順",
+      "summary": "形式分析は、同じ素材の回帰・対照・終止・調性・歌詞・編成を段階的に追うと安定する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-1li1uan",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "導入・移行・間奏・コーダ／アウトロ",
+      "summary": "曲の中心セクション以外にも、開始・接続・終了を担う補助的なセクションがある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c16-5pvklu",
+      "chapterNo": 16,
+      "chapterId": "form",
+      "chapter": "楽曲形式・曲の構造",
+      "chapterEn": "Form and Structure",
+      "title": "二部形式（Binary Form）",
+      "summary": "二部形式は大きく二つの部分で構成され、各部分が反復されることも多い。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-form.js"
+    },
+    {
+      "id": "c17-v8p1hr",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "クライマックスを作る",
+      "summary": "旋律の最高点や最も強く感じる音をクライマックスとして設計すると、フレーズの方向性が明確になる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-j1l7vc",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "コードトーンを着地点にする",
+      "summary": "コード進行上の重要な拍でコードトーンを意識すると、メロディと和声のつながりを明確にできる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-1rmq7b7",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "フレーズと終止感",
+      "summary": "メロディはフレーズ単位で目標へ向かい、終止や休止によって一つのまとまりとして感じられる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-9yk1k0",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "メロディック・シークエンス",
+      "summary": "シークエンスは、ある音型を別の高さへ移して繰り返し、旋律に前進感を作る技法。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-fy9fax",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "メロディの輪郭（Contour）",
+      "summary": "音名より先に「上がる・下がる・山型・谷型」といった輪郭を捉えると、旋律の方向性が見えやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-8gfavn",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "メロディ設計の実践手順",
+      "summary": "実際の作曲では、モチーフ→輪郭→着地点→音域→クライマックス→装飾の順に組み立てると考える項目を分離できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-1dzy6l8",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "モチーフと基本アイデア",
+      "summary": "メロディは長い音列としてではなく、短く識別できるモチーフや基本アイデアの組み合わせとして捉えると分析・作曲しやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-1tjm8vl",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "リズムもメロディの個性になる",
+      "summary": "メロディの認識には音高だけでなくリズムも大きく関わり、同じ音でも配置を変えると別の印象になる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-190w3p",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "音域（Range）と旋律の広さ",
+      "summary": "旋律の最低音から最高音までの幅は、歌いやすさ・緊張感・キャラクターを左右する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-pm6k4m",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "音楽理論を分野ごとに整理した学習ライブラリ。",
+      "summary": "スケール、コードトーン、非和声音、輪郭、反復を使って旋律を分析・制作する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-kwdz53",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "歌詞とフレーズを合わせる",
+      "summary": "ポップ/ロックでは、メロディフレーズと歌詞の1行が対応することが多く、言葉の区切りが旋律構造の手掛かりになる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-1t5kp70",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "傾向音と解決方向",
+      "summary": "調性の中には特定の方向へ進みやすく感じられる音があり、旋律の期待感を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-1apqlhh",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "経過音・隣接音で旋律を滑らかにする",
+      "summary": "コードトーンだけを並べるのではなく、装飾音を使うと旋律の線を滑らかにしたり、緊張と解決を作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-a5hq5z",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "順次進行と跳躍のバランス",
+      "summary": "多くの旋律では隣接音への順次進行が滑らかな流れを作り、跳躍がアクセントや方向転換を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c17-x03no0",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "旋律の非和声音を4段階で見る",
+      "summary": "メロディはコードトーンだけでできていない。PDFはパッシングトーン、ネイバートーン、アヴェイラブルテンション、その他の音を区別している。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c17-mt4bz2",
+      "chapterNo": 17,
+      "chapterId": "melody",
+      "chapter": "メロディ理論",
+      "chapterEn": "Melody Theory",
+      "title": "反復と変形",
+      "summary": "同じモチーフをそのまま繰り返すだけでなく、長さ・向き・位置を変えると統一感と変化を両立できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-melody.js"
+    },
+    {
+      "id": "c18-dokwdg",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "${DATA.name}",
+      "summary": "和声・旋律・リズム・音域・密度を組み合わせ、セクション差を設計する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-5vencn",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "Open Music Theory 公開教材を要約・再構成",
+      "summary": "和声・旋律・リズム・音域・密度を組み合わせ、セクション差を設計する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-17rzhju",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "アレンジを「機能レイヤー」で考える",
+      "summary": "楽器名から考える前に、各パートが曲の中で何の役割を持つかを分けるとアレンジ全体を整理しやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-c64e0d",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "コードの重複と省略",
+      "summary": "編成が増えると全員にコード構成音を全部弾かせる必要はなく、重要度に応じて重複・省略する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-12ma7k7",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "セクションごとの編成表を作る",
+      "summary": "曲を時間軸で見て、各セクションでどのレイヤーが入るかを表にすると全体の起伏を設計しやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-8pg99x",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "ダブリング：同じ旋律を重ねる",
+      "summary": "ユニゾンやオクターブで同じラインを複数楽器に重ねると、音量だけでなく新しい複合音色を作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-glrefi",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "ハーモニーフィラーを整理する",
+      "summary": "ギター・鍵盤・パッドなどのハーモニー層は、コード情報と質感を補う役割を持つが、重ねすぎると中域が飽和する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-uiybtu",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "ピアノ譜をそのまま配らない",
+      "summary": "鍵盤で成立する配置を別編成へ移す時は、音符をそのまま各楽器へ割り振るのではなく、元の効果を翻訳する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-lt9twh",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "ビート層とベース層を噛み合わせる",
+      "summary": "リズム隊は別々のパートではなく、拍の見せ方と低音の動きを共同で作る一つの基礎層として考えるとまとまりやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-9b1x7u",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "ボイシングとスペーシング",
+      "summary": "同じコードでも、各音をどの高さへ置くかで厚さ・透明感・安定感が大きく変わる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-1apn7um",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "音域を分けて濁りを減らす",
+      "summary": "複数パートが同じ音域へ集中すると情報が重なりやすいため、低・中・高の役割を意識して配置する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-tnqmjc",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "音色を「混ぜる」と「分ける」",
+      "summary": "音色設計では、複数楽器を一つの塊としてブレンドするか、別々の役割として対比させるかを意識する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-s4epge",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "参照テーマ",
+      "summary": "和声・旋律・リズム・音域・密度を組み合わせ、セクション差を設計する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-16ifwqp",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "実践アレンジ手順",
+      "summary": "アレンジは音を増やす作業ではなく、曲の主役と展開を決め、必要なレイヤーだけを配置する工程。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-13t25vk",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "主旋律を前に出す配置",
+      "summary": "メロディと伴奏を同時に鳴らす時は、音量だけでなく音域・音色・リズムの差を作ると主役が見えやすくなる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-l43xnf",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "新しい音色を取っておく",
+      "summary": "曲の序盤で全ての音色を出し切らず、特徴的な楽器を後半まで残すと到達点を強調できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c18-96smhu",
+      "chapterNo": 18,
+      "chapterId": "arrangement",
+      "chapter": "アレンジ・構成",
+      "chapterEn": "Arrangement",
+      "title": "密度でセクション差を作る",
+      "summary": "VerseとChorusの差は音量だけでなく、同時に鳴るパート数・音域・音価の密度で作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-arrangement.js"
+    },
+    {
+      "id": "c19-12egkvb",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "ADSRエンベロープ",
+      "summary": "エンベロープは、音量やフィルターなどの値を時間とともに変化させる仕組みで、音のキャラクターを大きく左右する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-uemd74",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "OpenStax・Open Music Theory・Indiana University・Ableton公式資料を要約・再構成",
+      "summary": "倍音・エンベロープ・音域・レイヤーを、編曲とミックスの両面から扱う。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-1l6vjhx",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "アタックが音色を決める",
+      "summary": "音の鳴り始め（アタック／トランジェント）は、楽器を聞き分けるうえで非常に重要な手掛かりになる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-1fahp4u",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "うなりと干渉",
+      "summary": "近い周波数の音が同時に鳴ると、波の重なりによって周期的に大きさが増減する「うなり」が生じる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-7gdma7",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "オシレーターと波形",
+      "summary": "シンセではオシレーターが音の出発点となり、波形によって最初の倍音構成が変わる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-msznil",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "スペクトルとスペクトラル・エンベロープ",
+      "summary": "複雑な音は、どの周波数成分がどれくらい含まれるかというスペクトルで見ると音色の構造を把握しやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-2rswsm",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "デシベル（dB）の基本",
+      "summary": "デシベルは音の強度レベルを対数的に扱うための単位で、音量を考える時の基礎になる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-1xup033",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "ノイズと広帯域な音",
+      "summary": "すべての音が明確な基音を持つわけではなく、広い周波数帯にエネルギーが分布するノイズ的な音も音楽では重要。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-1aj1499",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "フィルター：周波数成分を選ぶ",
+      "summary": "フィルターは入力音の特定の周波数帯を通したり減らしたりして、音色の明るさ・薄さ・輪郭を変える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-17klzb4",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "音は「物質を伝わる波」",
+      "summary": "音は、音源の振動によって周囲の物質に圧力変化が生まれ、その乱れが外側へ伝わる現象として捉えられる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-ef04fp",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "音色（Timbre）とは何か",
+      "summary": "音色は、同じ高さ・同じ程度の大きさでも音源を聞き分けられる性質で、複数の周波数成分と時間変化の影響を受ける。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-uw35t3",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "基音・倍音・オーバートーン",
+      "summary": "多くの楽器音は一つの周波数だけではなく、基音と複数の高い成分が同時に含まれている。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-2doyej",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "共鳴（Resonance）",
+      "summary": "物体や空気柱には振動しやすい固有の周波数があり、外からその周波数に近い刺激を受けると振動が強まる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-135mrqf",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "実践サウンドデザイン手順",
+      "summary": "音作りは「何となくノブを回す」のではなく、音源→スペクトル→時間変化→役割の順に整理すると再現しやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-5qmul1",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "周波数とピッチ",
+      "summary": "周波数は1秒間に繰り返される振動回数をHzで表す物理量で、知覚上の高さ（ピッチ）と強く関係する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-lmswvn",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "振幅・強度とラウドネス",
+      "summary": "音波の大きさに関する物理量と、人が感じる「大きさ」は区別して考える必要がある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c19-1y8axzv",
+      "chapterNo": 19,
+      "chapterId": "sound",
+      "chapter": "サウンド・音色",
+      "chapterEn": "Sound and Timbre",
+      "title": "複雑な波形は複数の成分として考えられる",
+      "summary": "現実の楽器音やシンセ音は複雑な波形だが、複数の単純な周期成分の組み合わせとして分析できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-sound.js"
+    },
+    {
+      "id": "c20-k44kw3",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "12平均律（12-TET）",
+      "summary": "12平均律は1オクターブを周波数比として12個の等しい半音へ分ける現代の代表的な音律。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-1ypa55a",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "cent（セント）で音程差を測る",
+      "summary": "centは音程の大きさを対数的に表す単位で、細かなチューニング差を比較するのに便利。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-d7ezgd",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "DAW・シンセのマイクロチューニング",
+      "summary": "現代のソフト音源では12平均律以外のチューニングを読み込んだり、音ごとにcent単位で調整できるものがある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-150wux2",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "ウェル・テンペラメント",
+      "summary": "ウェル・テンペラメントは、すべての調を使用可能にしつつ、調ごとに少し異なる響きの個性を残すタイプの不等分音律。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-1di9l3e",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "うなりを使って耳で合わせる",
+      "summary": "近い周波数の音を同時に鳴らすと生じるうなりは、チューニングの重要な手掛かりになる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-pnygdb",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "ギターの実用チューニング",
+      "summary": "ギターはフレットによって12平均律を近似する固定音高楽器だが、弦高・押弦圧・弦の太さ・ナットやブリッジ位置で実際のピッチは変わる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-1vtk6q3",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "ピアノのストレッチ・チューニング",
+      "summary": "実際のピアノでは弦の剛性によるインハーモニシティのため、単純な理論周波数より低音をやや低く、高音をやや高く取るストレッチ調律が使われることがある。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-1skv2o9",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "ピタゴラス・コンマ",
+      "summary": "純正5度を積み重ねた系では、12個の5度と7個のオクターブがわずかにずれる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-1dd8e9o",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "ピタゴラス音律",
+      "summary": "ピタゴラス音律は、純正な完全5度（3:2）を積み重ねて音階の音を作る考え方。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-kxcl37",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "異名同音と音律",
+      "summary": "C#とDbのような異名同音は12平均律では同じ鍵盤・同じ周波数だが、他の音律では必ずしも同一にならない。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-1tx2b8a",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "基準音 A=440 Hz",
+      "summary": "現代の一般的な基準音では、中央Cの上にあるA（A4）を440 Hzとして合わせる方法が国際標準になっている。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-153fuz0",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "実践チューニング手順",
+      "summary": "チューニングはチューナーの針を中央へ合わせるだけでなく、基準・楽器特性・和声・演奏位置まで含めて確認する作業。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-1ioeba7",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "周波数比と音程",
+      "summary": "音程は単なる音名の距離ではなく、二つの周波数の比として見ることができる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-1m6pzj5",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "純正律（Just Intonation）",
+      "summary": "純正律は、音程をできるだけ単純な整数比で作り、特定の和音を非常に滑らかに響かせる考え方。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-z53dgq",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "中全音律（Meantone Temperament）",
+      "summary": "中全音律は、5度をわずかに狭くする代わりに、長3度をより美しく響かせる方向へ調整した音律。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-4l7uoo",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "転調と音律のトレードオフ",
+      "summary": "音律は「一つの調の純粋さ」と「多くの調を自由に使えること」のバランスとして理解できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-1jo35rp",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "標準音響・音律資料を要約・再構成",
+      "summary": "平均律・純正律・倍音関係を、理論上の比と聴感差の両方で理解する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c20-15pcz9t",
+      "chapterNo": 20,
+      "chapterId": "tuning",
+      "chapter": "チューニング・音律",
+      "chapterEn": "Tuning and Temperament",
+      "title": "平均律の長3度と完全5度",
+      "summary": "12平均律では便利さと引き換えに、純正音程との小さな差が残る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-tuning.js"
+    },
+    {
+      "id": "c21-163i4la",
+      "chapterNo": 21,
+      "chapterId": "stylehistory",
+      "chapter": "スタイル・理論史",
+      "chapterEn": "Style and Theory History",
+      "title": "『一般音楽論』第八編の章立てを基準に、本文未収録部分は公開資料で補完",
+      "summary": "理論を歴史・ジャンル・流派の文脈に置き、「絶対の禁則」と誤解しない。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-style-history.js"
+    },
+    {
+      "id": "c21-hbv7x9",
+      "chapterNo": 21,
+      "chapterId": "stylehistory",
+      "chapter": "スタイル・理論史",
+      "chapterEn": "Style and Theory History",
+      "title": "${sec.name}",
+      "summary": "理論を歴史・ジャンル・流派の文脈に置き、「絶対の禁則」と誤解しない。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-style-history.js"
+    },
+    {
+      "id": "c21-rpz36f",
+      "chapterNo": 21,
+      "chapterId": "stylehistory",
+      "chapter": "スタイル・理論史",
+      "chapterEn": "Style and Theory History",
+      "title": "II",
+      "summary": "トリスタン和音と調性からの脱却",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-style-history.js"
+    },
+    {
+      "id": "c21-1rrbbga",
+      "chapterNo": 21,
+      "chapterId": "stylehistory",
+      "chapter": "スタイル・理論史",
+      "chapterEn": "Style and Theory History",
+      "title": "III",
+      "summary": "原始主義",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-style-history.js"
+    },
+    {
+      "id": "c21-1dbjm86",
+      "chapterNo": 21,
+      "chapterId": "stylehistory",
+      "chapter": "スタイル・理論史",
+      "chapterEn": "Style and Theory History",
+      "title": "参照",
+      "summary": "理論を歴史・ジャンル・流派の文脈に置き、「絶対の禁則」と誤解しない。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-library-style-history.js"
+    }
+  ]
+}
