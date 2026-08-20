@@ -26,9 +26,16 @@ function tokens(text){
   return text.replace(/\s+(?:\/|\||→|>)\s+/g,' ').replace(/[,\n]+/g,' ').trim().split(/\s+/).filter(Boolean);
 }
 function dictionaryType(ch){return qualityToDictionary[ch.name]||'major'}
+function returnHref(){
+  const u=new URL(location.href);
+  u.search='';
+  u.searchParams.set('mode',mode);
+  u.searchParams.set('progression',progression.value.trim());
+  return u.href;
+}
 function dictionaryHref(ch){
   const root=sharpRoot[ch.root]||ch.root.replace('♯','#').replace('♭','b');
-  const p=new URLSearchParams({root,type:dictionaryType(ch),from:'guitar-pro',return:location.href});
+  const p=new URLSearchParams({chord:ch.raw,root,type:dictionaryType(ch),from:'guitar-pro',return:returnHref()});
   if(ch.bass)p.set('bass',sharpRoot[ch.bass]||ch.bass.replace('♯','#').replace('♭','b'));
   return 'https://akito0802.github.io/Cordhyo-/index.html?'+p.toString();
 }
