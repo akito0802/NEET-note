@@ -8,5 +8,6 @@
 $('analyze').onclick=analyze;$('commonFixed').onchange=analyze;$('topFixed').onchange=analyze;document.querySelectorAll('.preset').forEach(b=>b.onclick=()=>{$('fromChord').value=b.dataset.a;$('toChord').value=b.dataset.b;analyze()});$('playFrom').onclick=()=>state&&T.playMidis(state.from);$('playTo').onclick=()=>state&&T.playMidis(state.to);$('playBoth').onclick=()=>{if(!state)return;T.playMidis(state.from,.65,0);T.playMidis(state.to,.75,.72)};analyze()})();
 </script>
 
+
 <script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260819-safe5"></script>
 </body></html>
