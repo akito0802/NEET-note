@@ -121,4 +121,34 @@ loadConfig().then(async()=>{
   authMod.onAuthStateChanged(auth,async u=>{user=u;if(u){cloudLabel.textContent='ログイン済み・同期';acct.classList.add('show');acctText.textContent=u.email||u.displayName||'Googleアカウント';login.hidden=true;syncBtn.hidden=false;logout.hidden=false;status.textContent='ログイン済み。同期できるよ。';menuName.textContent=u.displayName||'NEETNOTEユーザー';menuMail.textContent=u.email||'Googleアカウント';menuState.textContent='ログイン済み';menuDot.classList.add('on');await sync()}else{cloudLabel.textContent='ログイン・同期';acct.classList.remove('show');login.hidden=false;syncBtn.hidden=true;logout.hidden=true;status.textContent='未ログイン。データはこの端末に保存中。';menuName.textContent='ニートン';menuMail.textContent='未ログイン';menuState.textContent='この端末に保存中';menuDot.classList.remove('on')}});
   login.onclick=()=>authMod.signInWithPopup(auth,provider).catch(e=>status.textContent='ログインエラー：'+(e.code||e.message));syncBtn.onclick=sync;logout.onclick=()=>authMod.signOut(auth);
 }).catch(e=>{console.error(e);status.textContent='認証機能の読み込みに失敗したよ。'});
+
+// 転調理論ライブラリ専用：ページ本体に古い↑が残っていても、ここで必ず置き換える。
+if(location.pathname==='/NEET-note/modulation-route.html'){
+  document.querySelectorAll('#modScrollTop,#modScrollTopFresh,.mod-scroll-top').forEach(el=>el.remove());
+  const toolbar=document.querySelector('#libraryView .ml-toolbar');
+  if(toolbar&&!toolbar.id)toolbar.id='librarySearchTop';
+  const style=document.createElement('style');
+  style.id='ngm-mod-search-return-style';
+  style.textContent=`
+#ngm-mod-search-return{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(82px,calc(env(safe-area-inset-bottom) + 82px));z-index:39030;display:none;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 14px;border:1px solid rgba(154,117,73,.28);border-radius:999px;background:rgba(255,250,242,.98);color:#704a25;box-shadow:0 9px 26px rgba(89,62,31,.18);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);text-decoration:none;font-size:.74rem;font-weight:900}
+#ngm-mod-search-return.show{display:inline-flex}
+html[data-theme="dark"] #ngm-mod-search-return{background:rgba(48,42,35,.97);color:#e0b77f;border-color:#514438}
+`;
+  document.head.appendChild(style);
+  const searchReturn=document.createElement('a');
+  searchReturn.id='ngm-mod-search-return';
+  searchReturn.href='#librarySearchTop';
+  searchReturn.setAttribute('aria-label','理論ライブラリの検索欄へ戻る');
+  searchReturn.innerHTML='<span aria-hidden="true">↑</span><span>検索へ</span>';
+  searchReturn.addEventListener('click',e=>{
+    const lib=document.getElementById('libraryView');
+    if(lib&&lib.hidden){e.preventDefault();document.getElementById('makerView')?.scrollIntoView({behavior:'smooth',block:'start'});return}
+    const target=document.getElementById('librarySearchTop')||document.querySelector('#libraryView .ml-toolbar');
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+  const syncSearchReturn=()=>searchReturn.classList.toggle('show',window.scrollY>420);
+  window.addEventListener('scroll',syncSearchReturn,{passive:true});
+  document.body.appendChild(searchReturn);
+  syncSearchReturn();
+}
 })();
