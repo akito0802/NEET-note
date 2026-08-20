@@ -8,6 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
 <link rel="stylesheet" href="theory-tools.css?v=20260819-1">
 <link rel="stylesheet" href="modulation-library.css?v=20260820-1">
+<link rel="stylesheet" href="modulation-course-ui.css?v=20260820-c1">
 <style>
 .mod-hub{width:min(1180px,calc(100% - 24px));margin:auto;padding:76px 0 96px}.mod-hub-hero{padding:25px 4px 18px}.mod-hub-hero .eyebrow{font-size:.68rem;letter-spacing:.14em;font-weight:900;color:#95683f}.mod-hub-hero h1{font-size:clamp(2rem,7vw,4rem);margin:5px 0 9px;line-height:1}.mod-hub-hero>p{max-width:850px;color:#756553;line-height:1.8;margin:0}.mod-hero-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.mod-hero-links a{text-decoration:none}.mod-hub-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 14px}.mod-hub-tab{appearance:none;border:1px solid #dfd1bd;background:rgba(255,253,248,.9);color:#6f4827;border-radius:15px;min-height:58px;font-size:.95rem;font-weight:900;cursor:pointer}.mod-hub-tab.active{background:#8d6239;color:#fff;border-color:#8d6239;box-shadow:0 8px 24px rgba(91,62,31,.18)}.mod-hub-tab small{display:block;font-size:.64rem;font-weight:700;opacity:.8;margin-top:2px}.mod-view[hidden]{display:none!important}.mod-route-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.mod-route-actions a{text-decoration:none}.mod-learn{background:#fff7eb!important;color:#6f4827!important;border-color:#d9c4a8!important}.mod-library-intro{margin-bottom:12px}.mod-library-intro h2{margin:0 0 5px}.mod-library-intro p{margin:0;color:#756553;font-size:.8rem;line-height:1.65}html[data-theme="dark"] .mod-hub-hero>p{color:#bdae9d}html[data-theme="dark"] .mod-hub-tab{background:#302a23;color:#e0b77f;border-color:#514438}html[data-theme="dark"] .mod-hub-tab.active{background:#a87948;color:#fff}@media(max-width:620px){.mod-hub{width:min(100% - 16px,620px);padding-top:64px}.mod-hub-tabs{position:sticky;top:54px;z-index:9;background:#f3eadc;padding:5px 0}.mod-hub-tab{min-height:52px;font-size:.85rem}html[data-theme="dark"] .mod-hub-tabs{background:#211e1a}}
 </style>
@@ -56,7 +57,7 @@
   <section id="libraryView" class="mod-view" hidden>
     <section class="ml-panel mod-library-intro">
       <div class="ml-section-head"><div><span>THEORY LIBRARY</span><h2>転調を「学ぶ → 鳴らす → 試す」</h2></div><small>20 lessons</small></div>
-      <p>転調・トニック化・ピボット・V7から、dim7、aug、異名同音、ラスサビ転調まで段階的に学べます。</p>
+      <p>LEVEL 1〜4を教科書の章のように並べ、レッスンを選ぶと「やさしく言うと / 理論的には / 転調例」をまとめて確認できます。</p>
     </section>
 
     <section class="ml-overview" aria-label="学習レベル">
@@ -94,11 +95,11 @@
 
     <div class="ml-layout">
       <section class="ml-panel">
-        <div class="ml-section-head"><div><span>LESSONS</span><h2>転調技法ライブラリ</h2></div><small id="count" class="ml-count"></small></div>
+        <div class="ml-section-head"><div><span>CURRICULUM</span><h2>LEVEL 1〜4 学習カリキュラム</h2></div><small id="count" class="ml-count"></small></div>
         <div id="lessonGrid" class="ml-grid"></div>
       </section>
       <aside id="detail" class="ml-panel ml-detail">
-        <div class="ml-detail-empty">左のカードから「詳しく学ぶ」を選ぶと、ここに解説・コード例・試聴・ルートメーカーへのリンクが表示されます。</div>
+        <div class="ml-detail-empty">上のカリキュラムからレッスンを選ぶと、解説・コード例・試聴・ルートメーカーへのリンクが表示されます。</div>
       </aside>
     </div>
 
@@ -143,7 +144,12 @@ $('make').onclick=make;$('fromKey').onchange=make;$('toKey').onchange=make;make(
 <script>
 (()=>{
 const $=id=>document.getElementById(id);let libraryLoaded=false;
-function loadLibrary(){if(libraryLoaded)return;libraryLoaded=true;const s=document.createElement('script');s.src='modulation-library.js?v=20260820-1';s.defer=true;document.body.appendChild(s)}
+function loadLibrary(){
+ if(libraryLoaded)return;libraryLoaded=true;
+ const s=document.createElement('script');s.src='modulation-library.js?v=20260820-1';s.defer=true;
+ s.onload=()=>{const course=document.createElement('script');course.src='modulation-course-ui.js?v=20260820-c1';course.defer=true;document.body.appendChild(course)};
+ document.body.appendChild(s)
+}
 function setView(view,update=true){
  const lib=view==='library';$('makerView').hidden=lib;$('libraryView').hidden=!lib;
  document.querySelectorAll('.mod-hub-tab').forEach(b=>{const on=b.dataset.view===view;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on))});
@@ -154,7 +160,6 @@ document.querySelectorAll('.mod-hub-tab').forEach(b=>b.onclick=()=>setView(b.dat
 const q=new URLSearchParams(location.search);setView((q.get('view')==='library'||q.get('lesson'))?'library':'maker',false);
 })();
 </script>
-
 
 <script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260819-safe5"></script>
 </body>
