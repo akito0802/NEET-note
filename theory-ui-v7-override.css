@@ -1,0 +1,80 @@
+/* Theory UI v7 specificity bridge: override legacy v6 direct-child card rules */
+#tbReaderHead>.tlo-lesson-meta,[id$="ReaderHead"]>.tlo-lesson-meta{
+  margin:12px 0 0!important;
+  padding:10px 0 0!important;
+  border:0!important;
+  border-top:1px solid var(--v7-line)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+#tbReaderBody>.tlo-objective,[id$="ReaderBody"]>.tlo-objective{
+  margin:0 0 22px!important;
+  padding:14px 16px!important;
+  border:0!important;
+  border-left:4px solid var(--v7-blue)!important;
+  border-radius:10px!important;
+  background:#f3f6f8!important;
+  box-shadow:none!important;
+}
+#tbReaderBody>.tlo-cta,[id$="ReaderBody"]>.tlo-cta{
+  margin:28px 0 22px!important;
+  padding:18px!important;
+  border:0!important;
+  border-radius:14px!important;
+  background:var(--v7-accent-soft)!important;
+  box-shadow:none!important;
+}
+#tbReaderBody>.v7-fold,[id$="ReaderBody"]>.v7-fold,
+#tbReaderBody>details.tlo-os.v7-fold,[id$="ReaderBody"]>details.tlo-os.v7-fold{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-top:1px solid var(--v7-line)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+#tbReaderBody>.v7-fold:last-of-type,[id$="ReaderBody"]>.v7-fold:last-of-type{
+  border-bottom:1px solid var(--v7-line)!important;
+}
+#tbReaderBody>details.tlo-os:not(.v7-fold),[id$="ReaderBody"]>details.tlo-os:not(.v7-fold){
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-top:1px solid var(--v7-line)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+#tbReaderBody>.tlo-practice-shell,[id$="ReaderBody"]>.tlo-practice-shell{
+  margin:26px 0!important;
+  padding:16px!important;
+  border:1px solid var(--v7-line)!important;
+  border-radius:14px!important;
+  background:var(--v7-soft)!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+#tbReaderBody>.tlo-practice-shell>.tlo-audio,[id$="ReaderBody"]>.tlo-practice-shell>.tlo-audio,
+#tbReaderBody>.tlo-practice-shell>.tlo-svg,[id$="ReaderBody"]>.tlo-practice-shell>.tlo-svg,
+#tbReaderBody>.tlo-practice-shell>.tlo-visual,[id$="ReaderBody"]>.tlo-practice-shell>.tlo-visual{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+#tbReaderBody>.tlo-practice-shell>.tlo-audio,[id$="ReaderBody"]>.tlo-practice-shell>.tlo-audio{
+  margin-bottom:14px!important;
+  padding-bottom:14px!important;
+  border-bottom:1px solid var(--v7-line)!important;
+}
+@media(max-width:760px){
+  #tbReaderBody>.tlo-objective,[id$="ReaderBody"]>.tlo-objective{padding:13px 14px!important}
+  #tbReaderBody>.tlo-cta,[id$="ReaderBody"]>.tlo-cta{padding:16px!important}
+  #tbReaderBody>.tlo-practice-shell,[id$="ReaderBody"]>.tlo-practice-shell{padding:14px!important}
+}
