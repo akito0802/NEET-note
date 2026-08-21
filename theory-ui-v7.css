@@ -1,0 +1,114 @@
+/* Theory UI v7 — reading hierarchy, fewer boxes, mobile-first */
+:root{--v7-paper:#fffdfa;--v7-bg:#f5f0e8;--v7-ink:#20242a;--v7-muted:#756e65;--v7-line:#ddd4c8;--v7-soft:#f6f1e9;--v7-accent:#7c6545;--v7-accent-soft:#efe5d7;--v7-blue:#506d86}
+html,body{background:var(--v7-bg)!important;color:var(--v7-ink)!important}
+body{overflow-x:hidden!important}
+.wrap,#textbookLibrary{max-width:900px!important}
+.c-hero{padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+.c-hero h1{font-size:clamp(1.85rem,5vw,2.55rem)!important;letter-spacing:-.04em!important}
+.c-hero .lead{max-width:650px!important;color:var(--v7-muted)!important}
+
+/* global menu should never cover lesson copy */
+body>.ngm-btn{position:absolute!important;top:max(14px,env(safe-area-inset-top))!important;right:max(14px,env(safe-area-inset-right))!important;left:auto!important;width:42px!important;height:42px!important;z-index:8!important;box-shadow:none!important}
+body>.ngm-top-return{display:none!important}
+
+/* compact utility bar: progress + one overflow menu */
+.tlo-toolbar{position:sticky!important;top:6px!important;z-index:40!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;padding:8px 10px!important;margin:0 auto 16px!important;border:1px solid rgba(210,199,184,.9)!important;border-radius:12px!important;background:rgba(255,253,250,.94)!important;box-shadow:0 5px 18px rgba(70,53,33,.045)!important;backdrop-filter:blur(14px)!important}
+.tlo-toolbar>div:first-child{display:flex!important;align-items:center!important;gap:8px!important;min-width:0!important;flex:1!important}
+.tlo-toolbar>div:first-child>b{display:none!important}
+#tloProgressText{font-size:.7rem!important;color:var(--v7-muted)!important;white-space:normal!important;overflow-wrap:anywhere!important}
+.tlo-progress{display:none!important}
+.tlo-toolbar>.tlo-actions{display:none!important}
+.tlo-more{position:relative!important;margin-left:auto!important;flex:0 0 auto!important}
+.tlo-more>summary{list-style:none!important;display:grid!important;place-items:center!important;width:38px!important;height:34px!important;border:1px solid var(--v7-line)!important;border-radius:9px!important;background:#fff!important;color:var(--v7-ink)!important;font-size:1.1rem!important;line-height:1!important;cursor:pointer!important}
+.tlo-more>summary::-webkit-details-marker{display:none!important}
+.tlo-more-panel{position:absolute!important;right:0!important;top:42px!important;z-index:50!important;width:180px!important;display:grid!important;gap:6px!important;padding:8px!important;border:1px solid var(--v7-line)!important;border-radius:12px!important;background:#fff!important;box-shadow:0 14px 36px rgba(42,33,24,.14)!important}
+.tlo-more-panel .tlo-btn{width:100%!important;min-height:38px!important;padding:8px 10px!important;border:0!important;border-radius:8px!important;background:transparent!important;text-align:left!important;justify-content:flex-start!important;color:var(--v7-ink)!important;white-space:normal!important}
+.tlo-more-panel .tlo-btn:hover{background:var(--v7-soft)!important}
+
+/* home: reduce visual noise */
+.tlo-intro{padding:18px 0!important;border:0!important;border-bottom:1px solid var(--v7-line)!important;border-radius:0!important;background:transparent!important}
+.tlo-brand{padding:0!important;border:0!important;background:transparent!important;color:var(--v7-ink)!important}
+.tlo-intro .tlo-grid{gap:8px!important;border:0!important}
+.tlo-intro .tlo-grid article{padding:11px 12px!important;border:1px solid var(--v7-line)!important;border-radius:10px!important;background:rgba(255,253,250,.72)!important}
+#tloCourses{padding:0!important;border:0!important;background:transparent!important}
+.tlo-course{border-radius:10px!important;box-shadow:none!important}
+.tb-categories{gap:8px!important}
+.tb-cat{border:1px solid var(--v7-line)!important;border-radius:12px!important;background:var(--v7-paper)!important;box-shadow:none!important}
+
+/* chapter overview stays concise; gateway folds */
+.tlo-chapter-guide{padding:14px 0!important;border:0!important;border-bottom:1px solid var(--v7-line)!important;border-radius:0!important;background:transparent!important}
+.tlo-gateway.v7-fold{margin:8px 0 14px!important}
+.tb-row{border:0!important;border-bottom:1px solid var(--v7-line)!important;background:transparent!important}
+
+/* one paper surface for the lesson */
+#tbReader,#tbMelodyReader,#tbArrangementReader,#tbSoundReader,#tbTuningReader,#tbStyleHistoryReader{max-width:760px!important;margin:0 auto!important;padding:20px 22px 28px!important;border:1px solid var(--v7-line)!important;border-radius:18px!important;background:var(--v7-paper)!important;box-shadow:0 8px 26px rgba(65,48,30,.04)!important}
+#tbReaderHead,[id$="ReaderHead"]{padding:0 0 15px!important;border-bottom:1px solid var(--v7-line)!important}
+#tbReaderHead h2,[id$="ReaderHead"] h2{font-size:clamp(1.5rem,5vw,2rem)!important;line-height:1.35!important;letter-spacing:-.035em!important}
+#tbReaderBody,[id$="ReaderBody"]{margin-top:0!important;padding:18px 0 0!important;border:0!important;border-radius:0!important;background:transparent!important;font-size:.96rem!important;line-height:1.92!important;box-shadow:none!important}
+#tbReaderBody>p,[id$="ReaderBody"]>p{margin:0 0 1.15em!important;line-height:1.92!important}
+#tbReaderBody>h3,[id$="ReaderBody"]>h3{margin:2.1em 0 .7em!important;font-size:1.08rem!important}
+
+/* lesson metadata becomes a quiet utility strip, not another card */
+.tlo-lesson-meta{margin:12px 0 0!important;padding:10px 0 0!important;border:0!important;border-top:1px solid var(--v7-line)!important;border-radius:0!important;background:transparent!important}
+.tlo-lesson-meta .tlo-meta{gap:5px!important}
+.tlo-lesson-meta .tlo-meta span{padding:4px 7px!important;background:var(--v7-soft)!important;border:0!important;border-radius:999px!important;font-size:.62rem!important;color:var(--v7-muted)!important}
+.tlo-lesson-meta .tlo-actions{display:flex!important;flex-wrap:wrap!important;gap:6px!important;margin-top:8px!important}
+.tlo-lesson-meta .tlo-btn{min-height:34px!important;padding:6px 8px!important;border:1px solid var(--v7-line)!important;border-radius:8px!important;background:#fff!important;font-size:.66rem!important;white-space:normal!important}
+
+/* only three prominent content groups */
+.tlo-objective{margin:0 0 22px!important;padding:14px 16px!important;border:0!important;border-left:4px solid var(--v7-blue)!important;border-radius:10px!important;background:#f3f6f8!important;box-shadow:none!important}
+.tlo-objective h3{margin:0 0 6px!important;font-size:.88rem!important}
+.tlo-objective p{margin:0!important;line-height:1.7!important}
+.tlo-objective small{display:block!important;margin-top:7px!important;color:var(--v7-muted)!important}
+
+.tlo-practice-shell{margin:26px 0!important;padding:16px!important;border:1px solid var(--v7-line)!important;border-radius:14px!important;background:var(--v7-soft)!important;overflow:hidden!important}
+.tlo-practice-title{margin:0 0 12px!important;font-size:.92rem!important;letter-spacing:-.01em!important}
+.tlo-practice-shell>.tlo-audio,.tlo-practice-shell>.tlo-svg,.tlo-practice-shell>.tlo-visual{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.tlo-practice-shell>.tlo-audio{margin-bottom:14px!important;padding-bottom:14px!important;border-bottom:1px solid var(--v7-line)!important}
+.tlo-practice-shell .tlo-audio h3,.tlo-practice-shell .tlo-svg>h3{font-size:.78rem!important;margin:0 0 8px!important;color:var(--v7-muted)!important}
+.tlo-practice-shell .tlo-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+.tlo-practice-shell .tlo-btn{min-width:0!important;min-height:42px!important;padding:9px!important;border:1px solid var(--v7-line)!important;border-radius:9px!important;background:#fff!important;white-space:normal!important;line-height:1.35!important;text-align:center!important}
+.tlo-practice-shell .tlo-visual{border:0!important;background:transparent!important}
+.tlo-practice-shell .tlo-visual-head{padding:8px 0!important;border:0!important;background:transparent!important}
+.tlo-practice-shell .tlo-score-wrap,.tlo-practice-shell .tlo-diagram-wrap{padding:8px 0 0!important}
+
+.tlo-cta{margin:28px 0 22px!important;padding:18px!important;border:0!important;border-radius:14px!important;background:var(--v7-accent-soft)!important;box-shadow:none!important}
+.tlo-cta h3{margin:0 0 10px!important;font-size:.95rem!important}
+.tlo-cta .tlo-btn.primary{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-height:46px!important;padding:11px 14px!important;border:0!important;border-radius:10px!important;background:var(--v7-accent)!important;color:#fff!important;text-decoration:none!important;font-weight:800!important;white-space:normal!important;text-align:center!important}
+
+/* secondary information collapses into quiet rows */
+.v7-fold{margin:0!important;padding:0!important;border:0!important;border-top:1px solid var(--v7-line)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.v7-fold:last-of-type{border-bottom:1px solid var(--v7-line)!important}
+.v7-fold>summary{position:relative!important;list-style:none!important;padding:14px 28px 14px 0!important;font-size:.82rem!important;font-weight:800!important;color:var(--v7-ink)!important;cursor:pointer!important}
+.v7-fold>summary::-webkit-details-marker{display:none!important}
+.v7-fold>summary::after{content:'＋';position:absolute;right:2px;top:50%;transform:translateY(-50%);font-size:1rem;color:var(--v7-muted)!important}
+.v7-fold[open]>summary::after{content:'−'}
+.v7-fold>.v7-fold-body{padding:0 0 16px!important;color:var(--v7-muted)!important;line-height:1.8!important}
+.v7-fold .tlo-preview-links{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin-top:12px!important}
+.v7-fold .tlo-preview-links a{min-width:0!important;padding:9px 10px!important;border:1px solid var(--v7-line)!important;border-radius:8px!important;background:#fff!important;text-align:center!important;white-space:normal!important;overflow-wrap:anywhere!important}
+.v7-fold ol,.v7-fold ul{padding-left:1.3rem!important}
+.v7-fold li{margin:.45rem 0!important}
+
+/* already-existing details should match folded rows */
+details.tlo-os:not(.tlo-more):not(.v7-fold){margin:0!important;padding:0!important;border:0!important;border-top:1px solid var(--v7-line)!important;border-radius:0!important;background:transparent!important}
+details.tlo-os:not(.tlo-more):not(.v7-fold)>summary{padding:14px 0!important;font-size:.82rem!important}
+
+.tlo-source{color:var(--v7-muted)!important}
+.tlo-warn{border-left:0!important}
+
+@media(max-width:760px){
+  .wrap,#textbookLibrary{padding-left:12px!important;padding-right:12px!important}
+  #tbReader,#tbMelodyReader,#tbArrangementReader,#tbSoundReader,#tbTuningReader,#tbStyleHistoryReader{padding:18px 16px 24px!important;border-radius:15px!important}
+  #tbReaderBody,[id$="ReaderBody"]{padding-top:16px!important;font-size:.95rem!important;line-height:1.88!important}
+  .tlo-lesson-meta .tlo-meta span:nth-child(n+3){display:none!important}
+  .tlo-practice-shell{padding:14px!important}
+  .tlo-practice-shell .tlo-actions{grid-template-columns:1fr!important}
+  .v7-fold .tlo-preview-links{grid-template-columns:1fr!important}
+  .tlo-intro .tlo-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:430px){
+  .tlo-intro .tlo-grid{grid-template-columns:1fr!important}
+  #tbReader,#tbMelodyReader,#tbArrangementReader,#tbSoundReader,#tbTuningReader,#tbStyleHistoryReader{padding:16px 14px 22px!important}
+  .tlo-toolbar{margin-bottom:12px!important}
+  .tlo-more-panel{width:164px!important}
+}
