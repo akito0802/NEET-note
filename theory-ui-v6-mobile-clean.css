@@ -1,0 +1,193 @@
+/* Theory UI v6.2 — mobile containment / spacing cleanup */
+html,body{overflow-x:hidden!important}
+
+/* Global menu: keep access at the page header, never float over the lesson while scrolling. */
+body>.ngm-btn{
+  position:absolute!important;
+  top:max(14px,env(safe-area-inset-top))!important;
+  right:max(14px,env(safe-area-inset-right))!important;
+  left:auto!important;
+  width:42px!important;
+  height:42px!important;
+  z-index:5!important;
+  box-shadow:none!important;
+}
+body>.ngm-top-return{display:none!important}
+
+/* Utility bar: progress on its own line, actions in equal boxes. */
+.tlo-toolbar{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:9px!important;
+  padding:10px!important;
+  overflow:hidden!important;
+}
+.tlo-toolbar>div:first-child{
+  width:100%!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:5px 10px!important;
+  min-width:0!important;
+}
+.tlo-toolbar>div:first-child>b,#tloProgressText{
+  min-width:0!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+  line-height:1.4!important;
+}
+.tlo-toolbar .tlo-actions{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:7px!important;
+  margin:0!important;
+}
+.tlo-toolbar .tlo-actions .tlo-btn{
+  width:100%!important;
+  min-width:0!important;
+  min-height:40px!important;
+  padding:9px 6px!important;
+  border:1px solid var(--tu-line)!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  white-space:normal!important;
+  line-height:1.3!important;
+  overflow-wrap:anywhere!important;
+}
+
+/* The missing rule: every Theory OS block is a real padded card. */
+#tbReaderBody>.tlo-os,[id$="ReaderBody"]>.tlo-os,
+#tbReaderHead>.tlo-os,[id$="ReaderHead"]>.tlo-os{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:14px 0!important;
+  padding:18px!important;
+  border:1px solid var(--tu-line)!important;
+  border-radius:16px!important;
+  background:#fff!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+}
+#tbReaderBody>.tlo-os:first-child,[id$="ReaderBody"]>.tlo-os:first-child{margin-top:0!important}
+#tbReaderBody>.tlo-os:last-child,[id$="ReaderBody"]>.tlo-os:last-child{margin-bottom:0!important}
+
+/* Keep all copy comfortably away from card edges. */
+#tbReaderBody>.tlo-os>h2,#tbReaderBody>.tlo-os>h3,#tbReaderBody>.tlo-os>h4,
+[id$="ReaderBody"]>.tlo-os>h2,[id$="ReaderBody"]>.tlo-os>h3,[id$="ReaderBody"]>.tlo-os>h4{
+  margin:0 0 12px!important;
+  max-width:100%!important;
+  line-height:1.45!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+}
+#tbReaderBody>.tlo-os>p,[id$="ReaderBody"]>.tlo-os>p{
+  margin:0 0 12px!important;
+  max-width:100%!important;
+  line-height:1.8!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+}
+#tbReaderBody>.tlo-os>p:last-child,[id$="ReaderBody"]>.tlo-os>p:last-child{margin-bottom:0!important}
+#tbReaderBody>.tlo-os>ol,#tbReaderBody>.tlo-os>ul,
+[id$="ReaderBody"]>.tlo-os>ol,[id$="ReaderBody"]>.tlo-os>ul{
+  margin:14px 0 0!important;
+  padding-left:1.45rem!important;
+  max-width:100%!important;
+}
+#tbReaderBody>.tlo-os li,[id$="ReaderBody"]>.tlo-os li{
+  margin:.4rem 0!important;
+  padding-left:.15rem!important;
+  line-height:1.7!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+}
+#tbReaderBody>.tlo-os>a:not(.tlo-btn),[id$="ReaderBody"]>.tlo-os>a:not(.tlo-btn){
+  display:inline-flex!important;
+  max-width:100%!important;
+  margin-top:5px!important;
+  line-height:1.5!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+}
+
+/* Preview/search links: one clear button per row on phones. */
+.tlo-preview-links{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:9px!important;
+  margin:14px 0 0!important;
+}
+.tlo-preview-links a{
+  width:100%!important;
+  min-width:0!important;
+  min-height:44px!important;
+  padding:10px 12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  white-space:normal!important;
+  line-height:1.4!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+}
+
+/* Lesson action buttons stay inside the metadata card. */
+.tlo-lesson-meta .tlo-actions,.tlo-audio .tlo-actions{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+.tlo-lesson-meta .tlo-btn,.tlo-audio .tlo-btn{
+  width:100%!important;
+  min-width:0!important;
+  min-height:42px!important;
+  padding:9px 8px!important;
+  white-space:normal!important;
+  text-align:center!important;
+  line-height:1.35!important;
+  overflow-wrap:anywhere!important;
+}
+
+/* Diagrams and notation never force the card wider than the viewport. */
+.tlo-visual,.tlo-score-wrap,.tlo-diagram-wrap,.tlo-svg,
+.tlo-visual-head,.tlo-diagram,.tlo-diagram-row,.tlo-diagram-cell{
+  max-width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+.tlo-visual{overflow:hidden!important}
+.tlo-score-wrap,.tlo-diagram-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
+
+@media(max-width:760px){
+  .wrap,#textbookLibrary{padding-left:12px!important;padding-right:12px!important}
+  .tlo-toolbar{top:6px!important;border-radius:12px!important}
+  .tlo-toolbar>div:first-child>b{display:none!important}
+  #tloProgressText{width:100%!important;text-align:left!important;font-size:.69rem!important}
+  #tbReaderBody,[id$="ReaderBody"]{padding:12px!important}
+  #tbReaderBody>.tlo-os,[id$="ReaderBody"]>.tlo-os,
+  #tbReaderHead>.tlo-os,[id$="ReaderHead"]>.tlo-os{padding:17px 16px!important;border-radius:14px!important}
+  .tlo-preview-links{grid-template-columns:1fr!important}
+  .tlo-diagram-row{grid-template-columns:1fr!important}
+  .tlo-diagram-label{max-width:100%!important}
+}
+
+@media(max-width:390px){
+  .tlo-toolbar .tlo-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .tlo-toolbar .tlo-actions .tlo-btn{font-size:.72rem!important;padding:8px 4px!important}
+  .tlo-lesson-meta .tlo-actions,.tlo-audio .tlo-actions{grid-template-columns:1fr!important}
+  #tbReaderBody>.tlo-os,[id$="ReaderBody"]>.tlo-os,
+  #tbReaderHead>.tlo-os,[id$="ReaderHead"]>.tlo-os{padding:16px 14px!important}
+}
