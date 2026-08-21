@@ -1,0 +1,182 @@
+/* Theory UI v6.1 — box containment and readable card boundaries */
+#textbookLibrary *, .tlo-toolbar *, .c-hero * { box-sizing:border-box; min-width:0; }
+
+/* Global wrapping: text must respect its container */
+.tb-cat b,.tb-cat small,.tb-cat em,.tb-row b,.tb-row small,.tb-row em,
+.tlo-course b,.tlo-course small,.tlo-stop,.tlo-chapter-guide,.tlo-gateway,
+.tlo-objective,.tlo-warn,.tlo-source,.tlo-audio,details.tlo-os,
+.tlo-visual-head b,.tlo-visual-head small,.tlo-diagram-label,.tlo-diagram-cell,
+#tbReaderBody,[id$="ReaderBody"],#tbReaderHead h2,[id$="ReaderHead"] h2,
+.tlo-btn,#tloProgressText,.tlo-toolbar>div:first-child>b {
+  max-width:100%!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+}
+
+/* Major text areas: one clear box per logical block */
+.c-hero {
+  padding:18px 20px!important;
+  border:1px solid var(--tu-line)!important;
+  border-radius:14px!important;
+  background:var(--tu-paper)!important;
+  overflow:hidden!important;
+}
+.c-hero h1,.c-hero .lead { max-width:100%!important; }
+
+.tlo-intro {
+  padding:18px!important;
+  border:1px solid var(--tu-line)!important;
+  border-radius:14px!important;
+  background:var(--tu-paper)!important;
+  overflow:hidden!important;
+}
+.tlo-brand {
+  padding:12px 14px!important;
+  border:1px solid var(--tu-line)!important;
+  border-radius:10px!important;
+  background:#fbf8f2!important;
+}
+.tlo-intro .tlo-grid {
+  gap:8px!important;
+  border:0!important;
+}
+.tlo-intro .tlo-grid article {
+  padding:12px 13px!important;
+  border:1px solid var(--tu-line)!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  overflow:hidden!important;
+}
+
+.tlo-chapter-guide,.tlo-gateway,.tlo-lesson-meta,.tlo-objective,.tlo-warn,.tlo-source,details.tlo-os,.tlo-audio {
+  padding:14px 15px!important;
+  border:1px solid var(--tu-line)!important;
+  border-radius:12px!important;
+  background:var(--tu-paper)!important;
+  overflow:hidden!important;
+}
+.tlo-objective { border-left:4px solid #7a8ea1!important; }
+.tlo-warn { border-left:4px solid #a47e46!important; }
+.tlo-source { color:var(--tu-muted)!important; }
+
+/* Reader text itself is contained by a single paper card */
+#tbReaderBody,[id$="ReaderBody"] {
+  margin-top:14px!important;
+  padding:18px 20px!important;
+  border:1px solid var(--tu-line)!important;
+  border-radius:14px!important;
+  background:var(--tu-paper)!important;
+  overflow:hidden!important;
+}
+#tbReaderBody img,[id$="ReaderBody"] img,
+#tbReaderBody svg,[id$="ReaderBody"] svg,
+#tbReaderBody table,[id$="ReaderBody"] table {
+  max-width:100%!important;
+}
+#tbReaderBody pre,[id$="ReaderBody"] pre,
+#tbReaderBody table,[id$="ReaderBody"] table {
+  overflow-x:auto!important;
+}
+
+/* Chapter cards: keep title, description and status inside the card */
+.tb-cat {
+  grid-template-columns:48px minmax(0,1fr) fit-content(74px)!important;
+  overflow:hidden!important;
+}
+.tb-cat>* { min-width:0!important; max-width:100%!important; }
+.tb-cat em {
+  max-width:74px!important;
+  text-align:right!important;
+  white-space:normal!important;
+  align-self:start!important;
+}
+
+/* Lesson rows */
+.tb-row {
+  grid-template-columns:32px minmax(0,1fr) fit-content(50px)!important;
+  overflow:hidden!important;
+}
+.tb-row>* { min-width:0!important; max-width:100%!important; }
+.tb-row em { max-width:50px!important; white-space:normal!important; text-align:right!important; }
+.tlo-row-link { flex:0 0 auto!important; }
+
+/* Pills/buttons must wrap within their own box */
+.tlo-course {
+  max-width:min(260px,82vw)!important;
+  white-space:normal!important;
+  overflow:hidden!important;
+  border-radius:12px!important;
+}
+.tlo-course b { white-space:normal!important; line-height:1.45!important; }
+.tlo-btn,.tlo-q button,.tlo-preview-links a {
+  white-space:normal!important;
+  line-height:1.4!important;
+  text-align:center!important;
+  overflow-wrap:anywhere!important;
+}
+.tlo-meta { flex-wrap:wrap!important; }
+.tlo-meta span {
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+}
+
+/* Toolbar text stays inside toolbar */
+.tlo-toolbar { overflow:hidden!important; }
+.tlo-toolbar>div:first-child { flex:1 1 auto!important; min-width:0!important; flex-wrap:wrap!important; }
+.tlo-toolbar>div:first-child>b,#tloProgressText { white-space:normal!important; }
+.tlo-toolbar .tlo-actions { flex:0 1 auto!important; min-width:0!important; flex-wrap:wrap!important; justify-content:flex-end!important; }
+
+/* Visual labels and diagrams */
+.tlo-visual { overflow:hidden!important; }
+.tlo-visual-head { flex-wrap:wrap!important; }
+.tlo-visual-head>* { min-width:0!important; max-width:100%!important; }
+.tlo-diagram { min-width:0!important; width:100%!important; }
+.tlo-diagram-row { min-width:0!important; flex-wrap:wrap!important; }
+.tlo-diagram-label {
+  width:auto!important;
+  flex:0 1 96px!important;
+}
+.tlo-diagram-cell {
+  min-width:70px!important;
+  max-width:150px!important;
+  white-space:normal!important;
+  text-align:center!important;
+}
+.tlo-score-wrap,.tlo-diagram-wrap { max-width:100%!important; }
+
+/* Search/settings boxes */
+.tlo-modal>section,#tloSearchResults a,#tloFeed a,#tloSaved a,.tlo-settings>div {
+  max-width:100%!important;
+  overflow:hidden!important;
+  overflow-wrap:anywhere!important;
+}
+.tlo-modal input,.tb-tools input,.tb-tools select { min-width:0!important; max-width:100%!important; width:100%!important; }
+
+@media(max-width:760px){
+  .c-hero { padding:15px 16px!important; }
+  .tlo-intro { padding:14px!important; }
+  .tlo-intro .tlo-grid { grid-template-columns:1fr!important; }
+  .tlo-intro .tlo-grid article { border:1px solid var(--tu-line)!important; }
+  .tb-tools { grid-template-columns:1fr!important; }
+  .tb-cat { grid-template-columns:40px minmax(0,1fr)!important; }
+  .tb-cat em { grid-column:2!important; max-width:100%!important; text-align:left!important; }
+  .tb-row { grid-template-columns:28px minmax(0,1fr)!important; }
+  .tb-row em,.tlo-row-link { grid-column:2!important; max-width:100%!important; text-align:left!important; justify-self:start!important; }
+  #tbReaderBody,[id$="ReaderBody"] { padding:15px 14px!important; border-radius:12px!important; }
+  .tlo-chapter-guide,.tlo-gateway,.tlo-lesson-meta,.tlo-objective,.tlo-warn,.tlo-source,details.tlo-os,.tlo-audio { padding:12px 13px!important; }
+  .tlo-toolbar { padding:8px!important; }
+  .tlo-toolbar .tlo-actions { width:100%!important; justify-content:stretch!important; }
+  .tlo-toolbar .tlo-actions .tlo-btn { flex:1 1 30%!important; }
+  .tlo-course-grid { flex-wrap:wrap!important; overflow-x:visible!important; }
+  .tlo-course { flex:1 1 calc(50% - 8px)!important; max-width:100%!important; }
+  .tlo-diagram-row { display:grid!important; grid-template-columns:minmax(70px,96px) minmax(0,1fr)!important; }
+  .tlo-diagram-label { width:auto!important; max-width:96px!important; }
+  .tlo-diagram-cell { min-width:0!important; max-width:100%!important; width:100%!important; }
+  .tlo-diagram-arrow { display:none!important; }
+}
+
+@media(max-width:390px){
+  .tlo-course { flex-basis:100%!important; }
+  .tlo-toolbar .tlo-actions .tlo-btn { flex-basis:100%!important; }
+}
