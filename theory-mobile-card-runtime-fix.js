@@ -79,7 +79,7 @@ function apply(){
     if(mq.matches){set(grid,'grid-template-columns','1fr');set(grid,'gap','12px')}
     else clear(grid,['grid-template-columns','gap']);
   });
-  document.querySelectorAll('.tb-cat').forEach(applyCard);
+  document.querySelectorAll('.tb-cat, .tb-catx').forEach(applyCard);
 }
 
 function schedule(){requestAnimationFrame(apply)}
