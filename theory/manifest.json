@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T16:00:47.535Z",
+  "generatedAt": "2026-08-22T16:51:38.889Z",
   "reviewed": "2026-08-21",
   "chapters": [
     {
@@ -399,6 +399,17 @@
       "sourceFile": "theory-library-organizer-v2.js"
     },
     {
+      "id": "c1-10bahut",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "✍️ 制作",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-content-depth-v1.js"
+    },
+    {
       "id": "c1-1jmzriz",
       "chapterNo": 1,
       "chapterId": "foundation",
@@ -419,6 +430,50 @@
       "summary": "セカンダリーDの♯11は強い色を持つため、単独で置くだけでは唐突に聞こえることがある。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c1-1bayv10",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "🎹 楽器",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-content-depth-v1.js"
+    },
+    {
+      "id": "c1-gsd0e",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "🔎 分析",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-content-depth-v1.js"
+    },
+    {
+      "id": "c1-rw3gj7",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "🧠 到達基準",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-content-depth-v1.js"
+    },
+    {
+      "id": "c1-1hg7h0t",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${d.q[2]+1}. ${esc(d.q[1][d.q[2]])}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-content-depth-v1.js"
     },
     {
       "id": "c1-zl3uep",
@@ -903,6 +958,17 @@
       "summary": "音程は2音の高さの距離。まず何度かを数え、そのうえで半音数から長・短・完全・増・減を判断する。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-v30xai",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "確認問題：${esc(d.q[0])}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-content-depth-v1.js"
     },
     {
       "id": "c1-1q6t7r8",
