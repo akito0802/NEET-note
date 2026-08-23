@@ -4,6 +4,16 @@ if(window.__NEET_MENU_V4_LOADER__)return;
 window.__NEET_MENU_V4_LOADER__=true;
 const ROOT='https://akito0802.github.io/NEET-note/';
 
+function installVersionFooter(){
+  if(window.__NEET_VERSION_FOOTER__||document.querySelector('script[data-neet-version-footer]'))return;
+  const version=document.createElement('script');
+  version.src=ROOT+'version-footer.js?v=20260823-1';
+  version.defer=true;
+  version.dataset.neetVersionFooter='1';
+  document.head.appendChild(version);
+}
+installVersionFooter();
+
 // 五度圏・長調→短調の2ページだけに、既存のNEETNOTEトップボタンと同じUIを追加。
 // DOM監視は使わず、読み込み時に一度だけ生成する。
 const localTopPages=new Set(['/NEET-note/circle-of-fifths.html','/NEET-note/major-to-minor-lab.html']);
