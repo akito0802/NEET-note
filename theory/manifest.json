@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T01:11:07.328Z",
+  "generatedAt": "2026-08-24T05:42:26.861Z",
   "reviewed": "2026-08-21",
   "chapters": [
     {
@@ -606,6 +606,28 @@
       "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c1-m6lgsk",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${p.no}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-reader-polish-v1.js"
+    },
+    {
+      "id": "c1-jpy197",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "${p.title}",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-reader-polish-v1.js"
     },
     {
       "id": "c1-1q62is0",
