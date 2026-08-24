@@ -14,6 +14,17 @@ function installVersionFooter(){
 }
 installVersionFooter();
 
+function installTheoryReaderPolish(){
+  if(location.pathname!='/NEET-note/theory-library.html')return;
+  if(window.__NEET_THEORY_READER_POLISH_V2__||document.querySelector('script[data-neet-reader-polish-v2]'))return;
+  const polish=document.createElement('script');
+  polish.src=ROOT+'theory-reader-polish-v2.js?v=20260824-2';
+  polish.defer=true;
+  polish.dataset.neetReaderPolishV2='1';
+  document.head.appendChild(polish);
+}
+installTheoryReaderPolish();
+
 // 五度圏・長調→短調の2ページだけに、既存のNEETNOTEトップボタンと同じUIを追加。
 // DOM監視は使わず、読み込み時に一度だけ生成する。
 const localTopPages=new Set(['/NEET-note/circle-of-fifths.html','/NEET-note/major-to-minor-lab.html']);
