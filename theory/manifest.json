@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T17:33:05.727Z",
+  "generatedAt": "2026-08-24T17:45:45.663Z",
   "reviewed": "2026-08-21",
   "chapters": [
     {
@@ -430,6 +430,17 @@
       "summary": "セカンダリーDの♯11は強い色を持つため、単独で置くだけでは唐突に聞こえることがある。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c1-15ax8rh",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "🎧 実践",
+      "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-content-depth-v5.js"
     },
     {
       "id": "c1-1bayv10",
