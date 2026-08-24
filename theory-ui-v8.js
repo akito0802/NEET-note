@@ -70,12 +70,16 @@ function groupPractice(body){
     shell.className='tlo-practice-shell';
     const title=document.createElement('h3');
     title.className='tlo-practice-title';
-    title.textContent='耳と譜面・図で確認';
+    title.textContent='譜面・図で確認 → 耳で聴き比べ';
     shell.appendChild(title);
-    (audio||visual).before(shell);
+    (visual||audio).before(shell);
   }
-  if(audio&&audio.parentElement!==shell)shell.appendChild(audio);
+  const title=$(':scope > .tlo-practice-title',shell);
   if(visual&&visual.parentElement!==shell)shell.appendChild(visual);
+  if(audio&&audio.parentElement!==shell)shell.appendChild(audio);
+  if(visual&&title&&title.nextElementSibling!==visual)title.after(visual);
+  const audioAnchor=visual||title;
+  if(audio&&audioAnchor&&audioAnchor.nextElementSibling!==audio)audioAnchor.after(audio);
 }
 
 function markCta(body){
@@ -104,6 +108,49 @@ function foldSecondary(body){
   });
 }
 
+function foldRank(el){
+  const label=($(':scope > summary',el)?.textContent||el.textContent||'').trim();
+  if(/補足|詳しい仕組み/.test(label))return 10;
+  if(/誤解/.test(label))return 20;
+  if(/流派|ジャンル/.test(label))return 30;
+  if(/実曲/.test(label))return 40;
+  if(/参考文献|出典|編集/.test(label))return 50;
+  return 35;
+}
+
+function placeAfter(node,anchor){
+  if(!node||!anchor||node===anchor)return anchor;
+  if(anchor.nextElementSibling!==node)anchor.after(node);
+  return node;
+}
+
+function reorderReader(body){
+  if(!body)return;
+  const objective=$(':scope > .tlo-objective',body);
+  if(objective&&body.firstElementChild!==objective)body.prepend(objective);
+
+  const depth=$(':scope > .tcd',body);
+  const practice=$(':scope > .tlo-practice-shell',body);
+  const cta=$(':scope > .tlo-cta',body);
+  const quiz=$(':scope > .tlo-quiz',body);
+  const folds=$$(':scope > .v8-fold',body).sort((a,b)=>foldRank(a)-foldRank(b));
+
+  const firstGenerated=practice||cta||quiz||folds[0];
+  if(depth&&firstGenerated&&depth.nextElementSibling!==firstGenerated)firstGenerated.before(depth);
+
+  let anchor=practice||depth;
+  if(practice&&depth)anchor=placeAfter(practice,depth);
+  if(cta&&anchor)anchor=placeAfter(cta,anchor);
+  else if(cta&&!anchor)anchor=cta;
+  if(quiz&&anchor)anchor=placeAfter(quiz,anchor);
+  else if(quiz&&!anchor)anchor=quiz;
+
+  folds.forEach(fold=>{
+    if(anchor)anchor=placeAfter(fold,anchor);
+    else anchor=fold;
+  });
+}
+
 function foldGateway(root){
   $$('.tlo-gateway',root).forEach(g=>{
     if(g.classList.contains('v8-fold'))return;
@@ -128,6 +175,7 @@ function transformReader(reader){
   markCta(body);
   groupPractice(body);
   foldSecondary(body);
+  reorderReader(body);
 }
 
 function syncMode(root){
