@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T17:45:45.663Z",
+  "generatedAt": "2026-08-25T02:44:30.046Z",
   "reviewed": "2026-08-21",
   "chapters": [
     {
@@ -685,6 +685,28 @@
       "sourceFile": "theory-library-organizer.js"
     },
     {
+      "id": "c1-qmo6er",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "4コードループを機能だけで決めつけない",
+      "summary": "ポップスの反復進行では、古典的なT–PD–D–Tだけでなく、ループの開始位置・メロディ・反復回数そのものが中心感を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
+      "id": "c1-1ve9ns",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Avoid Noteを禁止音にしない",
+      "summary": "Avoid Noteは「鳴らしてはいけない音」ではなく、特定のコードトーンと強く衝突しやすいため長く強調する時に注意する音として捉えると実践的。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
       "id": "c1-zniuoq",
       "chapterNo": 1,
       "chapterId": "foundation",
@@ -804,6 +826,28 @@
       "summary": "PDFの分析例は、まず調を決め、次に各コードをローマ数字化し、ドミナントモーションや終止を見つける流れで進む。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-1mgxp21",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "コード構成音の綴りと異名同音",
+      "summary": "同じ鍵盤を押しても、理論上の綴りが違えばコード内での役割や解決方向の説明が変わる。コード名から3度ずつ積む意識を持つとスペルミスを減らせる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
+      "id": "c1-1s5v90k",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "コード進行の共通音を残す最短声部進行",
+      "summary": "コードチェンジのたびに全音を動かす必要はない。共通音を保持し、残りの声部を最短距離で動かすと自然なVoice Leadingになる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
     },
     {
       "id": "c1-1hflhay",
@@ -949,6 +993,17 @@
       "sourceFile": "theory-library-source-expansion.js"
     },
     {
+      "id": "c1-8k0ye2",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "ローマ数字で進行を移調する",
+      "summary": "ローマ数字はコード名をキーから切り離して構造として保存する道具。曲を別キーへ移す時、音名ではなく度数で考えると進行をそのまま再現できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
       "id": "c1-1sq5s00",
       "chapterNo": 1,
       "chapterId": "foundation",
@@ -1092,6 +1147,17 @@
       "sourceFile": "theory-library-c-ui.js"
     },
     {
+      "id": "c1-12f98mi",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "旋律的短音階：短調の6度・7度を使い分ける",
+      "summary": "短調の6th・7thは固定された一種類ではなく、和声機能と旋律線の滑らかさに応じて上げ下げされる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
       "id": "c1-hcgr2j",
       "chapterNo": 1,
       "chapterId": "foundation",
@@ -1101,6 +1167,28 @@
       "summary": "音程・音階・調号・ローマ数字を使い、コードやスケールを自力で読み解く土台を作る。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-library-organizer-v2.js"
+    },
+    {
+      "id": "c1-1g0nbvu",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "短音階から関係調・同主調を区別する",
+      "summary": "短調を学ぶ時は、C majorとA minorのように調号を共有する関係と、C majorとC minorのように主音を共有する関係を分けて考える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
+      "id": "c1-17z674j",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "短調の和声：ピカルディ終止で最後だけ長三和音にする",
+      "summary": "minor中心の曲を最後だけ同主majorのIで閉じるPicardy Thirdは、暗い文脈の中へ明るい終結色を入れる歴史的な手法。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
     },
     {
       "id": "c1-1t1a2xj",
@@ -1145,6 +1233,17 @@
       "summary": "スケール音は均等な存在ではなく、安定度や解決傾向が違う。和声機能はこの傾向の組合せから見えてくる。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-library-deep.js"
+    },
+    {
+      "id": "c1-38d37e",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "転回形とベースラインを分けて考える",
+      "summary": "転回形は「最低音がどの構成音か」を示し、コードの根音そのものが変わったわけではない。ベースラインを独立して設計すると、同じコード進行でも流れを滑らかにできる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
     },
     {
       "id": "c1-embhn",
@@ -1213,6 +1312,28 @@
       "sourceFile": "theory-library-source-expansion.js"
     },
     {
+      "id": "c2-mxgqqz",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "ダイアトニック7thコードを一周する",
+      "summary": "三和音だけでなく各音階音の上へ7thまで積むと、そのキーで自然に使える7thコードの全体像が見える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
+      "id": "c2-7o1x9j",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "ダイアトニック代理コードの考え方",
+      "summary": "代理コードは「同じ機能だから自由交換」ではなく、共通音・ベース・メロディとの相性を保ちながら役割を近づける考え方。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
       "id": "c2-rebsyr",
       "chapterNo": 2,
       "chapterId": "major",
@@ -1246,6 +1367,28 @@
       "sourceFile": "theory-guide.js"
     },
     {
+      "id": "c2-1k82t2z",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "機能和声とベースラインで方向を作る",
+      "summary": "同じコード群でもベースの進み方を設計すると、機能感・推進力・セクションの重心が変わる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
+      "id": "c2-jhl4qc",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "機能和声のハーモニックリズムを設計する",
+      "summary": "コードが何拍ごとに変わるかというHarmonic Rhythmは、同じコード進行でも速度感と緊張の上がり方を大きく左右する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
       "id": "c2-1bicytx",
       "chapterNo": 2,
       "chapterId": "major",
@@ -1255,6 +1398,17 @@
       "summary": "フレーズに句読点を作る着地パターン。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c2-it01m9",
+      "chapterNo": 2,
+      "chapterId": "major",
+      "chapter": "長調の和声",
+      "chapterEn": "Major-key Harmony",
+      "title": "終止を4種類で比較する",
+      "summary": "長調の和声では、同じフレーズでも最後の2コードを変えるだけで閉じ方を大きく変えられる。Authentic / Half / Deceptive / Plagalを聴き比べると終止の強度設計が分かる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
     },
     {
       "id": "c2-1loa3fg",
@@ -1299,6 +1453,17 @@
       "summary": "Vで止まれば未解決感が残り、VからI以外へ進めば期待を外してフレーズを継続できる。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c3-8aujqy",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "iiø7–V7–iを短調の骨格として聞く",
+      "summary": "短調ではiiø7–V7–iがPredominant→Dominant→Tonicを明確に示す代表的な進行。各コード名よりGuide Toneの半音解決を追うと機能が聞こえやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
     },
     {
       "id": "c3-evi4jr",
@@ -1378,6 +1543,17 @@
       "sourceFile": "theory-library-pdf.js"
     },
     {
+      "id": "c3-195fxoq",
+      "chapterNo": 3,
+      "chapterId": "minor",
+      "chapter": "短調の和声",
+      "chapterEn": "Minor-key Harmony",
+      "title": "短調の和声：♭VI・♭VIIでAeolianの色を作る",
+      "summary": "短調ではV→iの強い機能和声だけでなく、Natural minor由来の♭VI・♭VIIを使うと循環的でモーダルな色を作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
       "id": "c3-qso4j9",
       "chapterNo": 3,
       "chapterId": "minor",
@@ -1444,6 +1620,28 @@
       "sourceFile": "theory-library-deep.js"
     },
     {
+      "id": "c4-143ic1v",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "ガイドトーン＋テンションの最小ボイシング",
+      "summary": "すべてのコードトーンを鳴らさなくても、3rd・7thで機能を示し、必要なTensionを1〜2音足すだけで洗練された響きを作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
+      "id": "c4-q3vjvt",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "コードタイプ別Available Tensionを整理する",
+      "summary": "テンションはコード品質と機能によって使いやすい音が変わる。まずmaj7 / m7 / dominant7 / m7♭5ごとの代表候補を比較すると選択が速くなる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
       "id": "c4-179cb5c",
       "chapterNo": 4,
       "chapterId": "tension",
@@ -1488,6 +1686,17 @@
       "sourceFile": "theory-library-pdf.js"
     },
     {
+      "id": "c4-1yfy710",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "テンション表記：sus・add9・9thコードを区別する",
+      "summary": "似た響きでも、3rdがあるか・7thがあるかでコード表記と機能が変わる。sus / add / extensionを分けると譜面とアレンジの意図が伝わりやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
       "id": "c4-7xhpjv",
       "chapterNo": 4,
       "chapterId": "tension",
@@ -1497,6 +1706,17 @@
       "summary": "V7ではナチュラル9・13だけでなく♭9・♯9・♯11・♭13なども使えるが、同時使用には制限がある。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-library-more.js"
+    },
+    {
+      "id": "c4-1jwy08u",
+      "chapterNo": 4,
+      "chapterId": "tension",
+      "chapter": "テンションを含む和音",
+      "chapterEn": "Chord Tensions",
+      "title": "メロディとテンションの衝突を管理する",
+      "summary": "伴奏側のテンションはメロディ音とセットで決める。コード単体で美しくても、歌の重要音と半音衝突すれば意図しない濁りになる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v1.js"
     },
     {
       "id": "c4-hpbk7h",
