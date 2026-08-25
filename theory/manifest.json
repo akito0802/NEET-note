@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T02:44:30.046Z",
+  "generatedAt": "2026-08-25T08:53:59.472Z",
   "reviewed": "2026-08-21",
   "chapters": [
     {
@@ -707,6 +707,138 @@
       "sourceFile": "theory-core-expansion-v1.js"
     },
     {
+      "id": "c1-112f273",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Backdoor Dominantを♭VII7→Iとして聞く",
+      "summary": "Backdoorは♭VII7からIへ進む代表的なdominant代替。V7とは異なるroot motionだが、borrowと半音Voice Leadingで柔らかい帰結を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-fxzpr4",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Borrowed ChordをVoice Leadingで選ぶ",
+      "summary": "借用コードは種類名より、元のダイアトニックコードからどの音が半音変化するかを見ると実用的に選べる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-1ox8vq5",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Common-tone diminishedで同じ根音を装飾する",
+      "summary": "Common-tone diminishedは解決先コードの1音を共通音として保持し、他の声部だけを半音で動かして装飾的な緊張を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-1u74fmv",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Dominant ScaleをTension構成で選ぶ",
+      "summary": "Dominant上のscale選択はコード名だけで固定せず、♭9・♯9・♯11・13など実際に欲しいtensionと解決先から逆算する。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-rwae9",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Dominant susで3rdの登場を遅らせる",
+      "summary": "V7sus4はdominantの3rdを一時的にsus4へ置き換え、解決方向を保ちながら決定的なGuide Toneの登場を遅らせる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-1trzhzb",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Extended Dominant Chainを声部進行で追う",
+      "summary": "Dominantを次のdominantへ連鎖させると、5度進行を保ちながら長い推進力を作れる。コード名の列より3rdと7thの解決を追うと構造が見えやすい。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-1t3xs5p",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "iv・♭VI・♭VIIを役割別に使い分ける",
+      "summary": "長調で頻出する借用コードは、同じminor系由来でも機能と色が異なる。進行中の役割で使い分けるとパターン暗記から抜けられる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-1ibi95t",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Non-functioning Dominantを別カテゴリーで読む",
+      "summary": "7th chordだから必ずVとして機能するとは限らない。Blues、Mixolydian、constant structureではdominant7thの音色が機能解決とは別目的で使われる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-ad1hsh",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Passing diminishedでベースの隙間をつなぐ",
+      "summary": "Passing diminishedは2つの安定コード間に半音の中継点を置き、ベースと内声を滑らかにつなぐ。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-1vwnylx",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Related ii–Vを目標コードの前に置く",
+      "summary": "セカンダリードミナントの前へ、そのdominantに対応するiiを置くと、一時的なii–Vとして目標コードへの助走を長くできる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-1rhhrg",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Secondary DominantのTensionは解決先から逆算する",
+      "summary": "セカンダリードミナントに9thやaltered tensionを足す時は、元キーの音階だけで決めず、次の目標コードへどう解決するかから選ぶ。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c1-s2flaw",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Secondary Leading-tone diminishedを目標コードへ解決する",
+      "summary": "vii°7/xは目標コードxの半音下の導音を根音にして、Secondary DominantよりコンパクトなVoice Leadingで一時的な解決を作る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
       "id": "c1-zniuoq",
       "chapterNo": 1,
       "chapterId": "foundation",
@@ -716,6 +848,17 @@
       "summary": "susは置換、addは追加、omitは省略。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c1-1gd21cr",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "Tritone SubstitutionをGuide Toneで理解する",
+      "summary": "subV7はRootがトライトーン離れていても、元のV7と3rd/7thの核を共有できるため同じTonicへ強く解決できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
     },
     {
       "id": "c1-1hb8ru2",
@@ -1189,6 +1332,17 @@
       "summary": "minor中心の曲を最後だけ同主majorのIで閉じるPicardy Thirdは、暗い文脈の中へ明るい終結色を入れる歴史的な手法。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-core-expansion-v1.js"
+    },
+    {
+      "id": "c1-189pix4",
+      "chapterNo": 1,
+      "chapterId": "foundation",
+      "chapter": "音楽理論の基礎",
+      "chapterEn": "Foundations",
+      "title": "遅延解決・偽解決でSecondary Dominantを外す",
+      "summary": "V/xを置いたからといって必ず直後にxへ行く必要はない。解決を遅らせたり別コードへ外したりすると、期待を保ったまま展開を作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
     },
     {
       "id": "c1-1t1a2xj",
@@ -1752,6 +1906,17 @@
       "sourceFile": "theory-library-source-expansion.js"
     },
     {
+      "id": "c5-j5023l",
+      "chapterNo": 5,
+      "chapterId": "secondary",
+      "chapter": "セカンダリードミナント",
+      "chapterEn": "Secondary Dominants",
+      "title": "セカンダリー・リーディングトーンコード",
+      "summary": "セカンダリードミナントと同じように、一時的な目標コードの導音上へdim / dim7を作ると、そのコードへ半音で吸い込まれる強い進行を作れる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
       "id": "c5-15qh3pk",
       "chapterNo": 5,
       "chapterId": "secondary",
@@ -2016,6 +2181,17 @@
       "sourceFile": "theory-library-source-expansion.js"
     },
     {
+      "id": "c6-qlo2bc",
+      "chapterNo": 6,
+      "chapterId": "modal",
+      "chapter": "モーダルインターチェンジ",
+      "chapterEn": "Modal Interchange",
+      "title": "借用元のModeを特定して色を言語化する",
+      "summary": "Modal Interchangeは「キー外コード」とだけ覚えるより、Parallel modeのどこから借りたかを特定すると特徴音と使い分けが見える。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
       "id": "c6-m7olo1",
       "chapterNo": 6,
       "chapterId": "modal",
@@ -2025,6 +2201,17 @@
       "summary": "同主音モードから一時的に和音を借りても、主音の中心が維持されるならモーダルインターチェンジとして扱える。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-library-source-expansion.js"
+    },
+    {
+      "id": "c6-1gs6fjv",
+      "chapterNo": 6,
+      "chapterId": "modal",
+      "chapter": "モーダルインターチェンジ",
+      "chapterEn": "Modal Interchange",
+      "title": "短調からParallel Major・Dorianを借りる",
+      "summary": "Modal Interchangeは長調からminor系を借りるだけではない。Minor key側からParallel majorやDorianの明るい音を借りると、中心を保ったまま色を持ち上げられる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
     },
     {
       "id": "c7-1qppr8b",
@@ -2049,6 +2236,28 @@
       "sourceFile": "theory-library-pdf.js"
     },
     {
+      "id": "c8-11ajga4",
+      "chapterNo": 8,
+      "chapterId": "diminished",
+      "chapter": "ディミニッシュコード",
+      "chapterEn": "Diminished Harmony",
+      "title": "dim7の対称性と4つの根音候補",
+      "summary": "Fully diminished 7thは短3度ずつ積まれ、転回しても同じ音集合になるため、1つの形から複数の根音・解決先を説明できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
+      "id": "c8-p07j9y",
+      "chapterNo": 8,
+      "chapterId": "diminished",
+      "chapter": "ディミニッシュコード",
+      "chapterEn": "Diminished Harmony",
+      "title": "V7♭9とdim7の関係を実戦で使う",
+      "summary": "Dominant7♭9はRootを除くとdim7を形成するため、dim7 voicingをdominantのUpper Structureとして再利用できる。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
+    },
+    {
       "id": "c8-vb7wto",
       "chapterNo": 8,
       "chapterId": "diminished",
@@ -2069,6 +2278,17 @@
       "summary": "対称構造を使って、コード同士を半音でつなぐ。",
       "reviewed": "2026-08-21",
       "sourceFile": "theory-guide.js"
+    },
+    {
+      "id": "c9-1qkgyce",
+      "chapterNo": 9,
+      "chapterId": "modulation",
+      "chapter": "転調",
+      "chapterEn": "Modulation",
+      "title": "Modal Interchangeと転調を区別する",
+      "summary": "一時的なborrowと本格的なkey changeを区別するには、1コードだけでなく中心音・終止・持続時間・導音の扱いを見る。",
+      "reviewed": "2026-08-21",
+      "sourceFile": "theory-core-expansion-v2.js"
     },
     {
       "id": "c9-1g3mcdq",
