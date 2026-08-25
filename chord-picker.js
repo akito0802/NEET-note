@@ -38,6 +38,52 @@ function buildChordName() {
   return `${root}${type}${bass ? `/${bass}` : ''}`;
 }
 
+function normalizeChordText(value) {
+  return String(value || '')
+    .trim()
+    .replace(/[♯＃]/g, '#')
+    .replace(/[♭]/g, 'b')
+    .replace(/／/g, '/')
+    .replace(/　/g, ' ');
+}
+
+function notifyChordInput() {
+  if (!chordMemoTextArea) return;
+  chordMemoTextArea.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function prepareChordTextArea() {
+  if (!chordMemoTextArea) return;
+  chordMemoTextArea.disabled = false;
+  chordMemoTextArea.readOnly = false;
+  chordMemoTextArea.inputMode = 'text';
+  chordMemoTextArea.autocapitalize = 'characters';
+  chordMemoTextArea.autocomplete = 'off';
+  chordMemoTextArea.spellcheck = false;
+  if (!chordMemoTextArea.placeholder) {
+    chordMemoTextArea.placeholder = 'ここに直接入力できるよ。例：C  Am  F  G7 / F#m7  B7  E';
+  }
+}
+
+function insertChordAtCursor(rawChord) {
+  if (!chordMemoTextArea) return;
+  const chord = normalizeChordText(rawChord);
+  if (!chord) return;
+
+  const value = chordMemoTextArea.value;
+  const start = chordMemoTextArea.selectionStart ?? value.length;
+  const end = chordMemoTextArea.selectionEnd ?? start;
+  const before = value.slice(0, start);
+  const after = value.slice(end);
+  const leftSpace = before && !/[\s|\n]$/.test(before) ? ' ' : '';
+  const rightSpace = after && !/^[\s|\n]/.test(after) ? ' ' : '';
+  const insert = `${leftSpace}${chord}${rightSpace}`;
+
+  chordMemoTextArea.setRangeText(insert, start, end, 'end');
+  notifyChordInput();
+  chordMemoTextArea.focus({ preventScroll: true });
+}
+
 function placeChordAboveMemoText(chord) {
   if (!chordMemoTextArea || !chord) return;
 
@@ -80,7 +126,7 @@ function placeChordAboveMemoText(chord) {
   }
 
   chordMemoTextArea.value = newValue;
-  chordMemoTextArea.dispatchEvent(new Event('input', { bubbles: true }));
+  notifyChordInput();
   chordMemoTextArea.focus();
   chordMemoTextArea.setSelectionRange(newCursor, newCursor);
 }
@@ -90,8 +136,54 @@ function insertLineBreakAtCursor() {
   const start = chordMemoTextArea.selectionStart ?? chordMemoTextArea.value.length;
   const end = chordMemoTextArea.selectionEnd ?? start;
   chordMemoTextArea.setRangeText('\n', start, end, 'end');
-  chordMemoTextArea.dispatchEvent(new Event('input', { bubbles: true }));
+  notifyChordInput();
   chordMemoTextArea.focus();
+}
+
+function addDirectChordInput() {
+  const picker = chordRootSelect?.closest('.chord-picker');
+  if (!picker || !chordMemoTextArea || document.getElementById('directChordInput')) return;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .direct-chord-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 0 10px}
+    .direct-chord-row input{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.94);color:var(--text);font:inherit;outline:none}
+    .direct-chord-row input:focus{border-color:rgba(0,122,255,.5);box-shadow:0 0 0 4px rgba(0,122,255,.1)}
+    .direct-chord-row button{min-height:44px;padding:9px 13px;border:0;border-radius:10px;background:var(--accent);color:#fff;font:inherit;font-weight:700}
+    .direct-chord-help{display:block;margin:-2px 0 9px;color:var(--muted);font-size:.75rem;line-height:1.55}
+    @media(max-width:560px){.direct-chord-row{grid-template-columns:1fr}.direct-chord-row button{width:100%}}
+  `;
+  document.head.appendChild(style);
+
+  const help = document.createElement('small');
+  help.className = 'direct-chord-help';
+  help.textContent = 'キーボードから直接入力OK。C / Am / F#m7 / G7/B などを入れて Enter でも追加できるよ。';
+
+  const row = document.createElement('div');
+  row.className = 'direct-chord-row';
+  row.innerHTML = '<input id="directChordInput" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="コードを直接入力（例：F#m7）"><button id="insertDirectChordBtn" type="button">入力</button>';
+
+  picker.insertAdjacentElement('afterend', help);
+  help.insertAdjacentElement('afterend', row);
+
+  const input = row.querySelector('#directChordInput');
+  const button = row.querySelector('#insertDirectChordBtn');
+  const commit = () => {
+    const chord = normalizeChordText(input.value);
+    if (!chord) {
+      input.focus();
+      return;
+    }
+    insertChordAtCursor(chord);
+    input.value = '';
+  };
+
+  button.addEventListener('click', commit);
+  input.addEventListener('keydown', event => {
+    if (event.key !== 'Enter' || event.isComposing) return;
+    event.preventDefault();
+    commit();
+  });
 }
 
 let chordAudioContext;
@@ -173,4 +265,6 @@ if (addChordLineBtn) {
   addChordLineBtn.addEventListener('click', insertLineBreakAtCursor);
 }
 
+prepareChordTextArea();
+addDirectChordInput();
 addPlayButton();
