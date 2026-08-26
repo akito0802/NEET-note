@@ -11,6 +11,7 @@ if(params.get('mode')!=='note'&&!params.has('song'))return;
 function install(){
   const area=document.getElementById('chordsInput');
   const picker=document.querySelector('.chord-section .chord-picker');
+  const addButton=document.getElementById('addChordBtn');
   if(!area||!picker)return false;
 
   const makeEditable=()=>{
@@ -32,6 +33,39 @@ function install(){
   };
   makeEditable();
 
+  const normalize=value=>String(value||'').trim().replace(/[♯＃]/g,'#').replace(/♭/g,'b').replace(/／/g,'/').replace(/　/g,' ');
+  const insertText=text=>{
+    text=normalize(text);
+    if(!text)return;
+    makeEditable();
+    const start=Number.isInteger(area.selectionStart)?area.selectionStart:area.value.length;
+    const end=Number.isInteger(area.selectionEnd)?area.selectionEnd:start;
+    const before=area.value.slice(0,start);
+    const after=area.value.slice(end);
+    const left=before&&!/[\s|\n]$/.test(before)?' ':'';
+    const right=after&&!/^[\s|\n]/.test(after)?' ':'';
+    area.setRangeText(left+text+right,start,end,'end');
+    area.dispatchEvent(new Event('input',{bubbles:true}));
+    area.dispatchEvent(new Event('change',{bubbles:true}));
+    area.focus({preventScroll:true});
+  };
+
+  if(addButton&&!addButton.dataset.neetChordDownPatched){
+    addButton.dataset.neetChordDownPatched='1';
+    addButton.textContent='＋ 下に追加';
+    addButton.setAttribute('aria-label','選択中のコードを下のコード進行メモへ追加');
+    addButton.addEventListener('click',event=>{
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      const root=document.getElementById('chordRootSelect')?.value||'';
+      const type=document.getElementById('chordTypeSelect')?.value||'';
+      const bass=document.getElementById('chordBassSelect')?.value||'';
+      if(!root)return;
+      insertText(`${root}${type}${bass?`/${bass}`:''}`);
+    },true);
+  }
+
   if(!document.getElementById('neetChordHotfixStyle')){
     const style=document.createElement('style');
     style.id='neetChordHotfixStyle';
@@ -50,7 +84,7 @@ function install(){
   if(!document.getElementById('neetDirectChordInput')){
     const note=document.createElement('small');
     note.className='neet-chord-input-note';
-    note.textContent='下の大きい欄はそのままキーボード入力できるよ。入力しづらい場合はこの欄からコードを追加してね。';
+    note.textContent='「＋ 下に追加」で選んだコードを下の大きい欄へ入れられるよ。大きい欄への直接キーボード入力もOK。';
 
     const row=document.createElement('div');
     row.className='neet-direct-chord';
@@ -60,22 +94,11 @@ function install(){
 
     const input=row.querySelector('#neetDirectChordInput');
     const button=row.querySelector('#neetInsertChordBtn');
-    const normalize=value=>String(value||'').trim().replace(/[♯＃]/g,'#').replace(/♭/g,'b').replace(/／/g,'/').replace(/　/g,' ');
     const insert=()=>{
       const text=normalize(input.value);
       if(!text){input.focus();return}
-      makeEditable();
-      const start=Number.isInteger(area.selectionStart)?area.selectionStart:area.value.length;
-      const end=Number.isInteger(area.selectionEnd)?area.selectionEnd:start;
-      const before=area.value.slice(0,start);
-      const after=area.value.slice(end);
-      const left=before&&!/[\s|\n]$/.test(before)?' ':'';
-      const right=after&&!/^[\s|\n]/.test(after)?' ':'';
-      area.setRangeText(left+text+right,start,end,'end');
-      area.dispatchEvent(new Event('input',{bubbles:true}));
-      area.dispatchEvent(new Event('change',{bubbles:true}));
+      insertText(text);
       input.value='';
-      area.focus({preventScroll:true});
     };
     button.addEventListener('click',insert);
     input.addEventListener('keydown',e=>{
