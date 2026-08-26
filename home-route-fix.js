@@ -47,6 +47,18 @@ const routeLegacyHome=()=>{
   return true;
 };
 
+const installChordInputHotfix=()=>{
+  if(!INDEX_PATH_RE.test(location.pathname))return;
+  const params=new URLSearchParams(location.search);
+  if(params.get('mode')!=='note'&&!params.has('song'))return;
+  if(window.__NEET_CHORD_INPUT_HOTFIX__||document.querySelector('script[data-neet-chord-input-hotfix]'))return;
+  const script=document.createElement('script');
+  script.src=ROOT+'chord-input-hotfix.js?v=20260827-1';
+  script.defer=true;
+  script.dataset.neetChordInputHotfix='1';
+  document.head.appendChild(script);
+};
+
 document.addEventListener('click',e=>{
   const el=e.target instanceof Element?e.target.closest('a,button'):null;
   if(!el||isNeetonHome(el)||!isHomeControl(el))return;
@@ -61,6 +73,7 @@ document.addEventListener('click',e=>{
 const apply=()=>{
   if(routeLegacyHome())return;
   normalizeHomeControls();
+  installChordInputHotfix();
 };
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
 new MutationObserver(normalizeHomeControls).observe(document.documentElement,{childList:true,subtree:true});
