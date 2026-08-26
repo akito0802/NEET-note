@@ -50,6 +50,7 @@ function normalizeChordText(value) {
 function notifyChordInput() {
   if (!chordMemoTextArea) return;
   chordMemoTextArea.dispatchEvent(new Event('input', { bubbles: true }));
+  chordMemoTextArea.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
 function prepareChordTextArea() {
@@ -70,9 +71,10 @@ function insertChordAtCursor(rawChord) {
   const chord = normalizeChordText(rawChord);
   if (!chord) return;
 
+  prepareChordTextArea();
   const value = chordMemoTextArea.value;
-  const start = chordMemoTextArea.selectionStart ?? value.length;
-  const end = chordMemoTextArea.selectionEnd ?? start;
+  const start = Number.isInteger(chordMemoTextArea.selectionStart) ? chordMemoTextArea.selectionStart : value.length;
+  const end = Number.isInteger(chordMemoTextArea.selectionEnd) ? chordMemoTextArea.selectionEnd : start;
   const before = value.slice(0, start);
   const after = value.slice(end);
   const leftSpace = before && !/[\s|\n]$/.test(before) ? ' ' : '';
@@ -254,10 +256,12 @@ function addPlayButton() {
 }
 
 if (addChordBtn) {
+  addChordBtn.textContent = '＋ 下に追加';
+  addChordBtn.setAttribute('aria-label', '選択中のコードを下のコード進行メモへ追加');
   addChordBtn.addEventListener('click', () => {
     const chord = buildChordName();
     if (!chord) return;
-    placeChordAboveMemoText(chord);
+    insertChordAtCursor(chord);
   });
 }
 
