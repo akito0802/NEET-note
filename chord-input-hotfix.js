@@ -150,7 +150,20 @@ function install(){
       .neet-direct-chord input{width:100%;min-width:0;min-height:46px;padding:11px 12px;border:1px solid var(--border,#e5e5ea);border-radius:10px;background:#fff;color:#1d1d1f;font:inherit;font-size:16px;pointer-events:auto!important;-webkit-user-select:text!important;user-select:text!important}
       .neet-direct-chord button{min-height:46px;padding:10px 14px;border:0;border-radius:10px;background:var(--accent,#007aff);color:#fff;font:inherit;font-weight:800}
       .neet-chord-input-note{position:relative;z-index:4;display:block;margin:-2px 0 8px;color:var(--muted,#6e6e73);font-size:.76rem;line-height:1.5}
-      @media(max-width:560px){.neet-direct-chord{grid-template-columns:1fr}.neet-direct-chord button{width:100%}}
+
+      @media(max-width:560px){
+        .chord-picker{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:9px!important;align-items:stretch!important}
+        .chord-picker #chordRootSelect{grid-column:1/4!important;grid-row:1!important}
+        .chord-picker #chordTypeSelect{grid-column:4/7!important;grid-row:1!important}
+        .chord-picker #chordBassSelect{grid-column:1/7!important;grid-row:2!important}
+        .chord-picker #addChordBtn{grid-column:1/7!important;grid-row:3!important;width:100%!important;min-height:52px!important;padding:12px 14px!important;font-size:.98rem!important;border-radius:12px!important}
+        .chord-picker #playSelectedChordBtn{grid-column:1/3!important;grid-row:4!important;width:100%!important;min-width:0!important;padding:9px 4px!important}
+        .chord-picker #addChordLineBtn{grid-column:3/5!important;grid-row:4!important;width:100%!important;min-width:0!important;padding:9px 4px!important}
+        .chord-picker #printChordMemoBtn{grid-column:5/7!important;grid-row:4!important;width:100%!important;min-width:0!important;padding:9px 4px!important}
+        .chord-picker select,.chord-picker button{min-height:48px!important}
+        .neet-direct-chord{grid-template-columns:1fr}
+        .neet-direct-chord button{width:100%}
+      }
     `;
     document.head.appendChild(style);
   }
