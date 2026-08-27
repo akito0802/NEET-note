@@ -53,7 +53,7 @@ const installChordInputHotfix=()=>{
   if(params.get('mode')!=='note'&&!params.has('song'))return;
   if(window.__NEET_CHORD_INPUT_HOTFIX__||document.querySelector('script[data-neet-chord-input-hotfix]'))return;
   const script=document.createElement('script');
-  script.src=ROOT+'chord-input-hotfix.js?v=20260827-3';
+  script.src=ROOT+'chord-input-hotfix.js?v=20260827-4';
   script.defer=true;
   script.dataset.neetChordInputHotfix='1';
   document.head.appendChild(script);
