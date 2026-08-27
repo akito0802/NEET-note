@@ -34,11 +34,6 @@ function install(){
   makeEditable();
 
   const normalize=value=>String(value||'').trim().replace(/[♯＃]/g,'#').replace(/♭/g,'b').replace(/／/g,'/').replace(/　/g,' ');
-  const displayWidth=text=>Array.from(text).reduce((width,char)=>{
-    const code=char.codePointAt(0);
-    const wide=code>=0x1100&&(code<=0x115f||code===0x2329||code===0x232a||(code>=0x2e80&&code<=0xa4cf)||(code>=0xac00&&code<=0xd7a3)||(code>=0xf900&&code<=0xfaff)||(code>=0xfe10&&code<=0xfe19)||(code>=0xfe30&&code<=0xfe6f)||(code>=0xff00&&code<=0xff60)||(code>=0xffe0&&code<=0xffe6));
-    return width+(wide?2:1);
-  },0);
   const looksLikeChordLine=line=>line.trim()===''||/^[\sA-Ga-g#b0-9Mmajinsudg()+/♭♯°øΔ-]+$/.test(line);
   const notify=()=>{
     area.dispatchEvent(new Event('input',{bubbles:true}));
@@ -49,13 +44,37 @@ function install(){
   const rememberCaret=()=>{
     if(Number.isInteger(area.selectionStart))lastCaret=area.selectionStart;
   };
-  ['focus','click','keyup','input','select','touchend','pointerup'].forEach(type=>area.addEventListener(type,rememberCaret,{passive:type==='touchend'||type==='pointerup'}));
+  ['focus','click','keyup','input','select','beforeinput','touchend','pointerup','blur'].forEach(type=>{
+    area.addEventListener(type,rememberCaret,{passive:type==='touchend'||type==='pointerup'});
+  });
+  document.addEventListener('selectionchange',()=>{
+    if(document.activeElement===area)rememberCaret();
+  });
 
   const selectedChord=()=>{
     const root=document.getElementById('chordRootSelect')?.value||'';
     const type=document.getElementById('chordTypeSelect')?.value||'';
     const bass=document.getElementById('chordBassSelect')?.value||'';
     return root?`${root}${type}${bass?`/${bass}`:''}`:'';
+  };
+
+  let measureCanvas;
+  const renderedSpaceCount=text=>{
+    try{
+      measureCanvas=measureCanvas||document.createElement('canvas');
+      const ctx=measureCanvas.getContext('2d');
+      if(!ctx)return Array.from(text).length;
+      const style=getComputedStyle(area);
+      ctx.font=[style.fontStyle,style.fontVariant,style.fontWeight,style.fontSize,style.fontFamily].filter(Boolean).join(' ');
+      const letterSpacing=parseFloat(style.letterSpacing)||0;
+      const expanded=String(text).replace(/\t/g,'  ');
+      const chars=Array.from(expanded);
+      const textWidth=ctx.measureText(expanded).width+(chars.length>1?letterSpacing*(chars.length-1):0);
+      const spaceWidth=Math.max(1,ctx.measureText(' ').width+letterSpacing);
+      return Math.max(0,Math.round(textWidth/spaceWidth));
+    }catch{
+      return Array.from(String(text)).reduce((n,ch)=>n+(/[\u1100-\u115f\u2e80-\ua4cf\uac00-\ud7a3\uf900-\ufaff\ufe10-\ufe6f\uff00-\uffe6]/.test(ch)?2:1),0);
+    }
   };
 
   const placeAbove=rawChord=>{
@@ -72,7 +91,8 @@ function install(){
     const lineEnd=lineEndIndex===-1?value.length:lineEndIndex;
     const textLine=value.slice(lineStart,lineEnd);
     const cursorInLine=Math.max(0,Math.min(cursor-lineStart,textLine.length));
-    const targetColumn=displayWidth(textLine.slice(0,cursorInLine));
+    const textBeforeCursor=textLine.slice(0,cursorInLine);
+    const targetSpaceCount=renderedSpaceCount(textBeforeCursor);
 
     const previousLineEnd=Math.max(0,lineStart-1);
     const previousLineStart=value.lastIndexOf('\n',Math.max(0,previousLineEnd-1))+1;
@@ -82,16 +102,20 @@ function install(){
     let newValue;
     let newCaret;
     if(hasChordLine){
-      let chordLine=previousLine;
-      if(chordLine.length<targetColumn)chordLine=chordLine.padEnd(targetColumn,' ');
-      const prefix=chordLine.slice(0,targetColumn);
-      const replaceEnd=targetColumn+chord.length;
-      const suffix=chordLine.length>replaceEnd?chordLine.slice(replaceEnd):'';
-      const updated=prefix+chord+suffix;
+      let updated=previousLine;
+      if(updated.length<targetSpaceCount)updated=updated.padEnd(targetSpaceCount,' ');
+
+      const occupied=updated.slice(targetSpaceCount,targetSpaceCount+chord.length).trim();
+      if(!occupied){
+        updated=updated.slice(0,targetSpaceCount)+chord+updated.slice(targetSpaceCount+chord.length);
+      }else if(updated.slice(targetSpaceCount,targetSpaceCount+chord.length)!==chord){
+        updated=updated.slice(0,targetSpaceCount)+chord+' '+updated.slice(targetSpaceCount);
+      }
+
       newValue=value.slice(0,previousLineStart)+updated+value.slice(previousLineEnd);
       newCaret=cursor+(updated.length-previousLine.length);
     }else{
-      const chordLine=' '.repeat(targetColumn)+chord;
+      const chordLine=' '.repeat(targetSpaceCount)+chord;
       newValue=value.slice(0,lineStart)+chordLine+'\n'+value.slice(lineStart);
       newCaret=cursor+chordLine.length+1;
     }
@@ -103,12 +127,10 @@ function install(){
     area.setSelectionRange(lastCaret,lastCaret);
   };
 
-  if(addButton&&!addButton.dataset.neetChordAbovePatched){
-    addButton.dataset.neetChordAbovePatched='1';
-    addButton.textContent='＋ 上に配置';
-    addButton.setAttribute('aria-label','選択中のコードを文章の1行上へ配置');
-    addButton.addEventListener('pointerdown',()=>rememberCaret(),true);
-    addButton.addEventListener('touchstart',()=>rememberCaret(),{capture:true,passive:true});
+  if(addButton&&!addButton.dataset.neetChordPixelPatched){
+    addButton.dataset.neetChordPixelPatched='1';
+    addButton.textContent='＋ コードを上に配置';
+    addButton.setAttribute('aria-label','選択中のコードを文章のカーソル位置の真上へ配置');
     addButton.addEventListener('click',event=>{
       event.preventDefault();
       event.stopPropagation();
@@ -123,7 +145,7 @@ function install(){
     style.id='neetChordHotfixStyle';
     style.textContent=`
       .chord-section{position:relative!important;isolation:isolate}
-      #chordsInput{min-height:220px!important;background:#fff!important;color:#1d1d1f!important;caret-color:#007aff!important;pointer-events:auto!important;-webkit-user-select:text!important;user-select:text!important;touch-action:auto!important}
+      #chordsInput{min-height:220px!important;background:#fff!important;color:#1d1d1f!important;caret-color:#007aff!important;pointer-events:auto!important;-webkit-user-select:text!important;user-select:text!important;touch-action:auto!important;font-family:"SFMono-Regular",Menlo,Monaco,Consolas,"Liberation Mono","Noto Sans Mono CJK JP",monospace!important;white-space:pre!important;overflow-x:auto!important}
       .neet-direct-chord{position:relative;z-index:4;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0 0 10px}
       .neet-direct-chord input{width:100%;min-width:0;min-height:46px;padding:11px 12px;border:1px solid var(--border,#e5e5ea);border-radius:10px;background:#fff;color:#1d1d1f;font:inherit;font-size:16px;pointer-events:auto!important;-webkit-user-select:text!important;user-select:text!important}
       .neet-direct-chord button{min-height:46px;padding:10px 14px;border:0;border-radius:10px;background:var(--accent,#007aff);color:#fff;font:inherit;font-weight:800}
@@ -133,17 +155,18 @@ function install(){
     document.head.appendChild(style);
   }
 
+  const helpText='文章の置きたい場所にカーソルを置いて「＋ コードを上に配置」を押すと、画面上の横位置を測って真上にコードを置くよ。';
   const oldNote=document.querySelector('.neet-chord-input-note');
-  if(oldNote)oldNote.textContent='文章内の置きたい位置にカーソルを合わせて「＋ 上に配置」を押すと、その位置の1行上にコードが入るよ。';
+  if(oldNote)oldNote.textContent=helpText;
 
   if(!document.getElementById('neetDirectChordInput')){
     const note=document.createElement('small');
     note.className='neet-chord-input-note';
-    note.textContent='文章内の置きたい位置にカーソルを合わせて「＋ 上に配置」を押すと、その位置の1行上にコードが入るよ。';
+    note.textContent=helpText;
 
     const row=document.createElement('div');
     row.className='neet-direct-chord';
-    row.innerHTML='<input id="neetDirectChordInput" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="直接コード入力：C / Am / F#m7 / G7/B"><button id="neetInsertChordBtn" type="button">上に配置</button>';
+    row.innerHTML='<input id="neetDirectChordInput" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="直接コード入力：C / Am / F#m7 / G7/B"><button id="neetInsertChordBtn" type="button">真上に配置</button>';
     picker.insertAdjacentElement('afterend',note);
     note.insertAdjacentElement('afterend',row);
 
@@ -163,7 +186,7 @@ function install(){
     });
   }else{
     const directButton=document.getElementById('neetInsertChordBtn');
-    if(directButton)directButton.textContent='上に配置';
+    if(directButton)directButton.textContent='真上に配置';
   }
 
   const observer=new MutationObserver(()=>makeEditable());
