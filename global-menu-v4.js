@@ -25,8 +25,6 @@ function installTheoryReaderPolish(){
 }
 installTheoryReaderPolish();
 
-// 五度圏・長調→短調の2ページだけに、既存のNEETNOTEトップボタンと同じUIを追加。
-// DOM監視は使わず、読み込み時に一度だけ生成する。
 const localTopPages=new Set(['/NEET-note/circle-of-fifths.html','/NEET-note/major-to-minor-lab.html']);
 if(localTopPages.has(location.pathname)){
   const style=document.createElement('style');
@@ -53,8 +51,6 @@ html[data-theme="dark"] .local-top-return{background:rgba(48,42,35,.94);color:#e
   else document.addEventListener('DOMContentLoaded',addLocalTop,{once:true});
 }
 
-// 転調メーカーの右下↑は、古いページ本体がキャッシュされていても
-// この always-fresh ローダー側から必ず作り直す。
 if(location.pathname==='/NEET-note/modulation-route.html'){
   const installModulationScrollButton=()=>{
     document.querySelectorAll('#modScrollTop,#modScrollTopFresh').forEach(el=>el.remove());
@@ -107,7 +103,7 @@ function installAdvancedMenu(){
 }
 
 const fix=document.createElement('script');
-fix.src=ROOT+'home-route-fix.js?v=20260818-2';
+fix.src=ROOT+'home-route-fix.js?v=20260828-6';
 fix.defer=true;
 fix.onload=()=>{
   const menu=document.createElement('script');
