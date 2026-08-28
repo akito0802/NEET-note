@@ -73,6 +73,16 @@ const installNotePrintUpgrade=()=>{
   document.head.appendChild(script);
 };
 
+const installNotePrintPreviewFix=()=>{
+  if(!isNoteRoute())return;
+  if(window.__NEET_NOTE_PRINT_PREVIEW_FIX__||document.querySelector('script[data-neet-note-print-preview-fix]'))return;
+  const script=document.createElement('script');
+  script.src=ROOT+'note-print-preview-fix.js?v=20260828-1';
+  script.defer=true;
+  script.dataset.neetNotePrintPreviewFix='1';
+  document.head.appendChild(script);
+};
+
 document.addEventListener('click',e=>{
   const el=e.target instanceof Element?e.target.closest('a,button'):null;
   if(!el||isNeetonHome(el)||!isHomeControl(el))return;
@@ -89,6 +99,7 @@ const apply=()=>{
   normalizeHomeControls();
   installChordInputHotfix();
   installNotePrintUpgrade();
+  installNotePrintPreviewFix();
 };
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
 new MutationObserver(normalizeHomeControls).observe(document.documentElement,{childList:true,subtree:true});
