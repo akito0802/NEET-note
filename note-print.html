@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ノート印刷 | NEET NOTE</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#f3f1ed;color:#171717;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic",sans-serif}.screen-bar{position:sticky;top:0;z-index:10;display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px max(14px,env(safe-area-inset-right)) 12px max(14px,env(safe-area-inset-left));background:rgba(255,255,255,.96);border-bottom:1px solid #ddd}.screen-bar button{min-height:44px;padding:8px 15px;border-radius:11px;font:inherit;font-weight:800}.back{border:1px solid #d2cec7;background:#fff;color:#333}.print{border:0;background:#24211e;color:#fff}.paper{width:min(210mm,calc(100% - 24px));min-height:297mm;margin:18px auto;padding:15mm;background:#fff;box-shadow:0 5px 28px rgba(0,0,0,.12)}h1{margin:0 0 5mm;font-size:26pt;line-height:1.2;overflow-wrap:anywhere}.meta{display:flex;flex-wrap:wrap;gap:2mm 6mm;margin:0 0 4mm;padding:0 0 3mm;border-bottom:1px solid #bbb;font-size:10.5pt}.section{margin-top:7mm}.section h2{margin:0 0 3mm;padding-bottom:2mm;border-bottom:1px solid #bbb;font-size:13pt}.section pre{margin:0;white-space:pre-wrap;overflow-wrap:normal;font-family:"SFMono-Regular",Menlo,Monaco,Consolas,"Noto Sans Mono CJK JP",monospace;font-size:10.5pt;line-height:1.65}.empty{padding:30px;text-align:center;color:#666}@page{size:A4 portrait;margin:15mm}@media print{html,body{background:#fff!important}.screen-bar{display:none!important}.paper{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}.empty{display:none}}
+</style>
+</head>
+<body>
+<div class="screen-bar"><button class="back" type="button" id="backBtn">← ノートへ戻る</button><button class="print" type="button" id="printBtn">🖨 印刷する</button></div>
+<main id="paper" class="paper" hidden>
+  <h1 id="title"></h1>
+  <div id="credits" class="meta"></div>
+  <div id="songMeta" class="meta"></div>
+  <section class="section"><h2>コード進行メモ</h2><pre id="chords"></pre></section>
+</main>
+<div id="empty" class="empty" hidden>印刷するノートが見つかりませんでした。ノート画面からもう一度「ノート内容を印刷」を押してください。</div>
+<script>
+(()=>{
+'use strict';
+const KEY='neet-note-print-current-v1';
+const add=(el,label,value)=>{if(!value)return;const span=document.createElement('span');span.textContent=`${label}: ${value}`;el.appendChild(span)};
+let data=null;try{data=JSON.parse(localStorage.getItem(KEY)||'null')}catch{}
+const paper=document.getElementById('paper'),empty=document.getElementById('empty');
+if(data&&typeof data==='object'){
+  document.getElementById('title').textContent=data.title||'無題の曲';
+  const credits=document.getElementById('credits');
+  add(credits,'アーティスト',data.artist);add(credits,'作詞',data.lyricist);add(credits,'作曲',data.composer);add(credits,'編曲',data.arranger);add(credits,'制作日',data.date);
+  const meta=document.getElementById('songMeta');
+  add(meta,'Key',data.key||'未設定');add(meta,'BPM',data.bpm||'未設定');add(meta,'拍子',data.time||'未設定');
+  document.getElementById('chords').textContent=data.chords||'未入力';
+  paper.hidden=false;
+}else empty.hidden=false;
+document.getElementById('backBtn').addEventListener('click',()=>{if(history.length>1)history.back();else location.href='./?mode=note'});
+document.getElementById('printBtn').addEventListener('click',()=>window.print());
+})();
+</script>
+</body>
+</html>
