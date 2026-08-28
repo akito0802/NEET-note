@@ -67,7 +67,7 @@ const installNotePrint=()=>{
   if(!isNoteRoute())return;
   if(window.__NEET_NOTE_PRINT_PREVIEW_FIX__||document.querySelector('script[data-neet-note-print-preview-fix]'))return;
   const script=document.createElement('script');
-  script.src=ROOT+'note-print-preview-fix.js?v=20260829-layout2';
+  script.src=ROOT+'note-print-preview-fix.js?v=20260829-safety1';
   script.defer=true;
   script.dataset.neetNotePrintPreviewFix='1';
   document.head.appendChild(script);
