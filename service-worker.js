@@ -1,4 +1,4 @@
-const CACHE='neet-note-pwa-v40';
+const CACHE='neet-note-pwa-v41';
 const OFFLINE='./offline.html';
 const CORE=['./','./index.html','./offline.html','./style.css','./common-ui.css','./common-ui.js','./app.js','./menu-ui.js','./favicon.svg','./manifest.webmanifest'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(async cache=>{for(const url of CORE){try{await cache.add(url)}catch{}}}).then(()=>self.skipWaiting()))});
