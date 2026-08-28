@@ -41,7 +41,7 @@ h1{margin:0 0 5mm;font-size:26pt;line-height:1.2;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
-<div class="screen-bar"><button class="back" type="button" id="backBtn">← ノートへ戻る</button><button class="print" type="button" id="printBtn">🖨 印刷する</button></div>
+<div class="screen-bar"><button class="back" type="button" id="backBtn">← 元のノートへ戻る</button><button class="print" type="button" id="printBtn">🖨 印刷する</button></div>
 <main id="paper" class="paper" hidden>
   <h1 id="title"></h1>
   <div id="credits" class="meta"></div>
@@ -52,9 +52,11 @@ h1{margin:0 0 5mm;font-size:26pt;line-height:1.2;overflow-wrap:anywhere}
 <script>
 (()=>{
 'use strict';
-const KEY='neet-note-print-current-v1';
+const ROOT='https://akito0802.github.io/NEET-note/';
+const PRINT_KEY='neet-note-print-current-v1';
+const SONGS_KEY='song-note-songs-v1';
 const add=(el,label,value)=>{if(!value)return;const span=document.createElement('span');span.textContent=`${label}: ${value}`;el.appendChild(span)};
-let data=null;try{data=JSON.parse(localStorage.getItem(KEY)||'null')}catch{}
+let data=null;try{data=JSON.parse(localStorage.getItem(PRINT_KEY)||'null')}catch{}
 const paper=document.getElementById('paper'),empty=document.getElementById('empty'),chords=document.getElementById('chords');
 
 function applyChordLayout(layout){
@@ -62,13 +64,41 @@ function applyChordLayout(layout){
   const allowed=['fontFamily','fontSize','fontWeight','fontStyle','lineHeight','letterSpacing','wordSpacing','fontVariantLigatures'];
   allowed.forEach(key=>{if(typeof layout[key]==='string'&&layout[key])chords.style[key]=layout[key]});
   if(typeof layout.tabSize==='string'&&layout.tabSize)chords.style.tabSize=layout.tabSize;
-  if(Number.isFinite(layout.editorWidth)&&layout.editorWidth>0){
-    chords.style.minWidth=`${Math.round(layout.editorWidth)}px`;
-  }
+  if(Number.isFinite(layout.editorWidth)&&layout.editorWidth>0)chords.style.minWidth=`${Math.round(layout.editorWidth)}px`;
   chords.style.whiteSpace='pre';
   chords.style.overflowWrap='normal';
   chords.style.wordBreak='normal';
   chords.style.fontVariantLigatures='none';
+}
+
+function legacyMatchedSongUrl(snapshot){
+  let songs=[];
+  try{
+    const parsed=JSON.parse(localStorage.getItem(SONGS_KEY)||'[]');
+    if(Array.isArray(parsed))songs=parsed;
+  }catch{}
+  if(!songs.length||!snapshot)return '';
+  const ranked=songs.map(song=>{
+    let score=0;
+    if(snapshot.title&&snapshot.title!=='無題の曲'&&song.title===snapshot.title)score+=8;
+    if(snapshot.chords&&snapshot.chords!=='未入力'&&song.chords===snapshot.chords)score+=10;
+    if(snapshot.artist&&song.artist===snapshot.artist)score+=2;
+    if(snapshot.lyricist&&song.lyricist===snapshot.lyricist)score+=2;
+    if(snapshot.composer&&song.composer===snapshot.composer)score+=2;
+    if(snapshot.date&&song.productionDate===snapshot.date)score+=1;
+    return {song,score};
+  }).filter(item=>item.song?.id).sort((a,b)=>b.score-a.score);
+  const best=ranked[0],second=ranked[1];
+  if(best&&best.score>=6&&(!second||best.score>second.score))return ROOT+'?song='+encodeURIComponent(best.song.id);
+  return '';
+}
+
+function resolveReturnUrl(){
+  if(data&&typeof data.returnUrl==='string'&&data.returnUrl.startsWith(ROOT))return data.returnUrl;
+  if(data&&data.songId)return ROOT+'?song='+encodeURIComponent(data.songId);
+  const legacy=legacyMatchedSongUrl(data);
+  if(legacy)return legacy;
+  return ROOT+'?mode=note';
 }
 
 if(data&&typeof data==='object'){
@@ -82,11 +112,10 @@ if(data&&typeof data==='object'){
   paper.hidden=false;
 }else empty.hidden=false;
 
-document.getElementById('backBtn').addEventListener('click',()=>{if(history.length>1)history.back();else location.href='./?mode=note'});
+document.getElementById('backBtn').addEventListener('click',()=>location.assign(resolveReturnUrl()));
 document.getElementById('printBtn').addEventListener('click',()=>window.print());
 })();
 </script>
-
 <script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260821-safe6"></script>
 </body>
 </html>
