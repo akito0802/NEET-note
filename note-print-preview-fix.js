@@ -6,8 +6,31 @@ window.__NEET_NOTE_PRINT_PREVIEW_FIX__=true;
 const ROOT='https://akito0802.github.io/NEET-note/';
 const STORAGE_KEY='neet-note-print-current-v1';
 const valueOf=id=>document.getElementById(id)?.value?.trim?.()||'';
+const rawValueOf=id=>{
+  const el=document.getElementById(id);
+  return typeof el?.value==='string'?el.value:'';
+};
+
+function chordLayout(){
+  const area=document.getElementById('chordsInput');
+  if(!area)return null;
+  const style=getComputedStyle(area);
+  return {
+    fontFamily:style.fontFamily,
+    fontSize:style.fontSize,
+    fontWeight:style.fontWeight,
+    fontStyle:style.fontStyle,
+    lineHeight:style.lineHeight,
+    letterSpacing:style.letterSpacing,
+    wordSpacing:style.wordSpacing,
+    tabSize:style.tabSize||'2',
+    fontVariantLigatures:style.fontVariantLigatures||'none',
+    editorWidth:Math.max(0,Math.round(area.clientWidth))
+  };
+}
 
 function currentData(){
+  const rawChords=rawValueOf('chordsInput');
   return {
     title:valueOf('titleInput')||'無題の曲',
     artist:valueOf('artistInput'),
@@ -18,7 +41,8 @@ function currentData(){
     key:valueOf('keyInput')||'未設定',
     bpm:valueOf('bpmInput')||'未設定',
     time:valueOf('timeSignatureInput')||'未設定',
-    chords:valueOf('chordsInput')||'未入力',
+    chords:rawChords.trim().length?rawChords:'未入力',
+    chordLayout:chordLayout(),
     savedAt:Date.now()
   };
 }
@@ -60,7 +84,7 @@ function openPrintView(){
     alert('印刷データを準備できませんでした。');
     return;
   }
-  window.location.assign(ROOT+'note-print.html?v=20260828-1');
+  window.location.assign(ROOT+'note-print.html?v=20260829-layout1');
 }
 
 document.addEventListener('click',event=>{
