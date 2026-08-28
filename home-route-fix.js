@@ -63,21 +63,11 @@ const installChordInputHotfix=()=>{
   document.head.appendChild(script);
 };
 
-const installNotePrintUpgrade=()=>{
-  if(!isNoteRoute())return;
-  if(window.__NEET_NOTE_PRINT_UPGRADE__||document.querySelector('script[data-neet-note-print-upgrade]'))return;
-  const script=document.createElement('script');
-  script.src=ROOT+'note-print-upgrade.js?v=20260828-1';
-  script.defer=true;
-  script.dataset.neetNotePrintUpgrade='1';
-  document.head.appendChild(script);
-};
-
-const installNotePrintPreviewFix=()=>{
+const installNotePrint=()=>{
   if(!isNoteRoute())return;
   if(window.__NEET_NOTE_PRINT_PREVIEW_FIX__||document.querySelector('script[data-neet-note-print-preview-fix]'))return;
   const script=document.createElement('script');
-  script.src=ROOT+'note-print-preview-fix.js?v=20260828-4';
+  script.src=ROOT+'note-print-preview-fix.js?v=20260828-5';
   script.defer=true;
   script.dataset.neetNotePrintPreviewFix='1';
   document.head.appendChild(script);
@@ -98,8 +88,7 @@ const apply=()=>{
   if(routeLegacyHome())return;
   normalizeHomeControls();
   installChordInputHotfix();
-  installNotePrintUpgrade();
-  installNotePrintPreviewFix();
+  installNotePrint();
 };
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
 new MutationObserver(normalizeHomeControls).observe(document.documentElement,{childList:true,subtree:true});
