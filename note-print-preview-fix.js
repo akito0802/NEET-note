@@ -16,7 +16,6 @@ function currentData(){
     key:valueOf('keyInput')||'未設定',
     bpm:valueOf('bpmInput')||'未設定',
     time:valueOf('timeSignatureInput')||'未設定',
-    structure:valueOf('structureInput')||'未入力',
     chords:valueOf('chordsInput')||'未入力'
   };
 }
@@ -74,7 +73,6 @@ function buildCleanPrintSheet(){
   }
   sections.innerHTML='';
   sections.append(
-    makeSection('曲の構成',data.structure),
     makeSection('コード進行メモ',data.chords,'neet-note-print-chords')
   );
 
