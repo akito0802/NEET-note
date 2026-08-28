@@ -47,15 +47,29 @@ const routeLegacyHome=()=>{
   return true;
 };
 
-const installChordInputHotfix=()=>{
-  if(!INDEX_PATH_RE.test(location.pathname))return;
+const isNoteRoute=()=>{
+  if(!INDEX_PATH_RE.test(location.pathname))return false;
   const params=new URLSearchParams(location.search);
-  if(params.get('mode')!=='note'&&!params.has('song'))return;
+  return params.get('mode')==='note'||params.has('song');
+};
+
+const installChordInputHotfix=()=>{
+  if(!isNoteRoute())return;
   if(window.__NEET_CHORD_INPUT_HOTFIX__||document.querySelector('script[data-neet-chord-input-hotfix]'))return;
   const script=document.createElement('script');
   script.src=ROOT+'chord-input-hotfix.js?v=20260827-5';
   script.defer=true;
   script.dataset.neetChordInputHotfix='1';
+  document.head.appendChild(script);
+};
+
+const installNotePrintUpgrade=()=>{
+  if(!isNoteRoute())return;
+  if(window.__NEET_NOTE_PRINT_UPGRADE__||document.querySelector('script[data-neet-note-print-upgrade]'))return;
+  const script=document.createElement('script');
+  script.src=ROOT+'note-print-upgrade.js?v=20260828-1';
+  script.defer=true;
+  script.dataset.neetNotePrintUpgrade='1';
   document.head.appendChild(script);
 };
 
@@ -74,6 +88,7 @@ const apply=()=>{
   if(routeLegacyHome())return;
   normalizeHomeControls();
   installChordInputHotfix();
+  installNotePrintUpgrade();
 };
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
 new MutationObserver(normalizeHomeControls).observe(document.documentElement,{childList:true,subtree:true});
