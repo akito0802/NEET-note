@@ -4,7 +4,9 @@ if(window.__NEET_NOTE_PRINT_PREVIEW_FIX__)return;
 window.__NEET_NOTE_PRINT_PREVIEW_FIX__=true;
 
 const ROOT='https://akito0802.github.io/NEET-note/';
-const STORAGE_KEY='neet-note-print-current-v1';
+const PRINT_KEY='neet-note-print-current-v1';
+const SONGS_KEY='song-note-songs-v1';
+const BACKUP_KEY='neet-note-text-backup-before-print-v1';
 const valueOf=id=>document.getElementById(id)?.value?.trim?.()||'';
 const rawValueOf=id=>{
   const el=document.getElementById(id);
@@ -29,22 +31,89 @@ function chordLayout(){
   };
 }
 
-function currentData(){
+function currentSongSnapshot(){
   const rawChords=rawValueOf('chordsInput');
+  const songId=rawValueOf('songId').trim();
   return {
+    songId,
     title:valueOf('titleInput')||'無題の曲',
     artist:valueOf('artistInput'),
     lyricist:valueOf('lyricistInput'),
     composer:valueOf('composerInput'),
     arranger:valueOf('arrangerInput'),
     date:valueOf('productionDateInput'),
+    productionDate:rawValueOf('productionDateInput'),
     key:valueOf('keyInput')||'未設定',
     bpm:valueOf('bpmInput')||'未設定',
     time:valueOf('timeSignatureInput')||'未設定',
+    timeSignature:rawValueOf('timeSignatureInput'),
+    structure:rawValueOf('structureInput'),
     chords:rawChords.trim().length?rawChords:'未入力',
+    rawChords,
+    mood:rawValueOf('moodInput'),
+    theme:rawValueOf('themeInput'),
+    lyricIdea:rawValueOf('lyricIdeaInput'),
     chordLayout:chordLayout(),
+    returnUrl:songId?ROOT+'?song='+encodeURIComponent(songId):location.href,
     savedAt:Date.now()
   };
+}
+
+function textOnlyBackup(songs){
+  return songs.map(song=>({
+    id:song.id,
+    title:song.title||'',
+    lyricist:song.lyricist||'',
+    composer:song.composer||'',
+    arranger:song.arranger||'',
+    artist:song.artist||'',
+    productionDate:song.productionDate||'',
+    key:song.key||'',
+    bpm:song.bpm||'',
+    timeSignature:song.timeSignature||'',
+    structure:song.structure||'',
+    chords:song.chords||'',
+    mood:song.mood||'',
+    theme:song.theme||'',
+    lyricIdea:song.lyricIdea||song.lyrics||'',
+    createdAt:song.createdAt||'',
+    updatedAt:song.updatedAt||''
+  }));
+}
+
+function saveCurrentSongSynchronously(snapshot){
+  let songs=[];
+  try{
+    const parsed=JSON.parse(localStorage.getItem(SONGS_KEY)||'[]');
+    if(Array.isArray(parsed))songs=parsed;
+  }catch{}
+
+  try{
+    localStorage.setItem(BACKUP_KEY,JSON.stringify({savedAt:Date.now(),songs:textOnlyBackup(songs)}));
+  }catch{}
+
+  if(!snapshot.songId||!songs.length)return;
+  const index=songs.findIndex(song=>song&&song.id===snapshot.songId);
+  if(index<0)return;
+  songs[index]={
+    ...songs[index],
+    title:rawValueOf('titleInput').trim(),
+    lyricist:rawValueOf('lyricistInput').trim(),
+    composer:rawValueOf('composerInput').trim(),
+    arranger:rawValueOf('arrangerInput').trim(),
+    artist:rawValueOf('artistInput').trim(),
+    productionDate:rawValueOf('productionDateInput'),
+    key:rawValueOf('keyInput'),
+    bpm:rawValueOf('bpmInput'),
+    timeSignature:rawValueOf('timeSignatureInput'),
+    structure:rawValueOf('structureInput'),
+    chords:rawValueOf('chordsInput'),
+    mood:rawValueOf('moodInput'),
+    theme:rawValueOf('themeInput').trim(),
+    lyricIdea:rawValueOf('lyricIdeaInput'),
+    updatedAt:new Date().toISOString()
+  };
+  localStorage.setItem(SONGS_KEY,JSON.stringify(songs));
 }
 
 function ensureStyle(){
@@ -78,13 +147,16 @@ function ensureButton(){
 }
 
 function openPrintView(){
+  const snapshot=currentSongSnapshot();
   try{
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(currentData()));
-  }catch{
-    alert('印刷データを準備できませんでした。');
+    saveCurrentSongSynchronously(snapshot);
+    localStorage.setItem(PRINT_KEY,JSON.stringify(snapshot));
+  }catch(error){
+    console.error('[NEET NOTE] print save failed',error);
+    alert('ノートを安全に保存できなかったため、印刷画面への移動を中止しました。');
     return;
   }
-  window.location.assign(ROOT+'note-print.html?v=20260829-layout2');
+  window.location.assign(ROOT+'note-print.html?v=20260829-safety1');
 }
 
 document.addEventListener('click',event=>{
