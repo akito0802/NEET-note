@@ -84,7 +84,7 @@ function openPrintView(){
     alert('印刷データを準備できませんでした。');
     return;
   }
-  window.location.assign(ROOT+'note-print.html?v=20260829-layout1');
+  window.location.assign(ROOT+'note-print.html?v=20260829-layout2');
 }
 
 document.addEventListener('click',event=>{
