@@ -156,7 +156,7 @@ function openPrintView(){
     alert('ノートを安全に保存できなかったため、印刷画面への移動を中止しました。');
     return;
   }
-  window.location.assign(ROOT+'note-print.html?v=20260829-safety1');
+  window.location.assign(ROOT+'note-print.html?v=20260901-pdf1');
 }
 
 document.addEventListener('click',event=>{
