@@ -103,7 +103,7 @@ function installAdvancedMenu(){
 }
 
 const fix=document.createElement('script');
-fix.src=ROOT+'home-route-fix.js?v=20260829-safety1';
+fix.src=ROOT+'home-route-fix.js?v=20260901-pdf1';
 fix.defer=true;
 fix.onload=()=>{
   const menu=document.createElement('script');
