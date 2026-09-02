@@ -58,3 +58,70 @@
     line-height: 1.65;
   }
 }
+
+.editor-output-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pdf-button {
+  border-color: #9b7448;
+  background: #9b7448;
+  color: #fff;
+}
+
+.print-section {
+  margin-top: 22px;
+  break-inside: avoid;
+}
+
+.print-section h2 {
+  margin: 0 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #bbb;
+  font-size: 13pt;
+}
+
+@media (max-width: 680px) {
+  .editor-topbar {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .editor-output-actions {
+    gap: 6px;
+  }
+
+  .editor-output-actions .save-status {
+    width: 100%;
+    text-align: right;
+  }
+
+  .editor-output-actions .print-button {
+    min-height: 38px;
+    padding: 7px 10px;
+    font-size: .78rem;
+  }
+}
+
+@media print {
+  .print-section-empty {
+    display: none !important;
+  }
+
+  html[data-print-mode="chords"] #printStructureSection,
+  html[data-print-mode="chords"] #printLyricsSection {
+    display: none !important;
+  }
+
+  .print-section {
+    break-inside: auto;
+  }
+
+  .print-section h2 {
+    break-after: avoid;
+  }
+}
