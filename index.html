@@ -44,7 +44,7 @@
       <section id="editorView" class="view">
         <div class="editor-topbar"><button id="backBtn" class="ghost-button">← 曲一覧</button><div id="saveStatus" class="save-status">保存済み</div></div>
         <form id="songForm" class="editor-card" autocomplete="off">
-          <input id="songId" type="hidden"><input id="moodInput" type="hidden"><input id="themeInput" type="hidden"><textarea id="lyricIdeaInput" class="hidden"></textarea>
+          <input id="songId" type="hidden"><input id="moodInput" type="hidden"><input id="themeInput" type="hidden">
           <label class="field title-field"><span>曲タイトル</span><input id="titleInput" type="text" placeholder="無題の曲" maxlength="80"></label>
           <div class="meta-grid credits-grid">
             <label class="field"><span style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span>作詞</span><button id="copyCreatorNameBtn" class="ghost-button" type="button" style="min-height:26px;padding:3px 9px;border-radius:999px;font-size:.72rem">↺ 同じ</button></span><input id="lyricistInput" type="text" placeholder="作詞者名" maxlength="80"></label>
@@ -52,6 +52,7 @@
           </div>
           <div class="meta-grid"><label class="field"><span>キー</span><select id="keyInput"><option value="">未設定</option><option>C</option><option>C# / Db</option><option>D</option><option>D# / Eb</option><option>E</option><option>F</option><option>F# / Gb</option><option>G</option><option>G# / Ab</option><option>A</option><option>A# / Bb</option><option>B</option></select></label><label class="field"><span>BPM</span><input id="bpmInput" type="number" min="20" max="300" placeholder="120"></label><label class="field"><span>拍子</span><select id="timeSignatureInput"><option value="">未設定</option><option>4/4</option><option>3/4</option><option>6/8</option><option>2/4</option><option>5/4</option><option>7/8</option></select></label></div>
           <label class="field"><span>曲の構成</span><textarea id="structureInput" rows="5" placeholder="例：イントロ → Aメロ → Bメロ → サビ"></textarea></label>
+          <label class="field"><span>歌詞メモ</span><textarea id="lyricIdeaInput" rows="16" placeholder="歌詞やフレーズを書いてみよう"></textarea></label>
           <div class="field chord-section"><span>コード進行メモ</span><div class="chord-picker"><select id="chordRootSelect"><option value="">ルート音</option><option>C</option><option>C#</option><option>Db</option><option>D</option><option>D#</option><option>Eb</option><option>E</option><option>F</option><option>F#</option><option>Gb</option><option>G</option><option>G#</option><option>Ab</option><option>A</option><option>A#</option><option>Bb</option><option>B</option></select><select id="chordTypeSelect"><option value="">メジャー</option><option value="m">マイナー</option><option value="5">5</option><option value="6">6</option><option value="m6">m6</option><option value="7">7</option><option value="maj7">maj7</option><option value="m7">m7</option><option value="add9">add9</option><option value="9">9</option><option value="sus2">sus2</option><option value="sus4">sus4</option><option value="dim">dim</option><option value="aug">aug</option><option value="m7b5">m7♭5</option></select><select id="chordBassSelect"><option value="">ベースなし</option><option>C</option><option>C#</option><option>Db</option><option>D</option><option>D#</option><option>Eb</option><option>E</option><option>F</option><option>F#</option><option>Gb</option><option>G</option><option>G#</option><option>Ab</option><option>A</option><option>A#</option><option>Bb</option><option>B</option></select><button id="addChordBtn" class="chord-add-button" type="button">＋ 上に追加</button><button id="addChordLineBtn" class="chord-line-button" type="button">↵ 改行</button><button id="printChordMemoBtn" class="print-button" type="button">印刷</button></div><textarea id="chordsInput" class="lyrics-chord-editor" rows="12" wrap="off"></textarea></div>
           <div style="margin:22px 0;padding:18px;border:1px solid var(--ui-line);border-radius:16px;background:var(--ui-surface)"><p class="eyebrow">GEMINI SONGWRITING ASSISTANT</p><h2>AIに相談</h2><button id="openAiPageBtn" class="primary-button" type="button">AI作曲アシスタントを開く</button></div>
           <label class="field"><span>音源・ボイスメモ</span><input id="audioInput" type="file" accept="audio/*"></label><div id="audioPreviewWrap" class="audio-preview hidden"><audio id="audioPreview" controls></audio><button id="removeAudioBtn" type="button" class="danger-text-button">音源を削除</button></div>
@@ -62,7 +63,7 @@
   </div>
   <section id="printSheet" class="print-sheet" aria-hidden="true"><h1 id="printTitle">無題の曲</h1><div id="printCredits" class="print-meta"></div><div id="printMeta" class="print-meta"></div><pre id="printContent" class="print-content"></pre></section>
   <template id="songCardTemplate"><article class="song-card" tabindex="0"><div class="song-card-head"><div><h2 class="song-title"></h2><p class="song-meta"></p></div><div style="display:flex;align-items:center;gap:8px"><span class="song-date"></span><button class="song-delete-button" type="button">削除</button></div></div><p class="song-preview"></p></article></template>
-  <script src="mellow-rain-recovery.js?v=1"></script>
+  <script src="mellow-rain-recovery.js?v=2"></script>
   <script src="common-ui.js?v=5"></script><script src="app.js?v=16"></script><script src="structure-sync.js?v=20260813-2"></script><script src="chord-picker.js?v=6"></script><script src="print.js?v=2"></script>
   <script>(()=>{const o=document.getElementById('menuOpenBtn'),c=document.getElementById('menuCloseBtn'),m=document.getElementById('sideMenu'),v=document.getElementById('menuOverlay');const open=()=>{m.classList.add('open');v.classList.add('open')},close=()=>{m.classList.remove('open');v.classList.remove('open')};o?.addEventListener('click',open);c?.addEventListener('click',close);v?.addEventListener('click',close)})();</script>
 <script src="menu-ui.js?v=20260813-2"></script>
@@ -74,9 +75,6 @@
  }
 })();
 </script>
-
-
-
 
 
 
