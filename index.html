@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="style.css?v=4">
   <link rel="stylesheet" href="background.css?v=1">
   <link rel="stylesheet" href="chord-picker.css?v=5">
-  <link rel="stylesheet" href="print.css?v=1">
+  <link rel="stylesheet" href="print.css?v=2">
   <link rel="stylesheet" href="common-ui.css?v=1">
   <style>
     .app-header{position:relative}.header-brand{display:flex;align-items:center;gap:12px}.menu-button{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid rgba(0,0,0,.1);border-radius:12px;background:rgba(255,255,255,.85);color:#1f2937;font-size:1.35rem;cursor:pointer}.menu-overlay{position:fixed;inset:0;z-index:9998;background:rgba(17,24,39,.42);opacity:0;visibility:hidden;pointer-events:none;transition:.2s}.menu-overlay.open{opacity:1;visibility:visible;pointer-events:auto}.side-menu{position:fixed;top:0;left:0;z-index:9999;width:min(82vw,300px);height:100dvh;padding:24px 18px;background:#fffdf8;box-shadow:14px 0 34px rgba(0,0,0,.18);transform:translateX(-110%);visibility:hidden;transition:.22s}.side-menu.open{transform:translateX(0);visibility:visible}.side-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.side-menu-head h2{margin:0;font-size:1.15rem}.menu-close{width:36px;height:36px;border:0;border-radius:10px;background:#f1f1f1;font-size:1.3rem}.menu-link{display:flex;align-items:center;gap:12px;width:100%;padding:14px 12px;margin-bottom:8px;border:0;border-radius:12px;color:#1f2937;background:transparent;text-decoration:none;font-weight:700}.menu-link.current{background:#e9e1d4}.menu-icon{width:28px;text-align:center;font-size:1.15rem}
@@ -43,7 +43,7 @@
     <main>
       <section id="listView" class="view active"><div class="toolbar"><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="曲名・作家名・雰囲気・コードで検索"></label></div><div id="emptyState" class="empty-state hidden"><div class="empty-icon">♪</div><h2>まだ曲がありません</h2><p>思いついたコードや雰囲気を、すぐに残してみよう。</p><button id="emptyNewSongBtn" class="primary-button">最初の曲を作る</button></div><div id="songList" class="song-grid"></div></section>
       <section id="editorView" class="view">
-        <div class="editor-topbar"><button id="backBtn" class="ghost-button">← 曲一覧</button><div id="saveStatus" class="save-status">保存済み</div></div>
+        <div class="editor-topbar"><button id="backBtn" class="ghost-button">← 曲一覧</button><div class="editor-output-actions"><div id="saveStatus" class="save-status">保存済み</div><button id="printSongBtn" class="print-button" type="button">🖨️ 印刷</button><button id="savePdfBtn" class="print-button pdf-button" type="button">📄 PDF保存</button></div></div>
         <form id="songForm" class="editor-card" autocomplete="off">
           <input id="songId" type="hidden"><input id="moodInput" type="hidden"><input id="themeInput" type="hidden">
           <label class="field title-field"><span>曲タイトル</span><input id="titleInput" type="text" placeholder="無題の曲" maxlength="80"></label>
@@ -62,11 +62,11 @@
       </section>
     </main>
   </div>
-  <section id="printSheet" class="print-sheet" aria-hidden="true"><h1 id="printTitle">無題の曲</h1><div id="printCredits" class="print-meta"></div><div id="printMeta" class="print-meta"></div><pre id="printContent" class="print-content"></pre></section>
+  <section id="printSheet" class="print-sheet" aria-hidden="true"><h1 id="printTitle">無題の曲</h1><div id="printCredits" class="print-meta"></div><div id="printMeta" class="print-meta"></div><section id="printStructureSection" class="print-section"><h2>曲の構成</h2><pre id="printStructure" class="print-content"></pre></section><section id="printLyricsSection" class="print-section"><h2>歌詞メモ</h2><pre id="printLyrics" class="print-content"></pre></section><section id="printChordsSection" class="print-section"><h2>コード進行メモ</h2><pre id="printContent" class="print-content"></pre></section></section>
   <template id="songCardTemplate"><article class="song-card" tabindex="0"><div class="song-card-head"><div><h2 class="song-title"></h2><p class="song-meta"></p></div><div style="display:flex;align-items:center;gap:8px"><span class="song-date"></span><button class="song-delete-button" type="button">削除</button></div></div><p class="song-preview"></p></article></template>
   <script src="mellow-rain-recovery.js?v=2"></script>
   <script src="firebase-config.js?v=20260903-1"></script>
-  <script src="common-ui.js?v=5"></script><script src="app.js?v=17"></script><script src="structure-sync.js?v=20260813-2"></script><script src="chord-picker.js?v=6"></script><script src="print.js?v=2"></script>
+  <script src="common-ui.js?v=5"></script><script src="app.js?v=17"></script><script src="structure-sync.js?v=20260813-2"></script><script src="chord-picker.js?v=6"></script><script src="print.js?v=3"></script>
   <script src="cloud-sync.js?v=20260903-1"></script>
   <script>(()=>{const o=document.getElementById('menuOpenBtn'),c=document.getElementById('menuCloseBtn'),m=document.getElementById('sideMenu'),v=document.getElementById('menuOverlay');const open=()=>{m.classList.add('open');v.classList.add('open')},close=()=>{m.classList.remove('open');v.classList.remove('open')};o?.addEventListener('click',open);c?.addEventListener('click',close);v?.addEventListener('click',close)})();</script>
 <script src="menu-ui.js?v=20260813-2"></script>
