@@ -1,15 +1,62 @@
 .print-button {
-  min-height: 42px;
-  padding: 9px 14px;
-  border: 1px solid var(--border);
+  min-height: 40px;
+  padding: 8px 13px;
+  border: 1px solid var(--border, #d8d0c3);
   border-radius: 10px;
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.94);
-  font-weight: 700;
+  color: var(--text, #2f241b);
+  background: var(--surface, #fffdf8);
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.print-button:active {
+  transform: scale(.98);
+}
+
+.editor-output-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .print-sheet {
   display: none;
+}
+
+.print-section {
+  margin-top: 22px;
+}
+
+.print-section h2 {
+  margin: 0 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #bbb;
+  font-size: 13pt;
+}
+
+@media (max-width: 680px) {
+  .editor-topbar {
+    align-items: center;
+    gap: 8px;
+  }
+
+  .editor-output-actions {
+    gap: 7px;
+  }
+
+  .editor-output-actions .save-status {
+    font-size: .72rem;
+  }
+
+  .editor-output-actions .print-button {
+    min-height: 38px;
+    padding: 7px 9px;
+    font-size: .75rem;
+  }
 }
 
 @media print {
@@ -22,7 +69,13 @@
     background: #fff !important;
   }
 
-  .app-shell {
+  .app-shell,
+  .ngm-btn,
+  .ngm-menu,
+  .ngm-overlay,
+  .ngm-top-return,
+  .cloud-modal,
+  .cloud-toast {
     display: none !important;
   }
 
@@ -48,80 +101,26 @@
     font-size: 10.5pt;
   }
 
-  .print-content {
-    margin: 0;
-    white-space: pre-wrap;
-    word-break: normal;
-    overflow-wrap: normal;
-    font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Noto Sans Mono CJK JP", monospace;
-    font-size: 10.5pt;
-    line-height: 1.65;
-  }
-}
-
-.editor-output-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.pdf-button {
-  border-color: #9b7448;
-  background: #9b7448;
-  color: #fff;
-}
-
-.print-section {
-  margin-top: 22px;
-  break-inside: avoid;
-}
-
-.print-section h2 {
-  margin: 0 0 8px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #bbb;
-  font-size: 13pt;
-}
-
-@media (max-width: 680px) {
-  .editor-topbar {
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .editor-output-actions {
-    gap: 6px;
-  }
-
-  .editor-output-actions .save-status {
-    width: 100%;
-    text-align: right;
-  }
-
-  .editor-output-actions .print-button {
-    min-height: 38px;
-    padding: 7px 10px;
-    font-size: .78rem;
-  }
-}
-
-@media print {
   .print-section-empty {
     display: none !important;
   }
 
-  html[data-print-mode="chords"] #printStructureSection,
-  html[data-print-mode="chords"] #printLyricsSection {
-    display: none !important;
-  }
-
   .print-section {
+    margin-top: 20px;
     break-inside: auto;
   }
 
   .print-section h2 {
     break-after: avoid;
+  }
+
+  .print-content {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Noto Sans Mono CJK JP", monospace;
+    font-size: 10.5pt;
+    line-height: 1.65;
   }
 }
