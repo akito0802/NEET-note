@@ -1,6 +1,4 @@
-const printChordMemoBtn = document.getElementById('printChordMemoBtn');
 const printSongBtn = document.getElementById('printSongBtn');
-const savePdfBtn = document.getElementById('savePdfBtn');
 const printTitle = document.getElementById('printTitle');
 const printCredits = document.getElementById('printCredits');
 const printMeta = document.getElementById('printMeta');
@@ -73,6 +71,4 @@ function openPrintDialog(options = {}) {
   }, 800);
 }
 
-printChordMemoBtn?.addEventListener('click', () => openPrintDialog({ chordsOnly: true }));
 printSongBtn?.addEventListener('click', () => openPrintDialog());
-savePdfBtn?.addEventListener('click', () => openPrintDialog());
