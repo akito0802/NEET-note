@@ -12,6 +12,7 @@ function readPrintData() {
     key: value('keyInput') || '未設定',
     bpm: value('bpmInput') || '未設定',
     timeSignature: value('timeSignatureInput') || '未設定',
+    lyrics: document.getElementById('lyricIdeaInput')?.value || '',
     chords: document.getElementById('chordsInput')?.value || ''
   };
 }
@@ -124,7 +125,10 @@ function buildPdf(data) {
   y += 37;
 
   context.font = '27px -apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic",sans-serif';
-  const lines = wrapText(context, data.chords || 'コード進行メモはまだありません。', contentWidth);
+  const lyrics = String(data.lyrics || '').trim();
+  const chords = String(data.chords || '').trim();
+  const noteBody = [lyrics, chords].filter(Boolean).join('\n\n') || '歌詞・コード進行メモはまだありません。';
+  const lines = wrapText(context, noteBody, contentWidth);
   const lineHeight = 47;
 
   lines.forEach(line => {
