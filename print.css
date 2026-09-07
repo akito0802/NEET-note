@@ -129,3 +129,139 @@
     line-height: 1.9;
   }
 }
+
+.note-print-preview {
+  position: fixed;
+  inset: 0;
+  z-index: 50000;
+  display: none;
+  padding: 18px;
+  background: rgba(28, 24, 20, .72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.note-print-preview.open {
+  display: grid;
+  place-items: center;
+}
+
+.note-print-preview-panel {
+  width: min(920px, 100%);
+  max-height: calc(100dvh - 36px);
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 20px;
+  background: #e8e5e0;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .38);
+  overscroll-behavior: contain;
+}
+
+.note-print-preview-head,
+.note-print-preview-actions {
+  position: sticky;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(255, 253, 248, .96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.note-print-preview-head {
+  top: 0;
+  border-bottom: 1px solid #d8d0c3;
+}
+
+.note-print-preview-head small {
+  display: block;
+  margin-bottom: 2px;
+  color: #8b7358;
+  font-size: .62rem;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.note-print-preview-head h2 {
+  margin: 0;
+  color: #2f241b;
+  font-size: 1rem;
+}
+
+.note-print-preview-head button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid #d8d0c3;
+  border-radius: 50%;
+  background: #fff;
+  color: #2f241b;
+  font-size: 1.35rem;
+  cursor: pointer;
+}
+
+.note-print-preview-pages {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  padding: 22px;
+}
+
+.note-print-page {
+  width: min(100%, 794px);
+  margin: 0;
+}
+
+.note-print-page canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .18);
+}
+
+.note-print-page figcaption {
+  margin-top: 7px;
+  color: #685b4d;
+  text-align: center;
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.note-print-preview-actions {
+  bottom: 0;
+  justify-content: flex-end;
+  border-top: 1px solid #d8d0c3;
+}
+
+@media (max-width: 680px) {
+  .note-print-preview {
+    padding: 0;
+  }
+
+  .note-print-preview-panel {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .note-print-preview-head,
+  .note-print-preview-actions {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .note-print-preview-pages {
+    gap: 13px;
+    padding: 12px 8px 18px;
+  }
+
+  .note-print-preview-actions {
+    padding-bottom: max(14px, env(safe-area-inset-bottom));
+  }
+}
