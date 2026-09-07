@@ -1,141 +1,187 @@
 const printSongBtn = document.getElementById('printSongBtn');
-const printTitle = document.getElementById('printTitle');
-const printCredits = document.getElementById('printCredits');
-const printMeta = document.getElementById('printMeta');
-const printContent = document.getElementById('printContent');
 
-function appendPrintItems(container, items) {
-  container.innerHTML = '';
-  items.forEach(([label, value]) => {
-    const item = document.createElement('span');
-    item.textContent = `${label}: ${value || '未設定'}`;
-    container.appendChild(item);
-  });
-}
-
-function buildPrintSheet() {
-  const title = document.getElementById('titleInput')?.value.trim() || '無題の曲';
-  const lyricist = document.getElementById('lyricistInput')?.value.trim() || '';
-  const composer = document.getElementById('composerInput')?.value.trim() || '';
-  const arranger = document.getElementById('arrangerInput')?.value.trim() || '';
-  const artist = document.getElementById('artistInput')?.value.trim() || '';
-  const productionDate = document.getElementById('productionDateInput')?.value || '';
-  const key = document.getElementById('keyInput')?.value || '未設定';
-  const bpm = document.getElementById('bpmInput')?.value || '未設定';
-  const timeSignature = document.getElementById('timeSignatureInput')?.value || '未設定';
-  const chords = document.getElementById('chordsInput')?.value || '';
-
-  printTitle.textContent = title;
-  appendPrintItems(printCredits, [
-    ['アーティスト', artist],
-    ['作詞', lyricist],
-    ['作曲', composer],
-    ['編曲', arranger],
-    ['制作日', productionDate]
-  ]);
-  appendPrintItems(printMeta, [
-    ['Key', key],
-    ['BPM', bpm],
-    ['拍子', timeSignature]
-  ]);
-  printContent.textContent = chords || 'コード進行メモはまだありません。';
-  return title;
-}
-
-function stylePdfSheet(sheet) {
-  sheet.removeAttribute('aria-hidden');
-  sheet.style.cssText = 'display:block;position:fixed;left:-10000px;top:0;width:794px;min-height:1123px;box-sizing:border-box;padding:86px 87px 48px;background:#fff;color:#161616;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic",sans-serif;';
-  const title = sheet.querySelector('h1');
-  title.style.cssText = 'margin:0 0 22px;font-size:34px;font-weight:800;line-height:1.2;letter-spacing:-.02em;';
-  sheet.querySelectorAll('.print-meta').forEach(meta => {
-    meta.style.cssText = 'display:flex;flex-wrap:wrap;align-items:baseline;column-gap:28px;row-gap:7px;margin:0;padding:0 0 14px;border-bottom:1px solid #aaa;font-size:16px;line-height:1.5;';
-  });
-  sheet.querySelector('.print-credits').style.marginBottom = '17px';
-  sheet.querySelector('.print-settings').style.marginBottom = '35px';
-  const heading = sheet.querySelector('.print-note-section h2');
-  heading.style.cssText = 'margin:0 0 20px;padding:0 0 10px;border-bottom:1px solid #aaa;font-size:21px;font-weight:800;line-height:1.35;';
-  const body = sheet.querySelector('.print-content');
-  body.style.cssText = 'margin:0;white-space:pre-wrap;word-break:normal;overflow-wrap:anywhere;font:17px/1.9 -apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic",sans-serif;';
+function readPrintData() {
+  const value = id => document.getElementById(id)?.value?.trim() || '';
+  return {
+    title: value('titleInput') || '無題の曲',
+    artist: value('artistInput'),
+    lyricist: value('lyricistInput'),
+    composer: value('composerInput'),
+    arranger: value('arrangerInput'),
+    productionDate: value('productionDateInput'),
+    key: value('keyInput') || '未設定',
+    bpm: value('bpmInput') || '未設定',
+    timeSignature: value('timeSignatureInput') || '未設定',
+    chords: document.getElementById('chordsInput')?.value || ''
+  };
 }
 
 function safeFileName(title) {
   return (title || '無題の曲').replace(/[\\/:*?"<>|]/g, '_').slice(0, 70) + '_ノート.pdf';
 }
 
-async function createPdf() {
+function makePageCanvas() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1240;
+  canvas.height = 1754;
+  const context = canvas.getContext('2d');
+  context.fillStyle = '#fff';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = '#171717';
+  context.textBaseline = 'top';
+  return { canvas, context };
+}
+
+function drawWrappedTokens(context, tokens, x, y, maxWidth, gap, lineHeight) {
+  let cursorX = x;
+  let cursorY = y;
+  tokens.forEach(token => {
+    const width = context.measureText(token).width;
+    if (cursorX > x && cursorX + width > x + maxWidth) {
+      cursorX = x;
+      cursorY += lineHeight;
+    }
+    context.fillText(token, cursorX, cursorY);
+    cursorX += width + gap;
+  });
+  return cursorY + lineHeight;
+}
+
+function wrapText(context, text, maxWidth) {
+  if (!text) return [''];
+  const rows = [];
+  String(text).split('\n').forEach(sourceLine => {
+    if (sourceLine === '') {
+      rows.push('');
+      return;
+    }
+    let line = '';
+    for (const char of Array.from(sourceLine)) {
+      const candidate = line + char;
+      if (line && context.measureText(candidate).width > maxWidth) {
+        rows.push(line);
+        line = char;
+      } else {
+        line = candidate;
+      }
+    }
+    rows.push(line);
+  });
+  return rows;
+}
+
+function buildPdf(data) {
+  const { jsPDF } = window.jspdf;
+  const pages = [];
+  let page = makePageCanvas();
+  pages.push(page.canvas);
+  let context = page.context;
+  const marginX = 136;
+  const contentWidth = 968;
+  const pageBottom = 1688;
+  let y = 140;
+
+  context.font = '800 48px -apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic",sans-serif';
+  context.fillText(data.title, marginX, y);
+  y += 82;
+
+  context.font = '27px -apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic",sans-serif';
+  y = drawWrappedTokens(context, [
+    `アーティスト: ${data.artist || '未設定'}`,
+    `作詞: ${data.lyricist || '未設定'}`,
+    `作曲: ${data.composer || '未設定'}`,
+    `編曲: ${data.arranger || '未設定'}`,
+    `制作日: ${data.productionDate || '未設定'}`
+  ], marginX, y, contentWidth, 36, 42);
+  y += 7;
+  context.strokeStyle = '#999';
+  context.lineWidth = 1.5;
+  context.beginPath();
+  context.moveTo(marginX, y);
+  context.lineTo(marginX + contentWidth, y);
+  context.stroke();
+  y += 30;
+
+  y = drawWrappedTokens(context, [
+    `Key: ${data.key}`,
+    `BPM: ${data.bpm}`,
+    `拍子: ${data.timeSignature}`
+  ], marginX, y, contentWidth, 45, 42);
+  y += 7;
+  context.beginPath();
+  context.moveTo(marginX, y);
+  context.lineTo(marginX + contentWidth, y);
+  context.stroke();
+  y += 47;
+
+  context.font = '800 31px -apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic",sans-serif';
+  context.fillText('コード進行メモ', marginX, y);
+  y += 48;
+  context.beginPath();
+  context.moveTo(marginX, y);
+  context.lineTo(marginX + contentWidth, y);
+  context.stroke();
+  y += 37;
+
+  context.font = '27px -apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic",sans-serif';
+  const lines = wrapText(context, data.chords || 'コード進行メモはまだありません。', contentWidth);
+  const lineHeight = 47;
+
+  lines.forEach(line => {
+    if (y + lineHeight > pageBottom) {
+      page = makePageCanvas();
+      pages.push(page.canvas);
+      context = page.context;
+      context.font = '27px -apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic",sans-serif';
+      y = 18;
+    }
+    if (line) context.fillText(line, marginX, y);
+    y += lineHeight;
+  });
+
+  const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+  pages.forEach((canvas, index) => {
+    if (index > 0) pdf.addPage();
+    pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
+  });
+  pdf.setProperties({ title: data.title + '_ノート', subject: 'NEET NOTE コード進行メモ' });
+  return pdf;
+}
+
+async function createAndSharePdf() {
   if (typeof autoSaveNow === 'function') autoSaveNow();
   const originalLabel = printSongBtn.textContent;
-  const preview = window.open('about:blank', '_blank');
-  if (preview) {
-    try {
-      preview.document.title = 'PDF作成中';
-      preview.document.body.innerHTML = '<p style="font-family:sans-serif;padding:24px">PDFを作成中…</p>';
-    } catch {}
-  }
-
   printSongBtn.disabled = true;
   printSongBtn.textContent = 'PDF作成中…';
-  let capture = null;
 
   try {
-    if (!window.html2canvas || !window.jspdf?.jsPDF) {
-      throw new Error('PDF機能の読み込みに失敗しました');
+    if (!window.jspdf?.jsPDF) throw new Error('PDF機能を読み込めませんでした');
+    const data = readPrintData();
+    const pdf = buildPdf(data);
+    const fileName = safeFileName(data.title);
+    const blob = pdf.output('blob');
+    const file = new File([blob], fileName, { type: 'application/pdf' });
+
+    if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: data.title + '_ノート'
+        });
+        return;
+      } catch (shareError) {
+        if (shareError?.name === 'AbortError') return;
+      }
     }
 
-    const title = buildPrintSheet();
-    capture = document.getElementById('printSheet').cloneNode(true);
-    capture.id = 'pdfCaptureSheet';
-    stylePdfSheet(capture);
-    document.body.appendChild(capture);
-
-    if (document.fonts?.ready) await document.fonts.ready;
-    const canvas = await window.html2canvas(capture, {
-      scale: 2,
-      backgroundColor: '#ffffff',
-      logging: false,
-      useCORS: true,
-      width: 794,
-      windowWidth: 794
-    });
-
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
-    const pageHeightPx = Math.round(canvas.width * 297 / 210);
-    let sourceY = 0;
-    let pageIndex = 0;
-
-    while (sourceY < canvas.height) {
-      const segmentHeight = Math.min(pageHeightPx, canvas.height - sourceY);
-      const pageCanvas = document.createElement('canvas');
-      pageCanvas.width = canvas.width;
-      pageCanvas.height = segmentHeight;
-      const context = pageCanvas.getContext('2d');
-      context.fillStyle = '#fff';
-      context.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-      context.drawImage(canvas, 0, sourceY, canvas.width, segmentHeight, 0, 0, canvas.width, segmentHeight);
-      if (pageIndex > 0) pdf.addPage();
-      pdf.addImage(pageCanvas.toDataURL('image/jpeg', 0.96), 'JPEG', 0, 0, 210, segmentHeight / canvas.width * 210, undefined, 'FAST');
-      sourceY += segmentHeight;
-      pageIndex += 1;
-    }
-
-    const fileName = safeFileName(title);
-    const blobUrl = URL.createObjectURL(pdf.output('blob'));
-    if (preview) {
-      preview.location.replace(blobUrl);
-    } else {
-      pdf.save(fileName);
-    }
-    window.setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+    pdf.save(fileName);
   } catch (error) {
     console.error(error);
-    if (preview) preview.close();
-    alert(`PDFを開けなかったよ。通信を確認して、もう一度押してね。\n${error.message || ''}`);
+    alert(`PDFを作成できなかったよ。ページを再読み込みして、もう一度試してね。\n${error.message || ''}`);
   } finally {
-    capture?.remove();
     printSongBtn.disabled = false;
     printSongBtn.textContent = originalLabel;
   }
 }
 
-printSongBtn?.addEventListener('click', createPdf);
+printSongBtn?.addEventListener('click', createAndSharePdf);
