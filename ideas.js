@@ -59,6 +59,7 @@ function saveNow(){
   const old=ideas[i],pages=normalizeExtraPages(old),now=new Date().toISOString();
   let firstText=old.text||'';
   if(currentPage===0)firstText=text.value;else if(pages[currentPage-1])pages[currentPage-1]={...pages[currentPage-1],text:text.value};
+  if((old.title||'')===title.value.trim()&&(old.category||'その他')===category.value&&(old.text||'')===firstText&&!!old.favorite===favorite.checked&&JSON.stringify(normalizeExtraPages(old))===JSON.stringify(pages)){status.textContent='保存済み';return}
   ideas[i]={...old,title:title.value.trim(),category:category.value,text:firstText,pages,favorite:favorite.checked,updatedAt:now};
   saveAll();status.textContent='保存済み';render();renderPageControls(ideas[i])
 }
@@ -68,5 +69,6 @@ installPageUI();
 [title,category,text,favorite].forEach(x=>{x.addEventListener('input',schedule);x.addEventListener('change',schedule)});
 search.oninput=render;document.getElementById('newIdeaBtn').onclick=make;document.getElementById('deleteIdea').onclick=remove;
 document.getElementById('copyIdea').onclick=async()=>{saveNow();const x=ideas.find(v=>v.id===currentId);if(!x)return;const pages=[x.text||'',...normalizeExtraPages(x).map(p=>p.text||'')];const body=pages.map((v,n)=>pages.length>1?`【メモ ${n+1}】\n${v}`:v).join('\n\n');try{await navigator.clipboard.writeText(`${title.value}\n\n${body}`);status.textContent='コピーしたよ';setTimeout(()=>status.textContent='保存済み',1200)}catch{alert('コピーできなかったよ。')}};
+window.addEventListener('neet-note:before-sync',()=>{if(status.textContent==='保存中…')saveNow()});
 window.addEventListener('beforeunload',saveNow);render();if(ideas.length)select(ideas[0].id);
 })();
