@@ -73,3 +73,33 @@ active.context.localStorage.removeItem(IDEAS);await active.drain();assert.equal(
 const empty={data:null,writes:0};const first=device(empty,{[KEY]:song('local only')});await first.engine.setUser(user);
 assert.equal(empty.data.storage[KEY].value,song('local only'));await first.engine.sync();assert.equal(empty.writes,1);
 console.log('PASS: startup, both directions, duplicate owners, no-op saves, offline retry, conflict preservation, in-flight edits, remote-only keys, deletion, first-account import');
+
+// Regression: cloud contains only Mellow Rain but the displaced snapshot contains other songs.
+const mellow={id:'mellow',title:'Mellow Rain',lyricIdea:'KEEP CURRENT'};
+const lost={id:'scene',title:'scene',lyricIdea:'original lyrics'};
+const deleted={id:'deleted',title:'Deleted',deletedAt:'2026-09-08T00:00:00Z'};
+const damaged={data:{storage:{[KEY]:{value:JSON.stringify([mellow,deleted]),updatedAt:10}}},writes:0};
+const repaired=device(damaged,{[KEY]:JSON.stringify([mellow]),'neet-sync-recovery-v2':JSON.stringify([
+ {uid:user.uid,key:KEY,value:JSON.stringify([{...mellow,lyricIdea:'OLD'},lost,{id:'deleted',title:'Deleted'}])},
+ {uid:'other-account',key:KEY,value:JSON.stringify([{id:'private',title:'Must not import'}])}
+])});
+await repaired.engine.setUser(user);
+const recovered=JSON.parse(damaged.data.storage[KEY].value);
+assert.equal(recovered.find(x=>x.id==='mellow').lyricIdea,'KEEP CURRENT');
+assert.equal(recovered.find(x=>x.id==='scene').lyricIdea,'original lyrics');
+assert.ok(recovered.find(x=>x.id==='deleted').deletedAt);
+assert.equal(recovered.find(x=>x.id==='private'),undefined);
+assert.equal(JSON.parse(repaired.values.get(KEY)).length,3);
+assert.equal(JSON.parse(repaired.values.get('neet-sync-repair-report:'+user.uid)).songs.length,1);
+// Future first-time sync retains locally unique songs while cloud wins matching IDs.
+const unique=device(damaged,{[KEY]:JSON.stringify([{...mellow,lyricIdea:'STALE'},lost,{id:'apricot',title:'apricot'}])});
+await unique.engine.setUser(user);
+assert.equal(JSON.parse(damaged.data.storage[KEY].value).find(x=>x.id==='mellow').lyricIdea,'KEEP CURRENT');
+assert.ok(JSON.parse(damaged.data.storage[KEY].value).find(x=>x.id==='apricot'));
+console.log('PASS: restore missing songs from displaced backups, preserve current lyrics and tombstones, exclude other accounts, retain unique device songs');
+
+const resumed=device(damaged,{},unique.values);await resumed.engine.setUser(user);
+resumed.set(KEY,JSON.stringify([{...mellow,title:'Mellow Rain edit'}]));await resumed.drain();
+assert.ok(JSON.parse(damaged.data.storage[KEY].value).find(x=>x.id==='scene'));
+assert.ok(JSON.parse(damaged.data.storage[KEY].value).find(x=>x.id==='apricot'));
+console.log('PASS: saving a partial editor snapshot cannot drop restored songs');

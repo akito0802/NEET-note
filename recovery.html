@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>データの復元｜NEET NOTE</title>
+<style>body{margin:0;background:#f5f1e9;color:#342c24;font:16px/1.7 system-ui,sans-serif}main{max-width:650px;margin:32px auto;padding:24px;background:white;border-radius:20px}h1{font-size:25px}button,a{font:inherit}button,.link{display:inline-block;padding:12px 18px;border:0;border-radius:10px;background:#6c4b2e;color:white;margin:6px 8px 6px 0;text-decoration:none}button:disabled{opacity:.5}#status{background:#f4ede4;padding:16px;border-radius:12px;white-space:pre-wrap}li{overflow-wrap:anywhere}small{display:block;color:#62584f}@media(max-width:700px){main{margin:12px;padding:20px}}</style>
+<script>window.NEET_SYNC_RECOVERY_PAGE=true;</script>
+<script src="firebase-config.js?v=20260908"></script><script src="sync-engine.js?v=20260908-restore2"></script></head>
+<body><main><h1>消えたデータを復元</h1>
+<p>この端末の退避データと自動バックアップから、一覧にない曲を探して戻すよ。今ある曲の内容は維持するよ。</p>
+<p id="status" role="status">ログイン状態を確認中…</p>
+<button id="login" hidden>いつものGoogleアカウントでログイン</button><button id="retry" disabled>もう一度バックアップを確認</button>
+<button id="export">端末のバックアップを保存</button>
+<small>バックアップには歌詞などが含まれるよ。自分用に保管してね。</small>
+<h2>復元できた曲</h2><p id="count">確認中</p><ul id="restored"></ul>
+<h2>現在の曲一覧</h2><ul id="current"></ul>
+<p>不足している曲がある場合は、以前その曲を作ったスマホ・PCのブラウザでも、このページを開いてね。</p>
+<a class="link" href="./?mode=note">ノートを開く</a>
+</main><script type="module">
+const $=id=>document.getElementById(id),KEY='song-note-songs-v1';let user=null,engine=null;
+const read=k=>{try{return JSON.parse(localStorage.getItem(k))}catch{return null}};
+function fill(id,rows){const list=$(id);list.replaceChildren();for(const song of rows){const item=document.createElement('li');item.textContent=song.title||'無題の曲';list.appendChild(item)}}
+function render(){const report=user?read('neet-sync-repair-report:'+user.uid):null;const rows=Array.isArray(report?.songs)?report.songs:[];fill('restored',rows);$('count').textContent=rows.length?`${rows.length}曲を復元してクラウドへ保存したよ。`:'この端末のバックアップから追加できた曲はまだないよ。';fill('current',(read(KEY)||[]).filter(x=>!x.deletedAt))}
+window.addEventListener('neet-note:sync-status',e=>{$('status').textContent=e.detail.text;render()});
+$('export').onclick=()=>{
+ const values={};for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(key===KEY||key==='song-note-auto-backups-v1'||key==='neet-sync-recovery-v2'||key==='neet-note-text-backup-before-print-v1'||(user&&key==='neet-sync-state-v2:'+user.uid))values[key]=localStorage.getItem(key)}
+ const url=URL.createObjectURL(new Blob([JSON.stringify({createdAt:new Date().toISOString(),values},null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='NEET-note-recovery-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);
+};
+try{
+ const v='12.17.0';const [appMod,authMod,dbMod]=await Promise.all([import(`https://www.gstatic.com/firebasejs/${v}/firebase-app.js`),import(`https://www.gstatic.com/firebasejs/${v}/firebase-auth.js`),import(`https://www.gstatic.com/firebasejs/${v}/firebase-firestore.js`)]);
+ const app=appMod.getApps().length?appMod.getApp():appMod.initializeApp(window.NEET_FIREBASE_CONFIG),auth=authMod.getAuth(app),db=dbMod.getFirestore(app);
+ engine=window.NEETSyncEngine.configure(db,dbMod);
+ authMod.onAuthStateChanged(auth,async next=>{user=next;$('login').hidden=!!user;$('retry').disabled=!user;if(user){await engine.setUser(user);render()}else{engine.setUser(null);$('status').textContent='いつも使っているアカウントでログインすると、復元を始めるよ。';render()}});
+ $('login').onclick=()=>authMod.signInWithPopup(auth,new authMod.GoogleAuthProvider()).catch(e=>{$('status').textContent='ログインできなかったよ：'+(e.code||e.message)});
+ $('retry').onclick=async()=>{$('retry').disabled=true;await engine.sync();render();$('retry').disabled=false};
+}catch(e){$('status').textContent='読み込めなかったよ。通信を確認して、このページを開き直してね。\n'+(e.code||e.message);render()}
+</script></body></html>

@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-if(window.__NEET_GLOBAL_MENU__)return;
+if(window.NEET_SYNC_RECOVERY_PAGE||window.__NEET_GLOBAL_MENU__)return;
 window.__NEET_GLOBAL_MENU__=true;
 
 const ROOT='https://akito0802.github.io/NEET-note/';
@@ -115,7 +115,7 @@ loadConfig().then(async()=>{
   const appMod=await import(`https://www.gstatic.com/firebasejs/${v}/firebase-app.js`),authMod=await import(`https://www.gstatic.com/firebasejs/${v}/firebase-auth.js`),dbMod=await import(`https://www.gstatic.com/firebasejs/${v}/firebase-firestore.js`);
   const app=appMod.getApps().length?appMod.getApp():appMod.initializeApp(cfg),auth=authMod.getAuth(app),db=dbMod.getFirestore(app),provider=new authMod.GoogleAuthProvider();
   provider.setCustomParameters({prompt:'select_account'});login.disabled=false;
-  await (window.__neetSyncEngineLoading ||= new Promise((resolve,reject)=>{if(window.NEETSyncEngine)return resolve();const script=document.createElement('script');script.src=ROOT+'sync-engine.js?v=20260908-1';script.onload=resolve;script.onerror=reject;document.head.appendChild(script)}));
+  await (window.__neetSyncEngineLoading ||= new Promise((resolve,reject)=>{if(window.NEETSyncEngine)return resolve();const script=document.createElement('script');script.src=ROOT+'sync-engine.js?v=20260908-restore2';script.onload=resolve;script.onerror=reject;document.head.appendChild(script)}));
   const engine=window.NEETSyncEngine.configure(db,dbMod),sync=()=>engine.sync();
   window.addEventListener('neet-note:sync-status',e=>{status.textContent=e.detail.text;menuState.textContent=e.detail.text});
   authMod.onAuthStateChanged(auth,async u=>{if(u){cloudLabel.textContent='ログイン済み・同期';acct.classList.add('show');acctText.textContent=u.email||u.displayName||'Googleアカウント';login.hidden=true;syncBtn.hidden=false;logout.hidden=false;status.textContent='ログイン済み。同期できるよ。';menuName.textContent=u.displayName||'NEETNOTEユーザー';menuMail.textContent=u.email||'Googleアカウント';menuState.textContent='ログイン済み';menuDot.classList.add('on');await engine.setUser(u)}else{engine.setUser(null);cloudLabel.textContent='ログイン・同期';acct.classList.remove('show');login.hidden=false;syncBtn.hidden=true;logout.hidden=true;status.textContent='未ログイン。データはこの端末に保存中。';menuName.textContent='ニートン';menuMail.textContent='未ログイン';menuState.textContent='この端末に保存中';menuDot.classList.remove('on')}});
