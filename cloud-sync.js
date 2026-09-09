@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const engineURL=new URL('sync-engine.js?v=20260908-restore2',document.currentScript?.src||location.href).href;
+const engineURL=new URL('sync-engine.js?v=20260910-albums1',document.currentScript?.src||location.href).href;
 const cfg=window.NEET_FIREBASE_CONFIG||{};
 const side=document.getElementById('sideMenu');
 if(!side||document.getElementById('cloudSyncMenuButton'))return;

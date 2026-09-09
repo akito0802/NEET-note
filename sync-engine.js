@@ -2,7 +2,7 @@
 (()=>{
 'use strict';
 if(window.NEETSyncEngine)return;
-const KEYS=['song-note-songs-v1','neet-note-lyrics-memos-v1','neet-note-calendar-v1','neet-note-ideas-v1','neet-note-theme','neet-note-melodies-v1'];
+const KEYS=['song-note-songs-v1','neet-note-lyrics-memos-v1','neet-note-calendar-v1','neet-note-ideas-v1','neet-note-theme','neet-note-melodies-v1','neet-note-releases-v1'];
 const originalSet=Storage.prototype.setItem,originalRemove=Storage.prototype.removeItem;
 const read=k=>{try{return JSON.parse(localStorage.getItem(k))}catch{return null}};
 const rawSet=(k,v)=>originalSet.call(localStorage,k,v);
@@ -21,7 +21,7 @@ const backup=(key,value)=>{
   }
 };
 // Restore missing records without replacing any current record (including tombstones).
-const arrayKeys=new Set([KEYS[0],KEYS[1],KEYS[3],KEYS[5]]);
+const arrayKeys=new Set([KEYS[0],KEYS[1],KEYS[3],KEYS[5],KEYS[6]]);
 const parse=value=>{try{return JSON.parse(value)}catch{return null}};
 function addMissing(value,candidates,key){
   if(arrayKeys.has(key)){
@@ -132,7 +132,7 @@ async function sync(){
           const sources=[];
           // Never drop songs that only exist on another device at first sync.
           // A same-base edit can still intentionally delete a record.
-          if(key===KEYS[0]&&!accepted.includes(key)&&local[key]!==null)sources.push(local[key]);
+          if((key===KEYS[0]||key===KEYS[6])&&!accepted.includes(key)&&local[key]!==null)sources.push(local[key]);
           if(repairing){
             if(local[key]!==null)sources.push(local[key]);
             sources.push(...(recoverySources[key]||[]));

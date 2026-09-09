@@ -5,6 +5,8 @@ const NEETON=ROOT+'neeton.svg?v=4';
 const CURRENT_HOME_ID='neetCurrentHomeDashboard';
 
 const productionItems=[
+ [ROOT+'my-albums.html','◎','マイアルバム','ジャケット・発売日・収録曲をまとめる'],
+ [ROOT+'my-albums.html?mode=live','♫','ライブモード','会場・セットリスト・アレンジを組む'],
  [ROOT+'?mode=note','▤','ノート','曲のアイデアと構成を整理'],
  [ROOT+'lyrics.html','♬','歌詞メモ','フレーズや歌詞をストック'],
  [ROOT+'voice-memo.html','♩','ボイスメモ','思いついた音をその場で録音'],
@@ -41,8 +43,8 @@ function install(){
   <section class="nh-account"><div class="nh-avatar"><img src="${NEETON}" alt="ニートン"><i></i></div><div class="nh-account-copy"><b id="nhName">ニートン</b><span id="nhMail">未ログイン</span><small id="nhState">この端末に保存中</small></div><span class="nh-chevron">›</span></section>
   <button class="nh-sync" id="nhSync" type="button"><span>♧</span> ログイン・同期</button>
   <main class="nh-workspace">
-   <div class="nh-pc-intro"><div><span class="nh-kicker">WORKSPACE</span><h1>音楽制作ホーム</h1><p>作る・残す・学ぶを、ここから。</p></div><div class="nh-status"><span>14 TOOLS</span><span id="nhPcState">LOCAL</span></div></div>
-   <section class="nh-tool-group"><div class="nh-group-head"><div><span>CREATE</span><h2>制作・記録</h2></div><small>8 tools</small></div><nav class="nh-grid nh-grid-create">${tiles(productionItems)}</nav></section>
+   <div class="nh-pc-intro"><div><span class="nh-kicker">WORKSPACE</span><h1>音楽制作ホーム</h1><p>作る・残す・学ぶを、ここから。</p></div><div class="nh-status"><span>16 TOOLS</span><span id="nhPcState">LOCAL</span></div></div>
+   <section class="nh-tool-group"><div class="nh-group-head"><div><span>CREATE</span><h2>制作・記録</h2></div><small>10 tools</small></div><nav class="nh-grid nh-grid-create">${tiles(productionItems)}</nav></section>
    <section class="nh-tool-group nh-tool-group-theory"><div class="nh-group-head"><div><span>LEARN</span><h2>理論・学習</h2></div><small>6 tools</small></div><nav class="nh-grid nh-grid-theory">${tiles(theoryItems)}</nav></section>
   </main>
   <a class="nh-wide nh-home" href="${ROOT}neeton-home.html"><span class="nh-house">⌂</span><b>ニートンのおうち</b></a>

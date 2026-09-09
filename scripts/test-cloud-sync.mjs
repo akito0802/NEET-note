@@ -103,3 +103,26 @@ resumed.set(KEY,JSON.stringify([{...mellow,title:'Mellow Rain edit'}]));await re
 assert.ok(JSON.parse(damaged.data.storage[KEY].value).find(x=>x.id==='scene'));
 assert.ok(JSON.parse(damaged.data.storage[KEY].value).find(x=>x.id==='apricot'));
 console.log('PASS: saving a partial editor snapshot cannot drop restored songs');
+
+// Release plans join existing accounts, sync covers / track order, and keep tombstones.
+{
+const RELEASES='neet-note-releases-v1';
+const plan={id:'album',kind:'album',title:'Release',cover:'data:image/jpeg;base64,AA==',tracks:[{id:'b',description:'second'},{id:'a',description:'first'}]};
+const releaseServer={data:{storage:{[KEY]:{value:song('Keep me'),updatedAt:1}}},writes:0};
+let first=device(releaseServer,{[RELEASES]:JSON.stringify([plan]),['neet-sync-repair-20260908:'+user.uid]:'done'});
+await first.engine.setUser(user);
+assert.deepEqual(JSON.parse(releaseServer.data.storage[RELEASES].value),[plan]);
+let second=device(releaseServer);await second.engine.setUser(user);
+assert.deepEqual(JSON.parse(second.values.get(RELEASES)),[plan]);
+first=device(releaseServer,{},first.values);await first.engine.setUser(user);
+second=device(releaseServer,{},second.values);await second.engine.setUser(user);
+const live={id:'live',kind:'live',venue:'Hall',capacity:'100',tracks:[{id:'t',arrangement:'Acoustic',key:'G',bpm:'100'}]};
+second.set(RELEASES,JSON.stringify([plan,live]));await second.drain();await first.engine.sync();
+assert.deepEqual(JSON.parse(first.values.get(RELEASES)),[plan,live]);
+first=device(releaseServer,{},first.values);await first.engine.setUser(user);
+second.set(RELEASES,JSON.stringify([{...plan,deletedAt:'2026-09-10'},live]));await second.drain();await first.engine.sync();
+assert.ok(JSON.parse(first.values.get(RELEASES))[0].deletedAt);
+assert.equal(releaseServer.data.storage[KEY].value,song('Keep me'));
+console.log('PASS: release first import, image and order roundtrip, live arrangement, deletion, original songs unchanged');
+
+}

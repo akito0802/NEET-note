@@ -1,0 +1,20 @@
+import vm from 'node:vm';
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
+const elements=new Map(), storage=new Map([['song-note-songs-v1',JSON.stringify([{id:'s1',title:'My song',key:'G',bpm:'120'}])]]);
+function el(s){if(!elements.has(s))elements.set(s,{innerHTML:'',textContent:'',value:'',handlers:{},addEventListener(n,f){this.handlers[n]=f},focus(){}});return elements.get(s)}
+const modes=['album','live'].map(mode=>({dataset:{mode},setAttribute(){}}));
+const win={addEventListener(){}};
+vm.runInNewContext(fs.readFileSync(new URL('../my-albums.js',import.meta.url),'utf8'),{window:win,document:{querySelector:el,querySelectorAll:()=>modes},localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v)},location:{search:''},history:{replaceState(){}},URLSearchParams,crypto:{randomUUID},confirm:()=>true,console});
+const plans=()=>JSON.parse(storage.get('neet-note-releases-v1'));
+const click=action=>el('#editor').handlers.click({target:{closest:()=>({dataset:{action},closest:()=>null})}});
+const input=(field,value,track)=>el('#editor').handlers.input({target:{dataset:{field},value,closest:()=>track?{dataset:{track}}:null}});
+el('#new-project').onclick();input('title','Album <test>');el('#song-picker').value='s1';click('add-song');click('add-blank');
+let p=plans()[0];assert.equal(p.tracks.length,2);assert.equal(p.tracks[0].key,'G');assert.ok(el('#projects').innerHTML.includes('&lt;test&gt;'));
+input('description','Keep this description',p.tracks[0].id);
+el('#editor').handlers.click({target:{closest:()=>({dataset:{action:'down'},closest:()=>({dataset:{track:p.tracks[0].id}})})}});
+p=plans()[0];assert.equal(p.tracks[1].description,'Keep this description');
+modes[1].onclick();el('#new-project').onclick();input('venue','Hall');input('capacity','100');el('#song-picker').value='s1';click('add-song');input('arrangement','Acoustic intro',plans()[0].tracks[0].id);
+assert.equal(plans()[0].kind,'live');assert.equal(plans()[0].tracks[0].arrangement,'Acoustic intro');click('delete-project');assert.ok(plans()[0].deletedAt);assert.equal(JSON.parse(storage.get('song-note-songs-v1'))[0].title,'My song');
+console.log('PASS: create album/live, select existing song, metadata, escape titles, reorder descriptions, arrangements and non-destructive deletion');
