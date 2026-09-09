@@ -31,5 +31,6 @@ try{
  $('login').onclick=()=>authMod.signInWithPopup(auth,new authMod.GoogleAuthProvider()).catch(e=>{$('status').textContent='ログインできなかったよ：'+(e.code||e.message)});
  $('retry').onclick=async()=>{$('retry').disabled=true;await engine.sync();render();$('retry').disabled=false};
 }catch(e){$('status').textContent='読み込めなかったよ。通信を確認して、このページを開き直してね。\n'+(e.code||e.message);render()}
-</script><script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260821-safe6"></script>
+</script>
+<script src="https://akito0802.github.io/NEET-note/global-menu-v4.js?v=20260821-safe6"></script>
 </body></html>
