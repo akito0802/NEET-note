@@ -8,7 +8,6 @@ const NEETON=ROOT+'neeton.svg?v=4';
 const groups=[
   {label:'メインメニュー',items:[
     [ROOT+'my-albums.html','💿','マイアルバム'],
-    [ROOT+'my-albums.html?mode=live','🎸','ライブモード'],
     [ROOT+'?mode=note','📝','ノート'],
     [ROOT+'lyrics.html','🎤','歌詞メモ'],
     [ROOT+'voice-memo.html','🎙️','ボイスメモ（録音）'],

@@ -107,7 +107,7 @@ fix.src=ROOT+'home-route-fix.js?v=20260901-pdf1';
 fix.defer=true;
 fix.onload=()=>{
   const menu=document.createElement('script');
-  menu.src=ROOT+'global-menu.js?v=20260910-albums1';
+  menu.src=ROOT+'global-menu.js?v=20260910-unified2';
   menu.defer=true;
   menu.onload=()=>{
     installAdvancedMenu();
