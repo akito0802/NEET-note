@@ -43,8 +43,7 @@ function install(){
   <button class="nh-sync" id="nhSync" type="button"><span>♧</span> ログイン・同期</button>
   <main class="nh-workspace">
    <div class="nh-pc-intro"><div><span class="nh-kicker">WORKSPACE</span><h1>音楽制作ホーム</h1><p>作る・残す・学ぶを、ここから。</p></div><div class="nh-status"><span>15 TOOLS</span><span id="nhPcState">LOCAL</span></div></div>
-   <section class="nh-tool-group"><div class="nh-group-head"><div><span>CREATE</span><h2>制作・記録</h2></div><small>9 tools</small></div><nav class="nh-grid nh-grid-create">${tiles(productionItems)}</nav></section>
-   <section class="nh-tool-group nh-tool-group-theory"><div class="nh-group-head"><div><span>LEARN</span><h2>理論・学習</h2></div><small>6 tools</small></div><nav class="nh-grid nh-grid-theory">${tiles(theoryItems)}</nav></section>
+   <section class="nh-tool-group"><div class="nh-group-head"><div><span>CREATE</span><h2>制作・理論</h2></div><small>15 tools</small></div><nav class="nh-grid nh-grid-create">${tiles([...productionItems,...theoryItems])}</nav></section>
   </main>
   <a class="nh-wide nh-home" href="${ROOT}neeton-home.html"><span class="nh-house">⌂</span><b>ニートンのおうち</b></a>
   <button class="nh-wide nh-theme" id="nhTheme" type="button"><span>☾</span><b>ダークモード</b><i></i></button>
